@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: v0m-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: v0_m
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "54329:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d v0_m"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - v0m_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  v0m_postgres_data:

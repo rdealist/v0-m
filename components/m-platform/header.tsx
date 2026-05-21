@@ -49,6 +49,8 @@ interface HeaderProps {
     locked: number
     change?: number
   }
+  // 可选外部当前路径；默认使用 Next.js pathname
+  currentPath?: string
   // 未读通知数量
   notificationCount?: number
   // 事件处理
@@ -63,6 +65,7 @@ export function Header({
   isLoggedIn = false,
   user,
   wallet,
+  currentPath,
   notificationCount = 0,
   onNavigate,
   onLogout,
@@ -70,6 +73,7 @@ export function Header({
   onNotificationClick,
 }: HeaderProps) {
   const pathname = usePathname()
+  const activePath = currentPath ?? pathname
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentLang, setCurrentLang] = useState<"zh" | "en">("zh")
 
@@ -100,7 +104,7 @@ export function Header({
           {/* 桌面端导航 */}
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map((item) => {
-              const isActive = pathname === item.href
+              const isActive = activePath === item.href
               return (
                     <Link
                       key={item.href}

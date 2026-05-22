@@ -434,15 +434,24 @@ export default function DataUploadPage() {
                         />
                       </div>
 
-                      {/* 身体部位 */}
+                      {/* 科室 */}
                       <div className="space-y-2">
-                        <Label htmlFor="bodyPart">身体部位</Label>
-                        <Input
-                          id="bodyPart"
-                          placeholder="例如：胸部、脑部、眼底"
+                        <Label htmlFor="bodyPart">科室</Label>
+                        <Select
                           value={formData.bodyPart}
-                          onChange={(e) => handleInputChange("bodyPart", e.target.value)}
-                        />
+                          onValueChange={(value) => handleInputChange("bodyPart", value)}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="选择科室" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {specialtyOptions.map((option) => (
+                              <SelectItem key={option.value} value={option.value}>
+                                {option.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
                       </div>
                     </div>
 
@@ -567,10 +576,10 @@ export default function DataUploadPage() {
                             {formData.sampleCount ? parseInt(formData.sampleCount).toLocaleString() : "-"}
                           </span>
                         </div>
-                        <div className="text-sm">
-                          <span className="text-muted-foreground">身体部位：</span>
-                          <span className="ml-1">{formData.bodyPart || "-"}</span>
-                        </div>
+                    <div className="text-sm">
+                      <span className="text-muted-foreground">科室：</span>
+                      <span className="ml-1">{formData.bodyPart || "-"}</span>
+                    </div>
                       </div>
 
                       {formData.features && (

@@ -185,8 +185,8 @@ const mockDatasets = [
 
 export default function DataMarketplacePage() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedModalities, setSelectedModalities] = useState<string[]>(["CT"])
-  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(["respiratory"])
+  const [selectedModality, setSelectedModality] = useState<string>("CT")
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("respiratory")
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
   const [selectedSampleRange, setSelectedSampleRange] = useState<string>("all")
   const [sortBy, setSortBy] = useState("newest")
@@ -195,30 +195,14 @@ export default function DataMarketplacePage() {
   const [isSpecialtyExpanded, setIsSpecialtyExpanded] = useState(false)
   const itemsPerPage = 6
 
-  const hasFilters = selectedModalities.length > 0 || selectedSpecialties.length > 0 || selectedStatus !== "all" || selectedSampleRange !== "all"
+  const hasFilters = selectedModality !== "" || selectedSpecialty !== "" || selectedStatus !== "all" || selectedSampleRange !== "all"
 
   const clearFilters = () => {
-    setSelectedModalities([])
-    setSelectedSpecialties([])
+    setSelectedModality("")
+    setSelectedSpecialty("")
     setSelectedStatus("all")
     setSelectedSampleRange("all")
     setCurrentPage(1)
-  }
-
-  const toggleModality = (modality: string) => {
-    setSelectedModalities(prev =>
-      prev.includes(modality)
-        ? prev.filter(m => m !== modality)
-        : [...prev, modality]
-    )
-  }
-
-  const toggleSpecialty = (specialty: string) => {
-    setSelectedSpecialties(prev =>
-      prev.includes(specialty)
-        ? prev.filter(s => s !== specialty)
-        : [...prev, specialty]
-    )
   }
 
   // 过滤数据集
@@ -226,10 +210,10 @@ export default function DataMarketplacePage() {
     if (searchQuery && !dataset.name.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false
     }
-    if (selectedModalities.length > 0 && !selectedModalities.includes(dataset.modality)) {
+    if (selectedModality && dataset.modality !== selectedModality) {
       return false
     }
-    if (selectedSpecialties.length > 0 && !selectedSpecialties.includes(dataset.specialty)) {
+    if (selectedSpecialty && dataset.specialty !== selectedSpecialty) {
       return false
     }
     if (selectedStatus !== "all" && dataset.status !== selectedStatus) {
@@ -343,11 +327,11 @@ export default function DataMarketplacePage() {
                   <Label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">成像模态与检查技术</Label>
                   <div className="flex flex-wrap gap-1.5">
                     {primaryModalityOptions.map((modality) => {
-                      const isSelected = selectedModalities.includes(modality.value)
+                      const isSelected = selectedModality === modality.value
                       return (
                         <button
                           key={modality.value}
-                          onClick={() => toggleModality(modality.value)}
+                          onClick={() => setSelectedModality(modality.value)}
                           className={`px-2.5 py-1 text-xs rounded-md transition-all ${
                             isSelected
                               ? "bg-primary text-primary-foreground shadow-sm"
@@ -372,11 +356,11 @@ export default function DataMarketplacePage() {
                   {isModalityExpanded && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {expandedModalityOptions.map((modality) => {
-                        const isSelected = selectedModalities.includes(modality.value)
+                        const isSelected = selectedModality === modality.value
                         return (
                           <button
                             key={modality.value}
-                            onClick={() => toggleModality(modality.value)}
+                            onClick={() => setSelectedModality(modality.value)}
                             className={`px-2.5 py-1 text-xs rounded-md transition-all ${
                               isSelected
                                 ? "bg-primary text-primary-foreground shadow-sm"
@@ -396,11 +380,11 @@ export default function DataMarketplacePage() {
                   <Label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">解剖部位与专科系统</Label>
                   <div className="flex flex-wrap gap-1.5">
                     {primarySpecialtyOptions.map((specialty) => {
-                      const isSelected = selectedSpecialties.includes(specialty.value)
+                      const isSelected = selectedSpecialty === specialty.value
                       return (
                         <button
                           key={specialty.value}
-                          onClick={() => toggleSpecialty(specialty.value)}
+                          onClick={() => setSelectedSpecialty(specialty.value)}
                           className={`px-2.5 py-1 text-xs rounded-md transition-all ${
                             isSelected
                               ? "bg-primary text-primary-foreground shadow-sm"
@@ -425,16 +409,16 @@ export default function DataMarketplacePage() {
                   {isSpecialtyExpanded && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
                       {expandedSpecialtyOptions.map((specialty) => {
-                        const isSelected = selectedSpecialties.includes(specialty.value)
+                        const isSelected = selectedSpecialty === specialty.value
                         return (
                           <button
                             key={specialty.value}
-                            onClick={() => toggleSpecialty(specialty.value)}
+                            onClick={() => setSelectedSpecialty(specialty.value)}
                             className={`px-2.5 py-1 text-xs rounded-md transition-all ${
                               isSelected
                                 ? "bg-primary text-primary-foreground shadow-sm"
                                 : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
-                            }`}
+                          }`}
                           >
                             {specialty.label}
                           </button>

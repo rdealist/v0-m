@@ -174,7 +174,7 @@ const mockDatasets = [
     ownerType: "institution" as const,
     ownerLevel: 9,
     modality: "全幅数字病理",
-    specialty: "呼吸与胸壁",
+    specialty: "泌尿与内生殖",
     samples: 9800,
     status: "public" as const,
     price: 12000,

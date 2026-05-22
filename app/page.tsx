@@ -251,7 +251,7 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
                 打破院墙限制：让沉睡的影像资产，跨时空连接全球专家智库
               </h2>
-              <p className="mt-3 max-w-3xl mx-auto" style={{ fontSize: '18px', color: 'rgb(92, 102, 112)' }}>
+              <p className="mt-3 max-w-3xl mx-auto text-lg text-muted-foreground">
                 将海量数据获取能力与专家高年资智力彻底并行解耦，全面释放产业效率
               </p>
             </div>
@@ -357,9 +357,9 @@ export default function HomePage() {
         <section>
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             {/* 热门数据集 */}
-            <div className="mb-12">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-foreground">热门数据集</h2>
+            <div className="mb-16">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl font-bold text-foreground">热门数据集</h2>
                 <Link href="/data" className="text-sm text-primary hover:underline flex items-center gap-1">
                   查看全部 <ChevronRight className="h-4 w-4" />
                 </Link>
@@ -391,8 +391,8 @@ export default function HomePage() {
 
             {/* 热门任务 */}
             <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-foreground">热���任务</h2>
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-2xl font-bold text-foreground">热门任务</h2>
                 <Link href="/tasks" className="text-sm text-primary hover:underline flex items-center gap-1">
                   查看全部 <ChevronRight className="h-4 w-4" />
                 </Link>
@@ -438,7 +438,7 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
                 信任阶梯
               </h2>
-              <p className="mt-3 text-muted-foreground" style={{ fontSize: '18px' }}>
+              <p className="mt-3 text-lg text-muted-foreground">
                 专业能力决定任务权限，贡献质量决定收益回报
               </p>
             </div>
@@ -479,49 +479,50 @@ export default function HomePage() {
         {/* iMedImage® 医学专科模型工厂 */}
         <section className="max-w-7xl mx-auto px-6 py-16 space-y-8 border-t border-slate-100">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">iMedImage® 医学专科模型工厂</h2>
-            <p className="text-sm text-slate-400" style={{ fontSize: '18px' }}>从原始影像到生产级应用，只需三步</p>
+            <h2 className="text-2xl font-bold text-foreground sm:text-3xl">iMedImage 医学专科模型工厂</h2>
+            <p className="text-lg text-muted-foreground">从原始影像到生产级应用，只需三步</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 hover:border-blue-200 hover:shadow-md transition-all">
+            <div className="bg-card border border-border p-6 rounded-2xl shadow-sm space-y-4 hover:border-primary/30 hover:shadow-md transition-all">
               <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
                 <Cpu className="h-6 w-6 text-blue-600" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-slate-900">分布式微调</h4>
-                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                <h4 className="text-base font-semibold text-foreground">分布式微调</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mt-2">
                   预置 iMedImage 基础大模型，支持零代码一键配置超参、多任务类型、多维度统计指标。无需深度学习背景，即可快速打造专属专科模型。
                 </p>
               </div>
             </div>
-            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 hover:border-cyan-200 hover:shadow-md transition-all">
+            <div className="bg-card border border-border p-6 rounded-2xl shadow-sm space-y-4 hover:border-primary/30 hover:shadow-md transition-all">
               <div className="w-12 h-12 rounded-xl bg-cyan-50 flex items-center justify-center">
                 <Rocket className="h-6 w-6 text-cyan-600" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-slate-900">快捷部署</h4>
-                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                <h4 className="text-base font-semibold text-foreground">快捷部署</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mt-2">
                   可视化训练过程监控，支持 TensorBoard 实时查看训练曲线与模型收敛状态。零代码一键部署，自动适配云端推理集群。
                 </p>
               </div>
             </div>
-            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 hover:border-emerald-200 hover:shadow-md transition-all">
+            <div className="bg-card border border-border p-6 rounded-2xl shadow-sm space-y-4 hover:border-primary/30 hover:shadow-md transition-all">
               <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
                 <Zap className="h-6 w-6 text-emerald-600" />
               </div>
               <div>
-                <h4 className="text-base font-bold text-slate-900">高并发推理</h4>
-                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                <h4 className="text-base font-semibold text-foreground">高并发推理</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed mt-2">
                   毫秒级批量推理响应，支持多模态影像输入。输出临床级 CAM 可解释性热力图，辅助医生快速定位病灶区域，提升诊断效率。
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="text-center pt-2">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition shadow-md shadow-blue-600/10">
-              {"iMed MaaS →"}
+          <div className="text-center pt-6">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="inline-block bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-sm px-6 py-2.5 rounded-lg transition">
+              进入 iMed MaaS
+              <ArrowRight className="inline-block ml-2 h-4 w-4" />
             </a>
           </div>
         </section>

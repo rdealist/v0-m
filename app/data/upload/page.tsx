@@ -57,24 +57,31 @@ const steps = [
 
 // 模态选项
 const modalityOptions = [
-  { value: "CT", label: "CT" },
-  { value: "MRI", label: "MRI" },
-  { value: "X-Ray", label: "X-Ray" },
-  { value: "ultrasound", label: "超声" },
-  { value: "OCT", label: "OCT" },
-  { value: "pathology", label: "病理" },
-  { value: "endoscopy", label: "内镜" },
+  { value: "X射线影像", label: "X射线影像 (XRAY)" },
+  { value: "计算机断层扫描", label: "计算机断层扫描 (CT)" },
+  { value: "声学超声影像", label: "声学超声影像 (US)" },
+  { value: "实验室与特异分子显色", label: "实验室与特异分子显色 (LAB)" },
+  { value: "磁共振成像", label: "磁共振成像 (MR)" },
+  { value: "全幅数字病理", label: "全幅数字病理 (WSI)" },
+  { value: "可见光影像", label: "专科可见光影像 (VL)" },
+  { value: "核医学与分子代谢", label: "核医学与分子代谢 (NM)" },
+  { value: "时序动态视频流媒体", label: "时序动态视频流媒体 (VIDEO)" },
+  { value: "其他", label: "其他 (OTH)" },
 ]
 
 // 科室选项
 const specialtyOptions = [
-  { value: "radiology", label: "放射科" },
-  { value: "cardiology", label: "心内科" },
-  { value: "neurology", label: "神经内科" },
-  { value: "ophthalmology", label: "眼科" },
-  { value: "oncology", label: "肿瘤科" },
-  { value: "orthopedics", label: "骨科" },
-  { value: "pulmonology", label: "呼吸内科" },
+  { value: "呼吸与胸壁", label: "呼吸与胸壁" },
+  { value: "神经与颅脑", label: "神经与颅脑" },
+  { value: "循环与心血管", label: "循环与心血管" },
+  { value: "消化与腹部", label: "消化与腹部" },
+  { value: "细胞与分子遗传学", label: "细胞与分子遗传学" },
+  { value: "皮肤、体表与感官", label: "皮肤、体表与感官" },
+  { value: "视觉与五官系统", label: "眼与视觉五官" },
+  { value: "泌尿与内生殖", label: "泌尿与内生殖" },
+  { value: "运动与骨关节", label: "运动与骨关节" },
+  { value: "生殖医学与胚胎发育", label: "生殖医学与胚胎发育" },
+  { value: "其他专科", label: "其他专科 / 综合系统" },
 ]
 
 // Mock预检结果
@@ -375,9 +382,9 @@ export default function DataUploadPage() {
                     </div>
 
                     <div className="grid gap-6 sm:grid-cols-2">
-                      {/* 影像模态 */}
+                      {/* 成像模态与检查技术 */}
                       <div className="space-y-2">
-                        <Label>影像模态 *</Label>
+                        <Label>成像模态与检查技术 *</Label>
                         <Select
                           value={formData.modality}
                           onValueChange={(value) => handleInputChange("modality", value)}
@@ -395,9 +402,9 @@ export default function DataUploadPage() {
                         </Select>
                       </div>
 
-                      {/* 科室 */}
+                      {/* 解剖部位与专科系统 */}
                       <div className="space-y-2">
-                        <Label>相关科室 *</Label>
+                        <Label>解剖部位与专科系统 *</Label>
                         <Select
                           value={formData.specialty}
                           onValueChange={(value) => handleInputChange("specialty", value)}

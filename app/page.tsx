@@ -19,6 +19,9 @@ import {
   Clock,
   Coins,
   ChevronRight,
+  Cpu,
+  Rocket,
+  Zap,
 } from "lucide-react"
 import Link from "next/link"
 
@@ -455,31 +458,37 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 relative overflow-hidden">
-              <div className="text-xs font-mono font-black text-blue-600"></div>
-              <h4 className="text-sm font-black text-slate-900">分布式微调</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                预置 iMedImage 基础大模型，支持零代码一键配置超参、多任务类型、多维度统计指标，打造专属专科模型。
-              </p>
-              <div className="text-[9px] bg-slate-50 text-slate-400 p-2 rounded font-mono border border-slate-100">
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 hover:border-blue-200 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                <Cpu className="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <h4 className="text-base font-bold text-slate-900">分布式微调</h4>
+                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                  预置 iMedImage 基础大模型，支持零代码一键配置超参、多任务类型、多维度统计指标。无需深度学习背景，即可快速打造专属专科模型。
+                </p>
               </div>
             </div>
-            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 relative overflow-hidden">
-              <div className="text-xs font-mono font-black text-cyan-700"></div>
-              <h4 className="text-sm font-black text-slate-900">快捷部署</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                可视化训练过程，支持TensorBoard 监控，零代码部署操作。
-              </p>
-              <div className="text-[9px] bg-slate-50 text-slate-400 p-2 rounded font-mono border border-slate-100">
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 hover:border-cyan-200 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-cyan-50 flex items-center justify-center">
+                <Rocket className="h-6 w-6 text-cyan-600" />
+              </div>
+              <div>
+                <h4 className="text-base font-bold text-slate-900">快捷部署</h4>
+                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                  可视化训练过程监控，支持 TensorBoard 实时查看训练曲线与模型收敛状态。零代码一键部署，自动适配云端推理集群。
+                </p>
               </div>
             </div>
-            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 relative overflow-hidden">
-              <div className="text-xs font-mono font-black text-emerald-700"></div>
-              <h4 className="text-sm font-black text-slate-900">高并发推理</h4>
-              <p className="text-xs text-slate-500 leading-relaxed">
-                毫秒级批量推理，输出临床级 CAM（可解释性分析）热力图。
-              </p>
-              <div className="text-[9px] bg-red-50 text-red-700 p-2 rounded font-bold font-mono border border-red-100">
+            <div className="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4 hover:border-emerald-200 hover:shadow-md transition-all">
+              <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
+                <Zap className="h-6 w-6 text-emerald-600" />
+              </div>
+              <div>
+                <h4 className="text-base font-bold text-slate-900">高并发推理</h4>
+                <p className="text-sm text-slate-500 leading-relaxed mt-2">
+                  毫秒级批量推理响应，支持多模态影像输入。输出临床级 CAM 可解释性热力图，辅助医生快速定位病灶区域，提升诊断效率。
+                </p>
               </div>
             </div>
           </div>

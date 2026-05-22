@@ -105,6 +105,7 @@ const mockDatasets = [
     price: 5000,
     coverImage: null,
     createdAt: "2026-03-15",
+    isOwned: false,
   },
   {
     id: "DS002",
@@ -120,6 +121,7 @@ const mockDatasets = [
     price: 8000,
     coverImage: null,
     createdAt: "2026-02-28",
+    isOwned: false,
   },
   {
     id: "DS003",
@@ -135,6 +137,7 @@ const mockDatasets = [
     price: 3500,
     coverImage: null,
     createdAt: "2026-04-01",
+    isOwned: true,
   },
   {
     id: "DS004",
@@ -150,6 +153,7 @@ const mockDatasets = [
     price: 4500,
     coverImage: null,
     createdAt: "2026-03-20",
+    isOwned: false,
   },
   {
     id: "DS005",
@@ -165,6 +169,7 @@ const mockDatasets = [
     price: 6000,
     coverImage: null,
     createdAt: "2026-01-15",
+    isOwned: true,
   },
   {
     id: "DS006",
@@ -180,11 +185,13 @@ const mockDatasets = [
     price: 12000,
     coverImage: null,
     createdAt: "2026-04-10",
+    isOwned: false,
   },
 ]
 
 export default function DataMarketplacePage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [datasetTab, setDatasetTab] = useState<"public" | "mine">("public")
   const [selectedModality, setSelectedModality] = useState<string>("计算机断层扫描")
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("呼吸与胸壁")
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
@@ -207,6 +214,13 @@ export default function DataMarketplacePage() {
 
   // 过滤数据集
   const filteredDatasets = mockDatasets.filter(dataset => {
+    // Tab 筛选：公开数据集 vs 我的数据集
+    if (datasetTab === "public" && dataset.isOwned) {
+      return false
+    }
+    if (datasetTab === "mine" && !dataset.isOwned) {
+      return false
+    }
     if (searchQuery && !dataset.name.toLowerCase().includes(searchQuery.toLowerCase())) {
       return false
     }
@@ -280,6 +294,30 @@ export default function DataMarketplacePage() {
               <div className="text-lg md:text-xl font-black text-emerald-600 font-mono mt-1">¥ 3,481,920</div>
             </div>
           </section>
+
+          {/* Tab 切换：公开数据集 / 我的数据集 */}
+          <div className="flex gap-2 mb-4">
+            <button
+              onClick={() => setDatasetTab("public")}
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                datasetTab === "public"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              公开数据集
+            </button>
+            <button
+              onClick={() => setDatasetTab("mine")}
+              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                datasetTab === "mine"
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
+              }`}
+            >
+              我的数据集
+            </button>
+          </div>
 
           {/* 搜索栏 */}
           <div className="flex gap-4 mb-6">

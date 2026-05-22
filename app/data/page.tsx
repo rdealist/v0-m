@@ -355,39 +355,63 @@ export default function DataMarketplacePage() {
                   </div>
                 </div>
 
-                {/* 状态和规模 - 紧凑下拉 */}
-                <div className="grid grid-cols-1 gap-3">
-                  <div className="space-y-1.5">
+                {/* 状态和规模 - 平铺气泡 */}
+                <div className="space-y-4">
+                  <div className="space-y-2">
                     <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">状态</Label>
-                    <Select value={selectedStatus} onValueChange={setSelectedStatus}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="全部" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">全部状态</SelectItem>
-                        {statusOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="flex flex-wrap gap-1.5">
+                      <button
+                        onClick={() => setSelectedStatus("all")}
+                        className={`px-2.5 py-1 text-xs rounded-md transition-all ${
+                          selectedStatus === "all"
+                            ? "bg-primary text-primary-foreground shadow-sm"
+                            : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                        }`}
+                      >
+                        全部
+                      </button>
+                      {statusOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => setSelectedStatus(option.value)}
+                          className={`px-2.5 py-1 text-xs rounded-md transition-all ${
+                            selectedStatus === option.value
+                              ? "bg-primary text-primary-foreground shadow-sm"
+                              : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div className="space-y-1.5">
+                  <div className="space-y-2">
                     <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">样本规模</Label>
-                    <Select value={selectedSampleRange} onValueChange={setSelectedSampleRange}>
-                      <SelectTrigger className="h-8 text-xs">
-                        <SelectValue placeholder="全部" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">全部规模</SelectItem>
-                        {sampleRangeOptions.map((option) => (
-                          <SelectItem key={option.value} value={option.value}>
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <div className="flex flex-wrap gap-1.5">
+                      <button
+                        onClick={() => setSelectedSampleRange("all")}
+                        className={`px-2.5 py-1 text-xs rounded-md transition-all ${
+                          selectedSampleRange === "all"
+                            ? "bg-primary text-primary-foreground shadow-sm"
+                            : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                        }`}
+                      >
+                        全部
+                      </button>
+                      {sampleRangeOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => setSelectedSampleRange(option.value)}
+                          className={`px-2.5 py-1 text-xs rounded-md transition-all ${
+                            selectedSampleRange === option.value
+                              ? "bg-primary text-primary-foreground shadow-sm"
+                              : "bg-muted/50 text-muted-foreground hover:bg-muted"
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

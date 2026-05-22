@@ -293,16 +293,21 @@ export default function TaskMarketplacePage() {
               </div>
               <div className="flex gap-2">
                 <Select value={selectedModality} onValueChange={setSelectedModality}>
-                  <SelectTrigger className="w-[120px]">
-                    <SelectValue placeholder="模态" />
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="成像模态" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">全部</SelectItem>
-                    <SelectItem value="CT">CT</SelectItem>
-                    <SelectItem value="MRI">MRI</SelectItem>
-                    <SelectItem value="X-Ray">X-Ray</SelectItem>
-                    <SelectItem value="超声">超声</SelectItem>
-                    <SelectItem value="OCT">OCT</SelectItem>
+                    <SelectItem value="all">全部模态</SelectItem>
+                    <SelectItem value="X射线影像">X射线影像 (XRAY)</SelectItem>
+                    <SelectItem value="计算机断层扫描">计算机断层扫描 (CT)</SelectItem>
+                    <SelectItem value="声学超声影像">声学超声影像 (US)</SelectItem>
+                    <SelectItem value="实验室与特异分子显色">实验室与特异分子显色 (LAB)</SelectItem>
+                    <SelectItem value="磁共振成像">磁共振成像 (MR)</SelectItem>
+                    <SelectItem value="全幅数字病理">全幅数字病理 (WSI)</SelectItem>
+                    <SelectItem value="可见光影像">专科可见光影像 (VL)</SelectItem>
+                    <SelectItem value="核医学与分子代谢">核医学与分子代谢 (NM)</SelectItem>
+                    <SelectItem value="时序动态视频流媒体">时序动态视频流媒体 (VIDEO)</SelectItem>
+                    <SelectItem value="其他">其他 (OTH)</SelectItem>
                   </SelectContent>
                 </Select>
                 <Select value={selectedMinLevel} onValueChange={setSelectedMinLevel}>

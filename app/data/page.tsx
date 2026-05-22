@@ -63,7 +63,21 @@ const expandedModalityOptions = [
   { value: "VIDEO", label: "时序动态视频流媒体 (VIDEO)" },
   { value: "OTH", label: "其他 (OTH)" },
 ]
-const specialtyOptions = ["放射科", "心内科", "神经内科", "眼科", "肿瘤科", "骨科", "呼吸内科"]
+const primarySpecialtyOptions = [
+  { value: "respiratory", label: "呼吸与胸壁" },
+  { value: "neuro", label: "神经与颅脑" },
+  { value: "cardio", label: "循环与心血管" },
+  { value: "digestive", label: "消化与腹部" },
+  { value: "cellular", label: "细胞与分子遗传学" },
+]
+const expandedSpecialtyOptions = [
+  { value: "skin", label: "皮肤、体表与感官" },
+  { value: "eye", label: "眼与视觉五官" },
+  { value: "urinary", label: "泌尿与内生殖" },
+  { value: "musculo", label: "运动与骨关节" },
+  { value: "reproductive", label: "生殖医学与胚胎发育" },
+  { value: "other", label: "其他专科 / 综合系统" },
+]
 const statusOptions = [
   { value: "active", label: "已发布" },
   { value: "pending_audit", label: "待审核" },
@@ -172,12 +186,13 @@ const mockDatasets = [
 export default function DataMarketplacePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedModalities, setSelectedModalities] = useState<string[]>(["CT"])
-  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(["放射科"])
+  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(["respiratory"])
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
   const [selectedSampleRange, setSelectedSampleRange] = useState<string>("all")
   const [sortBy, setSortBy] = useState("newest")
   const [currentPage, setCurrentPage] = useState(1)
   const [isModalityExpanded, setIsModalityExpanded] = useState(false)
+  const [isSpecialtyExpanded, setIsSpecialtyExpanded] = useState(false)
   const itemsPerPage = 6
 
   const hasFilters = selectedModalities.length > 0 || selectedSpecialties.length > 0 || selectedStatus !== "all" || selectedSampleRange !== "all"
@@ -378,25 +393,55 @@ export default function DataMarketplacePage() {
 
                 {/* 科室筛选 - 紧凑标签式 */}
                 <div className="space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">科室</Label>
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">解剖部位与专科系统</Label>
                   <div className="flex flex-wrap gap-1.5">
-                    {specialtyOptions.map((specialty) => {
-                      const isSelected = selectedSpecialties.includes(specialty)
+                    {primarySpecialtyOptions.map((specialty) => {
+                      const isSelected = selectedSpecialties.includes(specialty.value)
                       return (
                         <button
-                          key={specialty}
-                          onClick={() => toggleSpecialty(specialty)}
+                          key={specialty.value}
+                          onClick={() => toggleSpecialty(specialty.value)}
                           className={`px-2.5 py-1 text-xs rounded-md transition-all ${
                             isSelected
                               ? "bg-primary text-primary-foreground shadow-sm"
                               : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
                           }`}
                         >
-                          {specialty}
+                          {specialty.label}
                         </button>
                       )
                     })}
                   </div>
+                  
+                  {/* 展开/收起按钮 */}
+                  <button
+                    onClick={() => setIsSpecialtyExpanded(!isSpecialtyExpanded)}
+                    className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 mt-1"
+                  >
+                    {isSpecialtyExpanded ? "[ － 收起专科系统 ]" : "[ ＋ 展开其余 专科系统 ]"}
+                  </button>
+                  
+                  {/* 展开的额外专科选项 */}
+                  {isSpecialtyExpanded && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {expandedSpecialtyOptions.map((specialty) => {
+                        const isSelected = selectedSpecialties.includes(specialty.value)
+                        return (
+                          <button
+                            key={specialty.value}
+                            onClick={() => toggleSpecialty(specialty.value)}
+                            className={`px-2.5 py-1 text-xs rounded-md transition-all ${
+                              isSelected
+                                ? "bg-primary text-primary-foreground shadow-sm"
+                                : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
+                            }`}
+                          >
+                            {specialty.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 {/* 状态和规模 - 平铺气泡 */}

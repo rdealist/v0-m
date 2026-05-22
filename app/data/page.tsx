@@ -50,33 +50,33 @@ const mockWallet = {
 
 // 筛选选项
 const primaryModalityOptions = [
-  { value: "XRAY", label: "X射线影像大类 (XRAY)" },
-  { value: "CT", label: "计算机断层扫描大类 (CT)" },
-  { value: "US", label: "声学超声影像大类 (US)" },
-  { value: "LAB", label: "实验室与特异分子显色大类 (LAB)" },
-  { value: "MR", label: "磁共振成像大类 (MR)" },
+  { value: "X射线影像", label: "X射线影像大类 (XRAY)" },
+  { value: "计算机断层扫描", label: "计算机断层扫描大类 (CT)" },
+  { value: "声学超声影像", label: "声学超声影像大类 (US)" },
+  { value: "实验室与特异分子显色", label: "实验室与特异分子显色大类 (LAB)" },
+  { value: "磁共振成像", label: "磁共振成像大类 (MR)" },
 ]
 const expandedModalityOptions = [
-  { value: "WSI", label: "全幅数字病理大类 (WSI)" },
-  { value: "VL", label: "专科可见光影像 (VL)" },
-  { value: "NM", label: "核医学与分子代谢大类 (NM)" },
-  { value: "VIDEO", label: "时序动态视频流媒体 (VIDEO)" },
-  { value: "OTH", label: "其他 (OTH)" },
+  { value: "全幅数字病理", label: "全幅数字病理大类 (WSI)" },
+  { value: "可见光影像", label: "专科可见光影像 (VL)" },
+  { value: "核医学与分子代谢", label: "核医学与分子代谢大类 (NM)" },
+  { value: "时序动态视频流媒体", label: "时序动态视频流媒体 (VIDEO)" },
+  { value: "其他", label: "其他 (OTH)" },
 ]
 const primarySpecialtyOptions = [
-  { value: "respiratory", label: "呼吸与胸壁" },
-  { value: "neuro", label: "神经与颅脑" },
-  { value: "cardio", label: "循环与心血管" },
-  { value: "digestive", label: "消化与腹部" },
-  { value: "cellular", label: "细胞与分子遗传学" },
+  { value: "呼吸与胸壁", label: "呼吸与胸壁" },
+  { value: "神经与颅脑", label: "神经与颅脑" },
+  { value: "循环与心血管", label: "循环与心血管" },
+  { value: "消化与腹部", label: "消化与腹部" },
+  { value: "细胞与分子遗传学", label: "细胞与分子遗传学" },
 ]
 const expandedSpecialtyOptions = [
-  { value: "skin", label: "皮肤、体表与感官" },
-  { value: "eye", label: "眼与视觉五官" },
-  { value: "urinary", label: "泌尿与内生殖" },
-  { value: "musculo", label: "运动与骨关节" },
-  { value: "reproductive", label: "生殖医学与胚胎发育" },
-  { value: "other", label: "其他专科 / 综合系统" },
+  { value: "皮肤、体表与感官", label: "皮肤、体表与感官" },
+  { value: "视觉与五官系统", label: "眼与视觉五官" },
+  { value: "泌尿与内生殖", label: "泌尿与内生殖" },
+  { value: "运动与骨关节", label: "运动与骨关节" },
+  { value: "生殖医学与胚胎发育", label: "生殖医学与胚胎发育" },
+  { value: "其他专科", label: "其他专科 / 综合系统" },
 ]
 const statusOptions = [
   { value: "active", label: "已发布" },
@@ -98,8 +98,8 @@ const mockDatasets = [
     owner: "协和医院影像中心",
     ownerType: "institution" as const,
     ownerLevel: 7,
-    modality: "CT",
-    specialty: "放射科",
+    modality: "计算机断层扫描",
+    specialty: "呼吸与胸壁",
     samples: 12500,
     status: "public" as const,
     price: 5000,
@@ -113,8 +113,8 @@ const mockDatasets = [
     owner: "华西医学影像研究院",
     ownerType: "institution" as const,
     ownerLevel: 8,
-    modality: "MRI",
-    specialty: "神经内科",
+    modality: "磁共振成像",
+    specialty: "神经与颅脑",
     samples: 8200,
     status: "public" as const,
     price: 8000,
@@ -128,8 +128,8 @@ const mockDatasets = [
     owner: "中山眼科中心",
     ownerType: "institution" as const,
     ownerLevel: 6,
-    modality: "OCT",
-    specialty: "眼科",
+    modality: "可见光影像",
+    specialty: "视觉与五官系统",
     samples: 15800,
     status: "public" as const,
     price: 3500,
@@ -143,8 +143,8 @@ const mockDatasets = [
     owner: "北京大学人民医院",
     ownerType: "institution" as const,
     ownerLevel: 7,
-    modality: "X-Ray",
-    specialty: "放射科",
+    modality: "X射线影像",
+    specialty: "呼吸与胸壁",
     samples: 22000,
     status: "public" as const,
     price: 4500,
@@ -158,8 +158,8 @@ const mockDatasets = [
     owner: "阜外医院",
     ownerType: "institution" as const,
     ownerLevel: 8,
-    modality: "超声",
-    specialty: "心内科",
+    modality: "声学超声影像",
+    specialty: "循环与心血管",
     samples: 6500,
     status: "public" as const,
     price: 6000,
@@ -173,8 +173,8 @@ const mockDatasets = [
     owner: "复旦大学附属肿瘤医院",
     ownerType: "institution" as const,
     ownerLevel: 9,
-    modality: "病理",
-    specialty: "肿瘤科",
+    modality: "全幅数字病理",
+    specialty: "呼吸与胸壁",
     samples: 9800,
     status: "public" as const,
     price: 12000,
@@ -185,8 +185,8 @@ const mockDatasets = [
 
 export default function DataMarketplacePage() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedModality, setSelectedModality] = useState<string>("CT")
-  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("respiratory")
+  const [selectedModality, setSelectedModality] = useState<string>("计算机断层扫描")
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>("呼吸与胸壁")
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
   const [selectedSampleRange, setSelectedSampleRange] = useState<string>("all")
   const [sortBy, setSortBy] = useState("newest")

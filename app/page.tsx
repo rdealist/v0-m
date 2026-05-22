@@ -290,6 +290,48 @@ export default function HomePage() {
         {/* 热门数据集 + 热门任务 */}
         <section>
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+            {/* 三个解耦卡片 */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between group hover:border-blue-400 transition">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-xl text-blue-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-sm mt-3">数据端解耦</h3>
+                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">数据资产拥有者无需操心标注，一键上传脱敏数据，即可转化为长效分红的资产。</p>
+                </div>
+                <Link href="/data" className="w-full text-center bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 font-semibold text-xs py-2.5 rounded-lg border border-slate-200 hover:border-blue-200 transition block">
+                  {"医院/机构：让闲置数据变资产 →"}
+                </Link>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between group hover:border-blue-400 transition">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center text-xl text-cyan-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-sm mt-3">标注端解耦</h3>
+                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">全球高年资医生突破地域限制，用碎片时间与顶级专业经验在线变现。</p>
+                </div>
+                <button className="w-full text-center bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 font-semibold text-xs py-2.5 rounded-lg border border-slate-200 hover:border-blue-200 transition">
+                  {"高年资医生：开启专家经验变现 →"}
+                </button>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between group hover:border-blue-400 transition">
+                <div>
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-xl text-emerald-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  </div>
+                  <h3 className="font-bold text-slate-900 text-sm mt-3">区块链确权</h3>
+                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">{"每一份贡献都有据可查，API 只要被调用，收益秒级分账，上传者即为资产"股东"。"}</p>
+                </div>
+                <div className="text-[11px] text-emerald-600 bg-emerald-50/50 border border-emerald-100 rounded-lg p-2 text-center font-medium">
+                  清算结算系统全合规支持
+                </div>
+              </div>
+            </div>
+
             {/* 热门数据集 */}
             <div className="mb-12">
               <div className="flex items-center justify-between mb-6">

@@ -253,7 +253,8 @@ export default function HomePage() {
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
                 打破院墙限制：让沉睡的影像资产，跨时空连接全球专家智库
               </h2>
-              <p className="mt-3 text-muted-foreground">
+              <p className="mt-3" style={{ fontSize: '18px', color: 'rgb(92, 102, 112)' }}>
+                将海量数据获取能力与专家高年资智力彻底并行解耦，全面释放产业效率。
               </p>
             </div>
             

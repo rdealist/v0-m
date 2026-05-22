@@ -50,16 +50,16 @@ const mockWallet = {
 
 // 筛选选项
 const primaryModalityOptions = [
-  { value: "X射线影像", label: "X射线影像大类 (XRAY)" },
-  { value: "计算机断层扫描", label: "计算机断层扫描大类 (CT)" },
-  { value: "声学超声影像", label: "声学超声影像大类 (US)" },
-  { value: "实验室与特异分子显色", label: "实验室与特异分子显色大类 (LAB)" },
-  { value: "磁共振成像", label: "磁共振成像大类 (MR)" },
+  { value: "X射线影像", label: "X射线影像 (XRAY)" },
+  { value: "计算机断层扫描", label: "计算机断层扫描 (CT)" },
+  { value: "声学超声影像", label: "声学超声影像 (US)" },
+  { value: "实验室与特异分子显色", label: "实验室与特异分子显色 (LAB)" },
+  { value: "磁共振成像", label: "磁共振成像 (MR)" },
 ]
 const expandedModalityOptions = [
-  { value: "全幅数字病理", label: "全幅数字病理大类 (WSI)" },
+  { value: "全幅数字病理", label: "全幅数字病理 (WSI)" },
   { value: "可见光影像", label: "专科可见光影像 (VL)" },
-  { value: "核医学与分子代谢", label: "核医学与分子代谢大类 (NM)" },
+  { value: "核医学与分子代谢", label: "核医学与分子代谢 (NM)" },
   { value: "时序动态视频流媒体", label: "时序动态视频流媒体 (VIDEO)" },
   { value: "其他", label: "其他 (OTH)" },
 ]

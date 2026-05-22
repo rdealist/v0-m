@@ -69,8 +69,9 @@ const mockTasks = [
     maxClaims: 20,
     totalCases: 1250,
     status: "open" as const,
-    modality: "CT",
-    specialty: "放射科",
+    modality: "计算机断层扫描",
+    specialty: "呼吸与胸壁",
+    taskType: "annotation" as const,
   },
   {
     id: "T002",
@@ -86,8 +87,9 @@ const mockTasks = [
     maxClaims: 10,
     totalCases: 1000,
     status: "open" as const,
-    modality: "MRI",
-    specialty: "神经内科",
+    modality: "磁共振成像",
+    specialty: "神经与颅脑",
+    taskType: "annotation" as const,
   },
   {
     id: "T003",
@@ -103,8 +105,9 @@ const mockTasks = [
     maxClaims: 25,
     totalCases: 1750,
     status: "open" as const,
-    modality: "OCT",
-    specialty: "眼科",
+    modality: "可见光影像",
+    specialty: "视觉与五官系统",
+    taskType: "annotation" as const,
   },
   {
     id: "T004",
@@ -120,8 +123,9 @@ const mockTasks = [
     maxClaims: 30,
     totalCases: 2250,
     status: "open" as const,
-    modality: "X-Ray",
-    specialty: "放射科",
+    modality: "X射线影像",
+    specialty: "呼吸与胸壁",
+    taskType: "annotation" as const,
   },
   {
     id: "T005",
@@ -137,8 +141,45 @@ const mockTasks = [
     maxClaims: 15,
     totalCases: 1000,
     status: "open" as const,
-    modality: "超声",
-    specialty: "心内科",
+    modality: "声学超声影像",
+    specialty: "循环与心血管",
+    taskType: "annotation" as const,
+  },
+  {
+    id: "T006",
+    title: "肺结节标注质量审核",
+    description: "审核其他标注员提交的肺结节标注结果，确保标注质量符合标准",
+    publisher: "协和医院影像中心",
+    publisherLevel: 7,
+    reward: 3000,
+    rewardPerCase: 3,
+    minLevel: 5,
+    deadline: "2026-06-18",
+    claimed: 2,
+    maxClaims: 5,
+    totalCases: 500,
+    status: "open" as const,
+    modality: "计算机断层扫描",
+    specialty: "呼吸与胸壁",
+    taskType: "audit" as const,
+  },
+  {
+    id: "T007",
+    title: "脑部MRI分割审核",
+    description: "审核脑部肿瘤边界分割的标注结果，需要具备神经影像专业背景",
+    publisher: "华西医学影像研究院",
+    publisherLevel: 8,
+    reward: 5000,
+    rewardPerCase: 5,
+    minLevel: 5,
+    deadline: "2026-06-22",
+    claimed: 1,
+    maxClaims: 3,
+    totalCases: 300,
+    status: "open" as const,
+    modality: "磁共振成像",
+    specialty: "神经与颅脑",
+    taskType: "audit" as const,
   },
 ]
 
@@ -154,28 +195,19 @@ const myClaimedTasks = [
     totalCases: 100,
     completedCases: 45,
     status: "in_progress" as const,
-  },
-]
-
-// 审核任务（Lv5+可见）
-const auditTasks = [
-  {
-    id: "A001",
-    title: "肺结节标注审核",
-    submitter: "李医生",
-    submitterLevel: 3,
-    submittedAt: "2026-05-19 14:30",
-    casesCount: 50,
-    status: "pending_audit" as const,
+    taskType: "annotation" as const,
   },
   {
-    id: "A002",
-    title: "视网膜病变标注审核",
-    submitter: "王医生",
-    submitterLevel: 2,
-    submittedAt: "2026-05-19 10:15",
-    casesCount: 80,
-    status: "pending_audit" as const,
+    id: "T006",
+    title: "肺结节标注质量审核",
+    publisher: "协和医院影像中心",
+    reward: 3000,
+    deadline: "2026-06-18",
+    myProgress: 20,
+    totalCases: 50,
+    completedCases: 10,
+    status: "in_progress" as const,
+    taskType: "audit" as const,
   },
 ]
 
@@ -196,9 +228,11 @@ const myPublishedTasks = [
 export default function TaskMarketplacePage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedModality, setSelectedModality] = useState<string>("all")
+  const [selectedTaskType, setSelectedTaskType] = useState<string>("all")
   const [selectedMinLevel, setSelectedMinLevel] = useState<string>("all")
   const [sortBy, setSortBy] = useState("newest")
   const [activeTab, setActiveTab] = useState("all")
+  const [myTaskSource, setMyTaskSource] = useState<string>("claimed")
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 6
 
@@ -212,6 +246,14 @@ export default function TaskMarketplacePage() {
       return false
     }
     if (selectedModality !== "all" && task.modality !== selectedModality) {
+      return false
+    }
+    // 任务类型筛选
+    if (selectedTaskType !== "all" && task.taskType !== selectedTaskType) {
+      return false
+    }
+    // 审核任务只有 Lv5+ 可见
+    if (task.taskType === "audit" && !isExpert) {
       return false
     }
     return true
@@ -273,48 +315,57 @@ export default function TaskMarketplacePage() {
 
           {/* 任务Tab */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid">
               <TabsTrigger value="all">全部任务</TabsTrigger>
-              <TabsTrigger value="claimed">我的接单</TabsTrigger>
-              {isExpert && <TabsTrigger value="audit">审核任务</TabsTrigger>}
-              {isPublisher && <TabsTrigger value="published">我发布的</TabsTrigger>}
+              <TabsTrigger value="mine">我的任务</TabsTrigger>
             </TabsList>
 
-            {/* 搜索和筛选 - 所有tab下可见 */}
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="搜索任务..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Select value={selectedModality} onValueChange={setSelectedModality}>
-                  <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="成像模态" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">全部模态</SelectItem>
-                    <SelectItem value="X射线影像">X射线影像 (XRAY)</SelectItem>
-                    <SelectItem value="计算机断层扫描">计算机断层扫描 (CT)</SelectItem>
-                    <SelectItem value="声学超声影像">声学超声影像 (US)</SelectItem>
-                    <SelectItem value="实验室与特异分子显色">实验室与特异分子显色 (LAB)</SelectItem>
-                    <SelectItem value="磁共振成像">磁共振成像 (MR)</SelectItem>
-                    <SelectItem value="全幅数字病理">全幅数字病理 (WSI)</SelectItem>
-                    <SelectItem value="可见光影像">专科可见光影像 (VL)</SelectItem>
-                    <SelectItem value="核医学与分子代谢">核医学与分子代谢 (NM)</SelectItem>
-                    <SelectItem value="时序动态视频流媒体">时序动态视频流媒体 (VIDEO)</SelectItem>
-                    <SelectItem value="其他">其他 (OTH)</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={selectedMinLevel} onValueChange={setSelectedMinLevel}>
-                  <SelectTrigger className="w-[140px]">
-                    <SelectValue placeholder="最低等级" />
-                  </SelectTrigger>
-                  <SelectContent>
+            {/* 搜索和筛选 - 全部任务Tab */}
+            {activeTab === "all" && (
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="搜索任务..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10"
+                  />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  <Select value={selectedTaskType} onValueChange={setSelectedTaskType}>
+                    <SelectTrigger className="w-[130px]">
+                      <SelectValue placeholder="任务类型" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">全部类型</SelectItem>
+                      <SelectItem value="annotation">标注任务</SelectItem>
+                      {isExpert && <SelectItem value="audit">审核任务</SelectItem>}
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedModality} onValueChange={setSelectedModality}>
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="成像模态" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">全部模态</SelectItem>
+                      <SelectItem value="X射线影像">X射线影像 (XRAY)</SelectItem>
+                      <SelectItem value="计算机断层扫描">计算机断层扫描 (CT)</SelectItem>
+                      <SelectItem value="声学超声影像">声学超声影像 (US)</SelectItem>
+                      <SelectItem value="实验室与特异分子显色">实验室与特异分子显色 (LAB)</SelectItem>
+                      <SelectItem value="磁共振成像">磁共振成像 (MR)</SelectItem>
+                      <SelectItem value="全幅数字病理">全幅数字病理 (WSI)</SelectItem>
+                      <SelectItem value="可见光影像">专科可见光影像 (VL)</SelectItem>
+                      <SelectItem value="核医学与分子代谢">核医学与分子代谢 (NM)</SelectItem>
+                      <SelectItem value="时序动态视频流媒体">时序动态视频流媒体 (VIDEO)</SelectItem>
+                      <SelectItem value="其他">其他 (OTH)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedMinLevel} onValueChange={setSelectedMinLevel}>
+                    <SelectTrigger className="w-[140px]">
+                      <SelectValue placeholder="最低等级" />
+                    </SelectTrigger>
+                    <SelectContent>
                     <SelectItem value="all">全部等级</SelectItem>
                     <SelectItem value="1">Lv1 及以上</SelectItem>
                     <SelectItem value="2">Lv2 及以上</SelectItem>
@@ -333,8 +384,36 @@ export default function TaskMarketplacePage() {
                     <SelectItem value="reward">奖励最高</SelectItem>
                   </SelectContent>
                 </Select>
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* 我的任务Tab筛选 */}
+            {activeTab === "mine" && (
+              <div className="flex flex-col gap-4 sm:flex-row">
+                <div className="flex gap-2">
+                  <Select value={myTaskSource} onValueChange={setMyTaskSource}>
+                    <SelectTrigger className="w-[130px]">
+                      <SelectValue placeholder="任务来源" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="claimed">我的接单</SelectItem>
+                      {isPublisher && <SelectItem value="published">我发布的</SelectItem>}
+                    </SelectContent>
+                  </Select>
+                  <Select value={selectedTaskType} onValueChange={setSelectedTaskType}>
+                    <SelectTrigger className="w-[130px]">
+                      <SelectValue placeholder="任务类型" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">全部类型</SelectItem>
+                      <SelectItem value="annotation">标注任务</SelectItem>
+                      <SelectItem value="audit">审核任务</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            )}
 
             {/* 全部任务 */}
             <TabsContent value="all" className="space-y-6">
@@ -365,9 +444,16 @@ export default function TaskMarketplacePage() {
                       <CardHeader className="pb-3">
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1 min-w-0">
-                            <CardTitle className="text-base truncate">
-                              {task.title}
-                            </CardTitle>
+                            <div className="flex items-center gap-2">
+                              <CardTitle className="text-base truncate">
+                                {task.title}
+                              </CardTitle>
+                              {task.taskType === "audit" && (
+                                <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
+                                  审核
+                                </Badge>
+                              )}
+                            </div>
                             <CardDescription className="mt-1 flex items-center gap-1.5 text-sm">
                               <Building2 className="h-3.5 w-3.5" />
                               <span className="truncate">{task.publisher}</span>
@@ -495,181 +581,145 @@ export default function TaskMarketplacePage() {
               )}
             </TabsContent>
 
-            {/* 我的接单 */}
-            <TabsContent value="claimed" className="space-y-6">
-              {myClaimedTasks.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {myClaimedTasks.map((task) => (
-                    <Card key={task.id} className="border border-border">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base">{task.title}</CardTitle>
-                        <CardDescription>{task.publisher}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">标注进度</span>
-                            <span className="font-mono font-medium">
-                              {task.completedCases}/{task.totalCases}
-                            </span>
-                          </div>
-                          <Progress value={task.myProgress} className="h-2" />
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center gap-1.5 text-muted-foreground">
-                            <Clock className="h-4 w-4" />
-                            截止 {task.deadline}
-                          </div>
-                          <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
-                            <Coins className="h-4 w-4" />
-                            <span className="font-mono">{task.reward.toLocaleString()}</span>
-                          </div>
-                        </div>
-                        <Button className="w-full bg-primary hover:bg-primary/90" asChild>
-                          <Link href="/workspace/annotation">
-                            去标注
-                            <ChevronRight className="ml-2 h-4 w-4" />
+            {/* 我的任务 */}
+            <TabsContent value="mine" className="space-y-6">
+              {/* 我的接单 */}
+              {myTaskSource === "claimed" && (
+                <>
+                  {myClaimedTasks.filter(t => selectedTaskType === "all" || t.taskType === selectedTaskType).length > 0 ? (
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {myClaimedTasks
+                        .filter(t => selectedTaskType === "all" || t.taskType === selectedTaskType)
+                        .map((task) => (
+                        <Card key={task.id} className="border border-border">
+                          <CardHeader className="pb-3">
+                            <div className="flex items-center gap-2">
+                              <CardTitle className="text-base">{task.title}</CardTitle>
+                              {task.taskType === "audit" && (
+                                <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
+                                  审核
+                                </Badge>
+                              )}
+                            </div>
+                            <CardDescription>{task.publisher}</CardDescription>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-muted-foreground">
+                                  {task.taskType === "audit" ? "审核进度" : "标注进度"}
+                                </span>
+                                <span className="font-mono font-medium">
+                                  {task.completedCases}/{task.totalCases}
+                                </span>
+                              </div>
+                              <Progress value={task.myProgress} className="h-2" />
+                            </div>
+                            <div className="flex items-center justify-between text-sm">
+                              <div className="flex items-center gap-1.5 text-muted-foreground">
+                                <Clock className="h-4 w-4" />
+                                截止 {task.deadline}
+                              </div>
+                              <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
+                                <Coins className="h-4 w-4" />
+                                <span className="font-mono">{task.reward.toLocaleString()}</span>
+                              </div>
+                            </div>
+                            <Button className="w-full bg-primary hover:bg-primary/90" asChild>
+                              <Link href={task.taskType === "audit" ? "/workspace/audit" : "/workspace/annotation"}>
+                                {task.taskType === "audit" ? "去审核" : "去标注"}
+                                <ChevronRight className="ml-2 h-4 w-4" />
+                              </Link>
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <Card className="border border-dashed">
+                      <CardContent className="py-16 text-center">
+                        <CheckCircle2 className="mx-auto h-12 w-12 text-muted-foreground/30" />
+                        <h3 className="mt-4 text-lg font-medium text-foreground">暂无接单</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          浏览任务广场，领取适合您的任务
+                        </p>
+                        <Button variant="outline" className="mt-4" onClick={() => setActiveTab("all")}>
+                          浏览任务
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  )}
+                </>
+              )}
+
+              {/* 我发布的 */}
+              {myTaskSource === "published" && isPublisher && (
+                <>
+                  {myPublishedTasks.length > 0 ? (
+                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      {myPublishedTasks.map((task) => (
+                        <Card key={task.id} className="border border-border">
+                          <CardHeader className="pb-3">
+                            <div className="flex items-start justify-between gap-2">
+                              <CardTitle className="text-base">{task.title}</CardTitle>
+                              <TaskStatusBadge status={task.status} />
+                            </div>
+                          </CardHeader>
+                          <CardContent className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4 text-sm">
+                              <div>
+                                <span className="text-muted-foreground">任务奖励</span>
+                                <p className="font-mono font-medium text-foreground">
+                                  {task.reward.toLocaleString()} 积分
+                                </p>
+                              </div>
+                              <div>
+                                <span className="text-muted-foreground">锁仓资金</span>
+                                <p className="font-mono font-medium text-primary">
+                                  {task.lockedFunds.toLocaleString()} 积分
+                                </p>
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between text-sm">
+                                <span className="text-muted-foreground">领取进度</span>
+                                <span className="font-mono">{task.claimed}/{task.maxClaims}</span>
+                              </div>
+                              <Progress value={(task.claimed / task.maxClaims) * 100} className="h-1.5" />
+                            </div>
+                            <div className="flex items-center justify-between text-sm text-muted-foreground">
+                              <div className="flex items-center gap-1.5">
+                                <Clock className="h-4 w-4" />
+                                截止 {task.deadline}
+                              </div>
+                            </div>
+                            <Button variant="outline" className="w-full">
+                              查看详情
+                            </Button>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+                  ) : (
+                    <Card className="border border-dashed">
+                      <CardContent className="py-16 text-center">
+                        <Plus className="mx-auto h-12 w-12 text-muted-foreground/30" />
+                        <h3 className="mt-4 text-lg font-medium text-foreground">暂无发布的任务</h3>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          发布标注任务，吸引专业标注者
+                        </p>
+                        <Button className="mt-4 bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
+                          <Link href="/tasks/new">
+                            <Plus className="mr-2 h-4 w-4" />
+                            发布任务
                           </Link>
                         </Button>
                       </CardContent>
                     </Card>
-                  ))}
-                </div>
-              ) : (
-                <Card className="border border-dashed">
-                  <CardContent className="py-16 text-center">
-                    <CheckCircle2 className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                    <h3 className="mt-4 text-lg font-medium text-foreground">暂无接单</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      浏览任务广场，领取适合您的标注任务
-                    </p>
-                    <Button variant="outline" className="mt-4" onClick={() => setActiveTab("all")}>
-                      浏览任务
-                    </Button>
-                  </CardContent>
-                </Card>
+                  )}
+                </>
               )}
             </TabsContent>
-
-            {/* 审核任务（Lv5+） */}
-            {isExpert && (
-              <TabsContent value="audit" className="space-y-6">
-                {auditTasks.length > 0 ? (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {auditTasks.map((task) => (
-                      <Card key={task.id} className="border border-border">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start justify-between gap-2">
-                            <CardTitle className="text-base">{task.title}</CardTitle>
-                            <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
-                              待审核
-                            </Badge>
-                          </div>
-                          <CardDescription className="flex items-center gap-2 mt-1">
-                            提交人：{task.submitter}
-                            <LevelBadge level={task.submitterLevel} size="sm" />
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span>提交时间</span>
-                            <span>{task.submittedAt}</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span>案例数量</span>
-                            <span className="font-mono">{task.casesCount} 例</span>
-                          </div>
-                          <Button className="w-full bg-primary hover:bg-primary/90" asChild>
-                            <Link href="/workspace/audit">
-                              开始审核
-                              <ChevronRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <Card className="border border-dashed">
-                    <CardContent className="py-16 text-center">
-                      <CheckCircle2 className="mx-auto h-12 w-12 text-[#0F8770]/30" />
-                      <h3 className="mt-4 text-lg font-medium text-foreground">审核队列为空</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        当前没有待审核的标注提交
-                      </p>
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-            )}
-
-            {/* 我发布的 */}
-            {isPublisher && (
-              <TabsContent value="published" className="space-y-6">
-                {myPublishedTasks.length > 0 ? (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {myPublishedTasks.map((task) => (
-                      <Card key={task.id} className="border border-border">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start justify-between gap-2">
-                            <CardTitle className="text-base">{task.title}</CardTitle>
-                            <TaskStatusBadge status={task.status} />
-                          </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <span className="text-muted-foreground">任务奖励</span>
-                              <p className="font-mono font-medium text-foreground">
-                                {task.reward.toLocaleString()} 积分
-                              </p>
-                            </div>
-                            <div>
-                              <span className="text-muted-foreground">锁仓资金</span>
-                              <p className="font-mono font-medium text-primary">
-                                {task.lockedFunds.toLocaleString()} 积分
-                              </p>
-                            </div>
-                          </div>
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-muted-foreground">领取进度</span>
-                              <span className="font-mono">{task.claimed}/{task.maxClaims}</span>
-                            </div>
-                            <Progress value={(task.claimed / task.maxClaims) * 100} className="h-1.5" />
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1.5">
-                              <Clock className="h-4 w-4" />
-                              截止 {task.deadline}
-                            </div>
-                          </div>
-                          <Button variant="outline" className="w-full">
-                            查看详情
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <Card className="border border-dashed">
-                    <CardContent className="py-16 text-center">
-                      <Plus className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                      <h3 className="mt-4 text-lg font-medium text-foreground">暂无发布的任务</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        发布标注任务，吸引专业标注者
-                      </p>
-                      <Button className="mt-4 bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
-                        <Link href="/tasks/new">
-                          <Plus className="mr-2 h-4 w-4" />
-                          发布任务
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-            )}
           </Tabs>
         </div>
       </main>

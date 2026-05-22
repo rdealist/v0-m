@@ -433,26 +433,6 @@ export default function DataUploadPage() {
                           onChange={(e) => handleInputChange("sampleCount", e.target.value)}
                         />
                       </div>
-
-                      {/* 科室 */}
-                      <div className="space-y-2">
-                        <Label htmlFor="bodyPart">科室</Label>
-                        <Select
-                          value={formData.bodyPart}
-                          onValueChange={(value) => handleInputChange("bodyPart", value)}
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="选择科室" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {specialtyOptions.map((option) => (
-                              <SelectItem key={option.value} value={option.value}>
-                                {option.label}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
                     </div>
 
                     {/* 特征标签 */}
@@ -576,10 +556,6 @@ export default function DataUploadPage() {
                             {formData.sampleCount ? parseInt(formData.sampleCount).toLocaleString() : "-"}
                           </span>
                         </div>
-                    <div className="text-sm">
-                      <span className="text-muted-foreground">科室：</span>
-                      <span className="ml-1">{formData.bodyPart || "-"}</span>
-                    </div>
                       </div>
 
                       {formData.features && (

@@ -245,6 +245,29 @@ export default function DataMarketplacePage() {
             </Button>
           </div>
 
+          {/* 统计数据卡片 */}
+          <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+              <div className="text-[10px] text-slate-400 font-medium">全网影像总量 (DICOM实例)</div>
+              <div className="text-lg md:text-xl font-black text-slate-900 font-mono mt-1 flex items-baseline space-x-1">
+                <span>52,104,921</span>
+                <span className="text-[8px] text-emerald-500 font-bold font-sans">▲ 递增</span>
+              </div>
+            </div>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+              <div className="text-[10px] text-slate-400 font-medium">已确权资产总例数 (Cases)</div>
+              <div className="text-lg md:text-xl font-black text-slate-900 font-mono mt-1">1,245,000</div>
+            </div>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+              <div className="text-[10px] text-slate-400 font-medium">覆盖合作数据节点</div>
+              <div className="text-lg md:text-xl font-black text-slate-900 font-mono mt-1">150+ 家</div>
+            </div>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm bg-gradient-to-br from-white to-emerald-50/20">
+              <div className="text-[10px] text-emerald-600 font-bold">累计产生要素分红</div>
+              <div className="text-lg md:text-xl font-black text-emerald-600 font-mono mt-1">¥ 3,481,920</div>
+            </div>
+          </section>
+
           {/* 搜索栏 */}
           <div className="flex gap-4 mb-6">
             <div className="relative flex-1">

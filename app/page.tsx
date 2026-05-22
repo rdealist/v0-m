@@ -244,42 +244,110 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 业务闭环时间线 */}
+        {/* 数据端与标注端解耦 */}
         <section className="bg-card shadow-sm">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            <div className="text-center mb-10">
+            <div className="text-center mb-12">
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
                 打破院墙限制：让沉睡的影像资产，跨时空连接全球专家智库
               </h2>
-              <p className="mt-3" style={{ fontSize: '18px', color: 'rgb(92, 102, 112)' }}>
-                将海量数据获取能力与专家高年资智力彻底并行解耦，全面释放产业效率。
+              <p className="mt-3 max-w-3xl mx-auto" style={{ fontSize: '18px', color: 'rgb(92, 102, 112)' }}>
+                将海量数据获取能力与专家高年资智力彻底并行解耦，全面释放产业效率
               </p>
             </div>
             
-            {/* 时间线 */}
-            <div className="relative">
-              {/* 连接线 */}
-              <div className="absolute top-12 left-0 right-0 h-0.5 bg-muted hidden lg:block" />
+            {/* 解耦示意图 */}
+            <div className="relative max-w-5xl mx-auto">
+              {/* 中心连接线 - 桌面端 */}
+              <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-px bg-gradient-to-r from-blue-300 via-emerald-400 to-cyan-300" />
               
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-                {workflowSteps.map((step, index) => (
-                  <div key={step.title} className="relative flex flex-col items-center text-center">
-                    {/* 步骤圆点 */}
-                    <div className={`relative z-10 flex h-24 w-24 items-center justify-center rounded-2xl ${step.color} bg-background shadow-sm`}>
-                      <step.icon className="h-10 w-10" />
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                {/* 数据端 */}
+                <div className="bg-white p-6 rounded-2xl border-2 border-blue-200 shadow-sm space-y-5 relative">
+                  <div className="absolute -top-3 left-6 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    数据端
+                  </div>
+                  <div className="pt-2">
+                    <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center mb-4">
+                      <Database className="h-6 w-6 text-blue-600" />
                     </div>
-                    {/* 步骤编号 */}
-                    <div className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground shadow-sm">
-                      {index + 1}
-                    </div>
-                    <h3 className="mt-4 font-semibold text-foreground">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                      {step.description}
+                    <h3 className="font-bold text-slate-900 text-base">医院/机构</h3>
+                    <p className="text-sm text-slate-500 mt-2 leading-relaxed">
+                      专注数据资产管理，无需操心标注流程。一键上传脱敏数据，平台自动匹配最优标注资源，数据即刻转化为可持续收益的数字资产。
                     </p>
                   </div>
-                ))}
+                  <div className="space-y-2 pt-2 border-t border-slate-100">
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <Upload className="h-3.5 w-3.5 text-blue-500" />
+                      <span>脱敏上传，隐私合规</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <FileStack className="h-3.5 w-3.5 text-blue-500" />
+                      <span>自动匹配标注资源</span>
+                    </div>
+                  </div>
+                  <Link href="/data" className="w-full text-center bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold text-xs py-2.5 rounded-lg border border-blue-200 transition block">
+                    {"上传数据资产 →"}
+                  </Link>
+                </div>
+
+                {/* 中心 - 区块链确权 */}
+                <div className="bg-gradient-to-br from-emerald-50 to-cyan-50 p-6 rounded-2xl border-2 border-emerald-300 shadow-md space-y-5 relative lg:scale-105 lg:z-10">
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                    区块链确权
+                  </div>
+                  <div className="pt-2 text-center">
+                    <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center mx-auto mb-4 shadow-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-base">智能合约结算</h3>
+                    <p className="text-sm text-slate-500 mt-2 leading-relaxed">
+                      每一份贡献链上存证，权益归属清晰透明。API 调用即触发分账，数据贡献者与标注专家共享模型收益。
+                    </p>
+                  </div>
+                  <div className="space-y-2 pt-2 border-t border-emerald-200">
+                    <div className="flex items-center justify-center gap-2 text-xs text-emerald-700">
+                      <CheckSquare className="h-3.5 w-3.5" />
+                      <span>贡献存证，永久可查</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 text-xs text-emerald-700">
+                      <Coins className="h-3.5 w-3.5" />
+                      <span>秒级分账，收益透明</span>
+                    </div>
+                  </div>
+                  <div className="text-[11px] text-emerald-700 bg-white/60 border border-emerald-200 rounded-lg p-2 text-center font-medium">
+                    清算结算系统全合规支持
+                  </div>
+                </div>
+
+                {/* 标注端 */}
+                <div className="bg-white p-6 rounded-2xl border-2 border-cyan-200 shadow-sm space-y-5 relative">
+                  <div className="absolute -top-3 right-6 bg-cyan-600 text-white text-xs font-bold px-3 py-1 rounded-full">
+                    标注端
+                  </div>
+                  <div className="pt-2">
+                    <div className="w-12 h-12 rounded-xl bg-cyan-50 flex items-center justify-center mb-4">
+                      <Users className="h-6 w-6 text-cyan-600" />
+                    </div>
+                    <h3 className="font-bold text-slate-900 text-base">高年资专家</h3>
+                    <p className="text-sm text-slate-500 mt-2 leading-relaxed">
+                      突破地域与时间限制，用碎片化时间释放专业价值。平台智能派单，专家专注标注与审核，经验即刻转化为持续收益。
+                    </p>
+                  </div>
+                  <div className="space-y-2 pt-2 border-t border-slate-100">
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <Clock className="h-3.5 w-3.5 text-cyan-500" />
+                      <span>碎片时间，灵活参与</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-slate-600">
+                      <Trophy className="h-3.5 w-3.5 text-cyan-500" />
+                      <span>等级越高，收益越高</span>
+                    </div>
+                  </div>
+                  <Link href="/tasks" className="w-full text-center bg-cyan-50 hover:bg-cyan-100 text-cyan-700 font-semibold text-xs py-2.5 rounded-lg border border-cyan-200 transition block">
+                    {"领取标注任务 →"}
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -288,48 +356,6 @@ export default function HomePage() {
         {/* 热门数据集 + 热门任务 */}
         <section>
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-            {/* 三个解耦卡片 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between group hover:border-blue-400 transition">
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-xl text-blue-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                  </div>
-                  <h3 className="font-bold text-slate-900 text-sm mt-3">数据端解耦</h3>
-                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">数据资产拥有者无需操心标注，一键上传脱敏数据，即可转化为长效分红的资产。</p>
-                </div>
-                <Link href="/data" className="w-full text-center bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 font-semibold text-xs py-2.5 rounded-lg border border-slate-200 hover:border-blue-200 transition block">
-                  {"医院/机构：让闲置数据变资产 →"}
-                </Link>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between group hover:border-blue-400 transition">
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-cyan-50 flex items-center justify-center text-xl text-cyan-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  </div>
-                  <h3 className="font-bold text-slate-900 text-sm mt-3">标注端解耦</h3>
-                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">全球高年资医生突破地域限制，用碎片时间与顶级专业经验在线变现。</p>
-                </div>
-                <button className="w-full text-center bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-600 font-semibold text-xs py-2.5 rounded-lg border border-slate-200 hover:border-blue-200 transition">
-                  {"高年资医生：开启专家经验变现 →"}
-                </button>
-              </div>
-
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4 flex flex-col justify-between group hover:border-blue-400 transition">
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-xl text-emerald-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                  </div>
-                  <h3 className="font-bold text-slate-900 text-sm mt-3">区块链确权</h3>
-                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">{`每一份贡献都有据可查，API 只要被调用，收益秒级分账，上传者即为资产"股东"。`}</p>
-                </div>
-                <div className="text-[11px] text-emerald-600 bg-emerald-50/50 border border-emerald-100 rounded-lg p-2 text-center font-medium">
-                  清算结算系统全合规支持
-                </div>
-              </div>
-            </div>
-
             {/* 热门数据集 */}
             <div className="mb-12">
               <div className="flex items-center justify-between mb-6">
@@ -366,7 +392,7 @@ export default function HomePage() {
             {/* 热门任务 */}
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-foreground">热门任务</h2>
+                <h2 className="text-xl font-bold text-foreground">热���任务</h2>
                 <Link href="/tasks" className="text-sm text-primary hover:underline flex items-center gap-1">
                   查看全部 <ChevronRight className="h-4 w-4" />
                 </Link>

@@ -251,10 +251,9 @@ export default function HomePage() {
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
               <h2 className="text-2xl font-bold text-foreground sm:text-3xl">
-                业务闭环
+                打破院墙限制：让沉睡的影像资产，跨时空连接全球专家智库
               </h2>
               <p className="mt-3 text-muted-foreground">
-                数据上传 → 数据发布 → 任务发布（锁仓）→ 标注 → 审核 → 钱包结算
               </p>
             </div>
             

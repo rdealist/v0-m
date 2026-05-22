@@ -448,6 +448,11 @@ export default function TaskMarketplacePage() {
                               <CardTitle className="text-base truncate">
                                 {task.title}
                               </CardTitle>
+                              {task.taskType === "annotation" && (
+                                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                                  标注
+                                </Badge>
+                              )}
                               {task.taskType === "audit" && (
                                 <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
                                   审核
@@ -595,6 +600,11 @@ export default function TaskMarketplacePage() {
                           <CardHeader className="pb-3">
                             <div className="flex items-center gap-2">
                               <CardTitle className="text-base">{task.title}</CardTitle>
+                              {task.taskType === "annotation" && (
+                                <Badge variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                                  标注
+                                </Badge>
+                              )}
                               {task.taskType === "audit" && (
                                 <Badge variant="outline" className="text-xs bg-purple-50 text-purple-700 border-purple-200">
                                   审核

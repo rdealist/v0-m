@@ -49,7 +49,20 @@ const mockWallet = {
 }
 
 // 筛选选项
-const modalityOptions = ["CT", "MRI", "X-Ray", "超声", "OCT", "病理", "内镜"]
+const primaryModalityOptions = [
+  { value: "XRAY", label: "X射线影像大类 (XRAY)" },
+  { value: "CT", label: "计算机断层扫描大类 (CT)" },
+  { value: "US", label: "声学超声影像大类 (US)" },
+  { value: "LAB", label: "实验室与特异分子显色大类 (LAB)" },
+  { value: "MR", label: "磁共振成像大类 (MR)" },
+]
+const expandedModalityOptions = [
+  { value: "WSI", label: "全幅数字病理大类 (WSI)" },
+  { value: "VL", label: "专科可见光影像 (VL)" },
+  { value: "NM", label: "核医学与分子代谢大类 (NM)" },
+  { value: "VIDEO", label: "时序动态视频流媒体 (VIDEO)" },
+  { value: "OTH", label: "其他 (OTH)" },
+]
 const specialtyOptions = ["放射科", "心内科", "神经内科", "眼科", "肿瘤科", "骨科", "呼吸内科"]
 const statusOptions = [
   { value: "active", label: "已发布" },
@@ -164,6 +177,7 @@ export default function DataMarketplacePage() {
   const [selectedSampleRange, setSelectedSampleRange] = useState<string>("all")
   const [sortBy, setSortBy] = useState("newest")
   const [currentPage, setCurrentPage] = useState(1)
+  const [isModalityExpanded, setIsModalityExpanded] = useState(false)
   const itemsPerPage = 6
 
   const hasFilters = selectedModalities.length > 0 || selectedSpecialties.length > 0 || selectedStatus !== "all" || selectedSampleRange !== "all"
@@ -311,25 +325,55 @@ export default function DataMarketplacePage() {
 
                 {/* 模态筛选 - 紧凑标签式 */}
                 <div className="space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">影像模态</Label>
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">成像模态与检查技术</Label>
                   <div className="flex flex-wrap gap-1.5">
-                    {modalityOptions.map((modality) => {
-                      const isSelected = selectedModalities.includes(modality)
+                    {primaryModalityOptions.map((modality) => {
+                      const isSelected = selectedModalities.includes(modality.value)
                       return (
                         <button
-                          key={modality}
-                          onClick={() => toggleModality(modality)}
+                          key={modality.value}
+                          onClick={() => toggleModality(modality.value)}
                           className={`px-2.5 py-1 text-xs rounded-md transition-all ${
                             isSelected
                               ? "bg-primary text-primary-foreground shadow-sm"
                               : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
                           }`}
                         >
-                          {modality}
+                          {modality.label}
                         </button>
                       )
                     })}
                   </div>
+                  
+                  {/* 展开/收起按钮 */}
+                  <button
+                    onClick={() => setIsModalityExpanded(!isModalityExpanded)}
+                    className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 mt-1"
+                  >
+                    {isModalityExpanded ? "[ － 收起专科模态 ]" : "[ ＋ 展开其余 专科模态 ]"}
+                  </button>
+                  
+                  {/* 展开的额外模态选项 */}
+                  {isModalityExpanded && (
+                    <div className="flex flex-wrap gap-1.5 pt-1">
+                      {expandedModalityOptions.map((modality) => {
+                        const isSelected = selectedModalities.includes(modality.value)
+                        return (
+                          <button
+                            key={modality.value}
+                            onClick={() => toggleModality(modality.value)}
+                            className={`px-2.5 py-1 text-xs rounded-md transition-all ${
+                              isSelected
+                                ? "bg-primary text-primary-foreground shadow-sm"
+                                : "bg-muted/60 text-muted-foreground hover:bg-muted hover:text-foreground"
+                            }`}
+                          >
+                            {modality.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  )}
                 </div>
 
                 {/* 科室筛选 - 紧凑标签式 */}

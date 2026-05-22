@@ -46,21 +46,37 @@ const mockWallet = {
 
 // 模态选项
 const modalityOptions = [
-  { value: "CT", label: "CT" },
-  { value: "MRI", label: "MRI" },
-  { value: "X-Ray", label: "X-Ray" },
-  { value: "ultrasound", label: "超声" },
-  { value: "OCT", label: "OCT" },
-  { value: "pathology", label: "病理" },
+  { value: "X射线影像", label: "X射线影像 (XRAY)" },
+  { value: "计算机断层扫描", label: "计算机断层扫描 (CT)" },
+  { value: "声学超声影像", label: "声学超声影像 (US)" },
+  { value: "实验室与特异分子显色", label: "实验室与特异分子显色 (LAB)" },
+  { value: "磁共振成像", label: "磁共振成像 (MR)" },
+  { value: "全幅数字病理", label: "全幅数字病理 (WSI)" },
+  { value: "可见光影像", label: "专科可见光影像 (VL)" },
+  { value: "核医学与分子代谢", label: "核医学与分子代谢 (NM)" },
+  { value: "时序动态视频流媒体", label: "时序动态视频流媒体 (VIDEO)" },
+  { value: "其他", label: "其他 (OTH)" },
 ]
 
 // 科室选项
 const specialtyOptions = [
-  { value: "radiology", label: "放射科" },
-  { value: "cardiology", label: "心内科" },
-  { value: "neurology", label: "神经内科" },
-  { value: "ophthalmology", label: "眼科" },
-  { value: "oncology", label: "肿瘤科" },
+  { value: "呼吸与胸壁", label: "呼吸与胸壁" },
+  { value: "神经与颅脑", label: "神经与颅脑" },
+  { value: "循环与心血管", label: "循环与心血管" },
+  { value: "消化与腹部", label: "消化与腹部" },
+  { value: "细胞与分子遗传学", label: "细胞与分子遗传学" },
+  { value: "皮肤、体表与感官", label: "皮肤、体表与感官" },
+  { value: "视觉与五官系统", label: "眼与视觉五官" },
+  { value: "泌尿与内生殖", label: "泌尿与内生殖" },
+  { value: "运动与骨关节", label: "运动与骨关节" },
+  { value: "生殖医学与胚胎发育", label: "生殖医学与胚胎发育" },
+  { value: "其他专科", label: "其他专科 / 综合系统" },
+]
+
+// 任务类型选项
+const taskTypeOptions = [
+  { value: "annotation", label: "标注任务", description: "需要标注者对数据进行标注" },
+  { value: "audit", label: "审核任务", description: "需要专家审核已完成的标注结果" },
 ]
 
 // 数据集选项（mock）
@@ -79,6 +95,7 @@ export default function TaskPublishPage() {
 
   // 表单状态
   const [formData, setFormData] = useState({
+    taskType: "annotation",
     title: "",
     description: "",
     datasetId: "",
@@ -201,7 +218,7 @@ export default function TaskPublishPage() {
               返回任务广场
             </Link>
             <h1 className="text-2xl font-bold text-foreground sm:text-3xl">发布任务</h1>
-            <p className="mt-1 text-muted-foreground">创建标注任务，设定奖励并锁仓资金</p>
+            <p className="mt-1 text-muted-foreground">创建标注或审核任务，设定奖励并锁仓资金</p>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[1fr_400px]">
@@ -212,6 +229,43 @@ export default function TaskPublishPage() {
                 <CardDescription>填写任务的基本信息和要求</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
+                {/* 任务类型 */}
+                <div className="space-y-3">
+                  <Label>任务类型 *</Label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {taskTypeOptions.map((option) => (
+                      <button
+                        key={option.value}
+                        type="button"
+                        onClick={() => handleInputChange("taskType", option.value)}
+                        className={cn(
+                          "p-4 rounded-lg border text-left transition-all",
+                          formData.taskType === option.value
+                            ? option.value === "annotation"
+                              ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                              : "border-purple-500 bg-purple-50 ring-1 ring-purple-500"
+                            : "border-border hover:border-muted-foreground/50"
+                        )}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Badge
+                            variant="outline"
+                            className={cn(
+                              "text-xs",
+                              option.value === "annotation"
+                                ? "bg-blue-50 text-blue-700 border-blue-200"
+                                : "bg-purple-50 text-purple-700 border-purple-200"
+                            )}
+                          >
+                            {option.label}
+                          </Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-2">{option.description}</p>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 {/* 任务标题 */}
                 <div className="space-y-2">
                   <Label htmlFor="title">任务标题 *</Label>
@@ -256,9 +310,9 @@ export default function TaskPublishPage() {
                 </div>
 
                 <div className="grid gap-6 sm:grid-cols-2">
-                  {/* 影像模态 */}
+                  {/* 成像模态 */}
                   <div className="space-y-2">
-                    <Label>影像模态</Label>
+                    <Label>成像模态与检查技术</Label>
                     <Select
                       value={formData.modality}
                       onValueChange={(value) => handleInputChange("modality", value)}
@@ -276,9 +330,9 @@ export default function TaskPublishPage() {
                     </Select>
                   </div>
 
-                  {/* 科室 */}
+                  {/* 解剖部位与专科系统 */}
                   <div className="space-y-2">
-                    <Label>相关科室</Label>
+                    <Label>解剖部位与专科系统</Label>
                     <Select
                       value={formData.specialty}
                       onValueChange={(value) => handleInputChange("specialty", value)}
@@ -332,7 +386,9 @@ export default function TaskPublishPage() {
 
                   {/* 总例数 */}
                   <div className="space-y-2">
-                    <Label htmlFor="totalCases">总标注例数 *</Label>
+                    <Label htmlFor="totalCases">
+                      {formData.taskType === "audit" ? "总审核例数" : "总标注例数"} *
+                    </Label>
                     <Input
                       id="totalCases"
                       type="number"

@@ -450,6 +450,53 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* iMedImage® 核心专科大模型工厂 */}
+        <section className="max-w-7xl mx-auto px-6 py-16 space-y-8 border-t border-slate-100">
+          <div className="text-center space-y-2">
+            <h2 className="text-xl md:text-2xl font-black text-slate-900 tracking-tight">iMedImage® 核心专科大模型工厂</h2>
+            <p className="text-xs text-slate-400">{`"从原始影像到生产级应用，只需三步。"`}</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 relative overflow-hidden">
+              <div className="text-xs font-mono font-black text-blue-600">STEP 01 / FINE-TUNING</div>
+              <h4 className="text-sm font-black text-slate-900">大模型分布式微调</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                预置 iMedImage 基础大模型，支持一键配置超参、TensorBoard 监控，打造专属专科模型。
+              </p>
+              <div className="text-[9px] bg-slate-50 text-slate-400 p-2 rounded font-mono border border-slate-100">
+                [config] --base_model iMedImage-Core --lr 2e-5 --metrics=AUC/mAP
+              </div>
+            </div>
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 relative overflow-hidden">
+              <div className="text-xs font-mono font-black text-cyan-700">STEP 02 / DEPLOYMENT</div>
+              <h4 className="text-sm font-black text-slate-900">快捷部署 (Deployment)</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                零代码部署操作，一键部署。
+              </p>
+              <div className="text-[9px] bg-slate-50 text-slate-400 p-2 rounded font-mono border border-slate-100">
+                [export] --format=onnx/tensorrt_engine --node=cloud_cluster
+              </div>
+            </div>
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm space-y-3 relative overflow-hidden">
+              <div className="text-xs font-mono font-black text-emerald-700">STEP 03 / INFERENCE</div>
+              <h4 className="text-sm font-black text-slate-900">高并发推理 (Inference)</h4>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                {`毫秒级批量推理，输出临床级 CAM（可解释性分析）热力图，全链路"先充值，后扣费"风控防白嫖。`}
+              </p>
+              <div className="text-[9px] bg-red-50 text-red-700 p-2 rounded font-bold font-mono border border-red-100">
+                [security] status=active; firewall_mode=prepaid_intercept
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center pt-2">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-6 py-2.5 rounded-xl transition shadow-md shadow-blue-600/10">
+              {"进入 MaaS 深度开发控制台 →"}
+            </a>
+          </div>
+        </section>
+
         {/* 入口卡片（四张RouteCard） */}
         <section>
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

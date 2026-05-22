@@ -112,7 +112,7 @@ export default function TaskPublishPage() {
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
-  // 计算锁仓金额
+  // 计算预存金额
   const lockupCalculation = useMemo(() => {
     const totalCases = parseInt(formData.totalCases) || 0
     const pricePerCase = parseFloat(formData.pricePerCase) || 0
@@ -178,7 +178,7 @@ export default function TaskPublishPage() {
               </div>
               <h2 className="mt-6 text-xl font-bold text-foreground">任务发布成功</h2>
               <p className="mt-2 text-muted-foreground">
-                已锁仓 <span className="font-mono font-medium text-primary">{lockupCalculation.totalLockup.toLocaleString()}</span> 积分
+                已预存 <span className="font-mono font-medium text-primary">{lockupCalculation.totalLockup.toLocaleString()}</span> 积分
               </p>
               <div className="mt-6 flex gap-3 justify-center">
                 <Button variant="outline" asChild>
@@ -218,7 +218,7 @@ export default function TaskPublishPage() {
               返回任务广场
             </Link>
             <h1 className="text-2xl font-bold text-foreground sm:text-3xl">发布任务</h1>
-            <p className="mt-1 text-muted-foreground">创建标注或审核任务，设定奖励并锁仓资金</p>
+            <p className="mt-1 text-muted-foreground">创建标注或审核任务，设定报酬并预存资金</p>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[1fr_400px]">
@@ -425,7 +425,7 @@ export default function TaskPublishPage() {
               </CardContent>
             </Card>
 
-            {/* 右侧：锁仓计算器 */}
+            {/* 右侧：费用计算 */}
             <div className="space-y-6 lg:sticky lg:top-24 lg:self-start">
               {/* 钱包余额 */}
               <Card className="border border-border">
@@ -443,7 +443,7 @@ export default function TaskPublishPage() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-muted-foreground">已锁仓</span>
+                    <span className="text-sm text-muted-foreground">已预存</span>
                     <span className="font-mono text-sm text-primary">
                       {mockWallet.locked.toLocaleString()}
                     </span>
@@ -457,12 +457,12 @@ export default function TaskPublishPage() {
                 </CardContent>
               </Card>
 
-              {/* 锁仓计算器 */}
+              {/* 费用计算 */}
               <Card className="border border-primary/30 bg-primary/5">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
                     <Calculator className="h-4 w-4" />
-                    锁仓计算
+                    费用计算
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -499,12 +499,12 @@ export default function TaskPublishPage() {
                     </div>
                   </div>
 
-                  {/* 总锁仓金额 */}
+                  {/* 预存总额 */}
                   <div className="border-t border-border pt-4">
                     <div className="flex items-center justify-between">
                       <span className="font-medium flex items-center gap-2">
                         <Lock className="h-4 w-4 text-primary" />
-                        总锁仓金额
+                        预存总额
                       </span>
                       <span className="font-mono font-bold text-xl text-primary">
                         {lockupCalculation.totalLockup.toLocaleString()}
@@ -512,10 +512,10 @@ export default function TaskPublishPage() {
                     </div>
                   </div>
 
-                  {/* 锁仓后余额 */}
+                  {/* 预存后余额 */}
                   <div className="rounded-lg bg-background p-3 border border-border">
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">锁仓后可用余额</span>
+                      <span className="text-muted-foreground">预存后可用余额</span>
                       <span className={cn(
                         "font-mono font-medium",
                         hasEnoughBalance ? "text-foreground" : "text-destructive"
@@ -585,16 +585,16 @@ export default function TaskPublishPage() {
                     发布中...
                   </>
                 ) : (
-                  <>
-                    <Lock className="mr-2 h-5 w-5" />
-                    确认发布并锁仓
-                  </>
+                <>
+                  <Lock className="mr-2 h-5 w-5" />
+                  确认发布并预存
+                </>
                 )}
               </Button>
 
               {/* 提示 */}
               <p className="text-xs text-muted-foreground text-center">
-                发布后锁仓资金将从可用余额扣除，任务结束后按实际完成情况结算
+                发布后预存资金将从可用余额扣除，任务结束后按实际完成情况结算
               </p>
             </div>
           </div>

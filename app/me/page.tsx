@@ -221,7 +221,7 @@ export default function PersonalCenterPage() {
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Lock className="h-4 w-4" />
-                      <span className="text-sm">锁仓资金</span>
+                      <span className="text-sm">预存资金</span>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
@@ -302,7 +302,7 @@ export default function PersonalCenterPage() {
                           <div className="flex-1 min-w-0">
                             <p className="font-medium truncate">{task.title}</p>
                             <p className="text-sm text-muted-foreground">
-                              锁仓 <span className="font-mono text-primary">{task.lockedFunds.toLocaleString()}</span> 积分
+                              预存 <span className="font-mono text-primary">{task.lockedFunds.toLocaleString()}</span> 积分
                             </p>
                           </div>
                           <div className="text-right">
@@ -391,7 +391,7 @@ export default function PersonalCenterPage() {
                       <ClipboardList className="h-12 w-12 mx-auto text-muted-foreground/30" />
                       <p className="mt-4 text-muted-foreground">暂无进行中的任务</p>
                       <Button variant="outline" className="mt-4" asChild>
-                        <Link href="/tasks">浏览任务广场</Link>
+                        <Link href="/tasks">浏���任务广场</Link>
                       </Button>
                     </div>
                   )}

@@ -52,10 +52,10 @@ const workflowSteps = [
     color: "bg-primary/10 text-primary",
   },
   {
-    icon: ClipboardList,
-    title: "任务发布",
-    description: "创建任务并锁仓积分",
-    color: "bg-[#0F8770]/10 text-[#0F8770]",
+  icon: ClipboardList,
+  title: "任务发布",
+  description: "创建任务并预存报酬",
+  color: "bg-[#0F8770]/10 text-[#0F8770]",
   },
   {
     icon: CheckSquare,
@@ -157,18 +157,13 @@ const hotTasks = [
   },
 ]
 
-// 等级阶梯说明
+// 等级阶梯说明（精简版）
 const levelDescriptions = [
-  { level: 0, label: "L0", name: "游客", ability: "仅浏览公开内容" },
-  { level: 1, label: "Lv1", name: "新手", ability: "基础标注" },
-  { level: 2, label: "Lv2", name: "初级", ability: "简单任务" },
-  { level: 3, label: "Lv3", name: "中级", ability: "复杂任务" },
-  { level: 4, label: "Lv4", name: "高级", ability: "高难任务" },
-  { level: 5, label: "Lv5", name: "专家", ability: "审核权限", highlight: true },
-  { level: 6, label: "Lv6", name: "资深专家", ability: "审核权限" },
-  { level: 7, label: "Lv7", name: "权威专家", ability: "审核权限" },
-  { level: 8, label: "Lv8", name: "首席专家", ability: "审核权限" },
-  { level: 9, label: "Lv9", name: "顶级专家", ability: "最高权限" },
+  { level: 1, name: "初级标注员", ability: "基础标注任务", reward: "基础报酬" },
+  { level: 3, name: "中级标注员", ability: "复杂标注任务", reward: "1.5x 报酬系数" },
+  { level: 5, name: "专家", ability: "审核资质", reward: "2x 报酬系数", highlight: true },
+  { level: 7, name: "权威专家", ability: "高优先级任务", reward: "3x 报酬系数" },
+  { level: 9, name: "首席专家", ability: "最高权限", reward: "4x 报酬系数" },
 ]
 
 export default function HomePage() {
@@ -407,7 +402,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 信任阶梯（L0 + Lv1~Lv9） */}
+        {/* 信任阶梯 */}
         <section className="bg-card shadow-sm">
           <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="text-center mb-10">
@@ -415,38 +410,40 @@ export default function HomePage() {
                 信任阶梯
               </h2>
               <p className="mt-3 text-muted-foreground" style={{ fontSize: '18px' }}>
-                Lv5 及以上解锁审核权限
+                专业能力决定任务权限，贡献质量决定收益回报
               </p>
             </div>
             
             {/* 等级展示 */}
-            <div className="overflow-x-auto pb-4">
-              <div className="flex gap-3 min-w-max justify-center">
-                {levelDescriptions.map((item) => (
-                  <div
-                    key={item.level}
-                    className={`flex flex-col items-center p-4 rounded-xl ${
-                      item.highlight 
-                        ? "bg-[#0F8770]/5 shadow-md" 
-                        : "bg-background shadow-sm"
-                    } min-w-[100px]`}
-                  >
-                    {item.level === 0 ? (
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-muted-foreground text-sm font-bold">
-                        L0
-                      </div>
-                    ) : (
-                      <LevelBadge level={item.level} size="md" />
-                    )}
-                    <span className="mt-2 text-sm font-medium text-foreground">{item.name}</span>
-                    <span className="mt-1 text-xs text-muted-foreground text-center">{item.ability}</span>
-                    {item.highlight && (
-                      <Badge className="mt-2 bg-[#0F8770] text-white text-xs">审核起点</Badge>
-                    )}
-                  </div>
-                ))}
-              </div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-4 max-w-4xl mx-auto">
+              {levelDescriptions.map((item, index) => (
+                <div
+                  key={item.level}
+                  className={`relative flex flex-col items-center p-5 rounded-xl border ${
+                    item.highlight 
+                      ? "bg-[#0F8770]/5 border-[#0F8770]/30 shadow-md" 
+                      : "bg-background border-border shadow-sm"
+                  }`}
+                >
+                  <LevelBadge level={item.level} size="md" />
+                  <span className="mt-3 text-sm font-semibold text-foreground">{item.name}</span>
+                  <span className="mt-1 text-xs text-muted-foreground text-center">{item.ability}</span>
+                  <span className="mt-2 text-xs font-medium text-[#0F8770]">{item.reward}</span>
+                  {item.highlight && (
+                    <Badge className="absolute -top-2 -right-2 bg-[#0F8770] text-white text-[10px]">审核资质</Badge>
+                  )}
+                  {index < levelDescriptions.length - 1 && (
+                    <div className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 text-muted-foreground/30">
+                      <ChevronRight className="h-4 w-4" />
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
+            
+            <p className="text-center text-sm text-muted-foreground mt-8">
+              等级通过完成任务与审核积累提升，高质量贡献可获得额外经验加成
+            </p>
           </div>
         </section>
 

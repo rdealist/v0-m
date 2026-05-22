@@ -183,7 +183,7 @@ const mockTasks = [
   },
 ]
 
-// 我的接单（已领取的任务）
+// 我的任务（已领取的任务）
 const myClaimedTasks = [
   {
     id: "T001",
@@ -397,7 +397,7 @@ export default function TaskMarketplacePage() {
                       <SelectValue placeholder="任务来源" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="claimed">我的接单</SelectItem>
+                      <SelectItem value="claimed">我的任务</SelectItem>
                       {isPublisher && <SelectItem value="published">我发布的</SelectItem>}
                     </SelectContent>
                   </Select>
@@ -588,7 +588,7 @@ export default function TaskMarketplacePage() {
 
             {/* 我的任务 */}
             <TabsContent value="mine" className="space-y-6">
-              {/* 我的接单 */}
+              {/* 我领取的任务 */}
               {myTaskSource === "claimed" && (
                 <>
                   {myClaimedTasks.filter(t => selectedTaskType === "all" || t.taskType === selectedTaskType).length > 0 ? (
@@ -649,7 +649,7 @@ export default function TaskMarketplacePage() {
                     <Card className="border border-dashed">
                       <CardContent className="py-16 text-center">
                         <CheckCircle2 className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                        <h3 className="mt-4 text-lg font-medium text-foreground">暂无接单</h3>
+                        <h3 className="mt-4 text-lg font-medium text-foreground">暂无进行中的任务</h3>
                         <p className="mt-2 text-sm text-muted-foreground">
                           浏览任务广场，领取适合您的任务
                         </p>
@@ -684,7 +684,7 @@ export default function TaskMarketplacePage() {
                                 </p>
                               </div>
                               <div>
-                                <span className="text-muted-foreground">锁仓资金</span>
+                                <span className="text-muted-foreground">预存报酬</span>
                                 <p className="font-mono font-medium text-primary">
                                   {task.lockedFunds.toLocaleString()} 积分
                                 </p>

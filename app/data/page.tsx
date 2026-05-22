@@ -340,7 +340,7 @@ export default function DataMarketplacePage() {
 
                 {/* 模态筛选 - 紧凑标签式 */}
                 <div className="space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">成像模态与检查技术</Label>
+                  <Label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">成像模态与检查技术</Label>
                   <div className="flex flex-wrap gap-1.5">
                     {primaryModalityOptions.map((modality) => {
                       const isSelected = selectedModalities.includes(modality.value)
@@ -393,7 +393,7 @@ export default function DataMarketplacePage() {
 
                 {/* 科室筛选 - 紧凑标签式 */}
                 <div className="space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">解剖部位与专科系统</Label>
+                  <Label className="text-xs font-bold text-muted-foreground uppercase tracking-wide">解剖部位与专科系统</Label>
                   <div className="flex flex-wrap gap-1.5">
                     {primarySpecialtyOptions.map((specialty) => {
                       const isSelected = selectedSpecialties.includes(specialty.value)

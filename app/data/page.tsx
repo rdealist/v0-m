@@ -495,24 +495,28 @@ export default function DataMarketplacePage() {
               {/* 已选筛选标签 */}
               {hasFilters && (
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {selectedModalities.map((modality) => (
-                    <Badge key={modality} variant="secondary" className="gap-1">
-                      {modality}
+                  {selectedModality && (
+                    <Badge variant="secondary" className="gap-1">
+                      {primaryModalityOptions.find(m => m.value === selectedModality)?.label || 
+                       expandedModalityOptions.find(m => m.value === selectedModality)?.label || 
+                       selectedModality}
                       <X
                         className="h-3 w-3 cursor-pointer"
-                        onClick={() => toggleModality(modality)}
+                        onClick={() => setSelectedModality("")}
                       />
                     </Badge>
-                  ))}
-                  {selectedSpecialties.map((specialty) => (
-                    <Badge key={specialty} variant="secondary" className="gap-1">
-                      {specialty}
+                  )}
+                  {selectedSpecialty && (
+                    <Badge variant="secondary" className="gap-1">
+                      {primarySpecialtyOptions.find(s => s.value === selectedSpecialty)?.label || 
+                       expandedSpecialtyOptions.find(s => s.value === selectedSpecialty)?.label || 
+                       selectedSpecialty}
                       <X
                         className="h-3 w-3 cursor-pointer"
-                        onClick={() => toggleSpecialty(specialty)}
+                        onClick={() => setSelectedSpecialty("")}
                       />
                     </Badge>
-                  ))}
+                  )}
                 </div>
               )}
 

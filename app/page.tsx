@@ -197,7 +197,7 @@ export default function HomePage() {
                 加速全球医学影像行业迈入智能化时代
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-                中国拥有超 3285 项医学影像检测，但智能化辅助诊断渗透率不足 1%。我们致力于打破传统瓶颈，全面加速临床级智能化应用的普及与落地。
+                中国拥有超 3285 项医学影像检测，但智能化辅助诊断渗��率不足 1%。我们致力于打破传统瓶颈，全面加速临床级智能化应用的普及与落地。
               </p>
               <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
                 {isLoggedIn ? (
@@ -324,7 +324,7 @@ export default function HomePage() {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                   </div>
                   <h3 className="font-bold text-slate-900 text-sm mt-3">区块链确权</h3>
-                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">{"每一份贡献都有据可查，API 只要被调用，收益秒级分账，上传者即为资产"股东"。"}</p>
+                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">{`每一份贡献都有据可查，API 只要被调用，收益秒级分账，上传者即为资产"股东"。`}</p>
                 </div>
                 <div className="text-[11px] text-emerald-600 bg-emerald-50/50 border border-emerald-100 rounded-lg p-2 text-center font-medium">
                   清算结算系统全合规支持

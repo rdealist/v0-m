@@ -158,8 +158,8 @@ const mockDatasets = [
 
 export default function DataMarketplacePage() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedModalities, setSelectedModalities] = useState<string[]>([])
-  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>([])
+  const [selectedModalities, setSelectedModalities] = useState<string[]>(["CT"])
+  const [selectedSpecialties, setSelectedSpecialties] = useState<string[]>(["放射科"])
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
   const [selectedSampleRange, setSelectedSampleRange] = useState<string>("all")
   const [sortBy, setSortBy] = useState("newest")

@@ -77,23 +77,27 @@ const workflowSteps = [
 // 平台统计（克制呈现，使用种子数据）
 const platformStats = [
   {
-    title: "标注记录（个）",
+    title: "标注记录",
     value: "1,245,800",
+    unit: "个",
     icon: <FileStack className="h-5 w-5 text-primary" />,
   },
   {
-    title: "接入影像总量（TB）",
+    title: "接入影像总量",
     value: "486.3",
+    unit: "TB",
     icon: <Database className="h-5 w-5 text-primary" />,
   },
   {
-    title: "活跃任务数（个）",
+    title: "活跃任务数",
     value: "128",
+    unit: "个",
     icon: <ClipboardList className="h-5 w-5 text-primary" />,
   },
   {
-    title: "全球认证专家（位）",
+    title: "认证专家",
     value: "3,892",
+    unit: "位",
     icon: <Users className="h-5 w-5 text-primary" />,
   },
 ]
@@ -234,7 +238,10 @@ export default function HomePage() {
                       </div>
                       <div>
                         <p className="text-sm text-muted-foreground">{stat.title}</p>
-                        <p className="text-2xl font-bold text-foreground font-mono">{stat.value}</p>
+                        <p className="text-2xl font-bold text-foreground font-mono">
+                          {stat.value}
+                          <span className="text-sm font-normal text-muted-foreground ml-1">{stat.unit}</span>
+                        </p>
                       </div>
                     </div>
                   </CardContent>

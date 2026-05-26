@@ -278,29 +278,37 @@ export default function DataMarketplacePage() {
           <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">全网影像总量</p>
-                <p className="text-2xl font-bold text-foreground font-mono">52,104,921</p>
-                <p className="text-xs text-muted-foreground">DICOM 实例</p>
+                <p className="text-sm text-muted-foreground">影像总量</p>
+                <p className="text-2xl font-bold text-foreground font-mono">
+                  52,104,921
+                  <span className="text-sm font-normal text-muted-foreground ml-1">DICOM</span>
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">已确权资产总例数</p>
-                <p className="text-2xl font-bold text-foreground font-mono">1,245,000</p>
-                <p className="text-xs text-muted-foreground">Cases</p>
+                <p className="text-sm text-muted-foreground">确权资产</p>
+                <p className="text-2xl font-bold text-foreground font-mono">
+                  1,245,000
+                  <span className="text-sm font-normal text-muted-foreground ml-1">例</span>
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">覆盖合作数据节点</p>
-                <p className="text-2xl font-bold text-foreground font-mono">150+</p>
-                <p className="text-xs text-muted-foreground">家</p>
+                <p className="text-sm text-muted-foreground">合作节点</p>
+                <p className="text-2xl font-bold text-foreground font-mono">
+                  150
+                  <span className="text-sm font-normal text-muted-foreground ml-1">家</span>
+                </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">累计产生要素分红</p>
-                <p className="text-2xl font-bold text-foreground font-mono">¥3,481,920</p>
+                <p className="text-sm text-muted-foreground">要素分红</p>
+                <p className="text-2xl font-bold text-foreground font-mono">
+                  ¥3,481,920
+                </p>
               </CardContent>
             </Card>
           </section>

@@ -348,54 +348,6 @@ export default function CommunityPage() {
                 </CardContent>
               </Card>
             </div>
-                      <span className="text-xs text-muted-foreground">{topic.count} 讨论</span>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-
-              {/* 活跃用户 */}
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">本周活跃用户</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {discussions.slice(0, 4).map((post) => (
-                    <div key={post.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
-                      <Avatar className="h-8 w-8">
-                        <AvatarFallback className="bg-primary/10 text-primary text-xs">
-                          {post.author.name.slice(0, 1)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-sm font-medium text-foreground truncate">
-                            {post.author.name}
-                          </span>
-                          <LevelBadge level={post.author.level} size="sm" />
-                        </div>
-                        <p className="text-xs text-muted-foreground truncate">
-                          {post.author.institution}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
-
-              {/* 社区规范 */}
-              <Card className="bg-muted/30">
-                <CardContent className="pt-6">
-                  <h4 className="font-medium text-foreground mb-2">社区规范</h4>
-                  <ul className="text-xs text-muted-foreground space-y-1">
-                    <li>- 尊重他人，友善讨论</li>
-                    <li>- 保护患者隐私，脱敏处理</li>
-                    <li>- 分享真实经验，拒绝抄袭</li>
-                    <li>- 不发布广告或无关内容</li>
-                  </ul>
-                </CardContent>
-              </Card>
-            </div>
           </div>
         </div>
       </main>

@@ -383,24 +383,17 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   </Button>
                 </>
               ) : (
-                <>
-                  <Button className="w-full">
-                    <Coins className="mr-2 h-4 w-4" />
-                    获取访问权限
-                    <span className="ml-2 font-mono">{dataset.price.toLocaleString()}</span>
-                  </Button>
-                  <Button variant="outline" className="w-full">
-                    <Eye className="mr-2 h-4 w-4" />
-                    查看示例
-                  </Button>
-                </>
+                <Button variant="outline" className="w-full">
+                  <Share2 className="mr-2 h-4 w-4" />
+                  分享
+                </Button>
               )}
             </div>
           </div>
         </div>
 
         {/* 基本信息卡片 */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
           <Card className="border border-border">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 text-muted-foreground mb-1">
@@ -408,15 +401,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 <span className="text-xs">样本数量</span>
               </div>
               <p className="text-lg font-bold text-foreground">{dataset.samples.toLocaleString()}</p>
-            </CardContent>
-          </Card>
-          <Card className="border border-border">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Download className="h-4 w-4" />
-                <span className="text-xs">下载次数</span>
-              </div>
-              <p className="text-lg font-bold text-foreground">{dataset.downloads}</p>
             </CardContent>
           </Card>
           <Card className="border border-border">

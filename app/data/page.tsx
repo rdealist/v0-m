@@ -30,8 +30,6 @@ import {
   Database,
   Building2,
   X,
-  FileStack,
-  Users,
 } from "lucide-react"
 import Link from "next/link"
 import { useI18n } from "@/lib/i18n"
@@ -278,70 +276,25 @@ export default function DataMarketplacePage() {
 
           {/* 统计数据卡片 */}
           <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                    <Database className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">影像总量</p>
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      52,104,921
-                      <span className="text-sm font-normal text-muted-foreground ml-1">DICOM</span>
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                    <FileStack className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">确权资产</p>
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      1,245,000
-                      <span className="text-sm font-normal text-muted-foreground ml-1">例</span>
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                    <Building2 className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">合作节点</p>
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      150
-                      <span className="text-sm font-normal text-muted-foreground ml-1">家</span>
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent">
-                    <Users className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">认证专家</p>
-                    <p className="text-2xl font-bold text-foreground font-mono">
-                      3,892
-                      <span className="text-sm font-normal text-muted-foreground ml-1">位</span>
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+              <div className="text-[10px] text-slate-400 font-medium">全网影像总量 (DICOM实例)</div>
+              <div className="text-lg md:text-xl font-black text-slate-900 font-mono mt-1 flex items-baseline space-x-1">
+                <span>52,104,921</span>
+                <span className="text-[8px] text-emerald-500 font-bold font-sans">▲ 递增</span>
+              </div>
+            </div>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+              <div className="text-[10px] text-slate-400 font-medium">已确权资产总例数 (Cases)</div>
+              <div className="text-lg md:text-xl font-black text-slate-900 font-mono mt-1">1,245,000</div>
+            </div>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm">
+              <div className="text-[10px] text-slate-400 font-medium">覆盖合作数据节点</div>
+              <div className="text-lg md:text-xl font-black text-slate-900 font-mono mt-1">150+ 家</div>
+            </div>
+            <div className="bg-white p-4 border border-slate-200 rounded-xl shadow-sm bg-gradient-to-br from-white to-emerald-50/20">
+              <div className="text-[10px] text-emerald-600 font-bold">累计产生要素分红</div>
+              <div className="text-lg md:text-xl font-black text-emerald-600 font-mono mt-1">¥ 3,481,920</div>
+            </div>
           </section>
 
           {/* Tab 切换：公开数据集 / 我的数据集 */}

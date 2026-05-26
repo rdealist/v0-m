@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer } from "@/components/m-platform"
+import { Header } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -393,8 +393,6 @@ export default function NotificationsPage() {
           </Card>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

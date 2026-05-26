@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer } from "@/components/m-platform"
+import { Header } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -634,8 +634,6 @@ export default function DataUploadPage() {
           )}
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

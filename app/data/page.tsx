@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer, LevelBadge, DatasetStatusBadge } from "@/components/m-platform"
+import { Header, LevelBadge, DatasetStatusBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -682,8 +682,6 @@ export default function DataMarketplacePage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

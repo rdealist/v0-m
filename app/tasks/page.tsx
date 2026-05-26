@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer, LevelBadge, TaskStatusBadge } from "@/components/m-platform"
+import { Header, LevelBadge, TaskStatusBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -733,8 +733,6 @@ export default function TaskMarketplacePage() {
           </Tabs>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

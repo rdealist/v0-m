@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { Header, Footer, LevelBadge } from "@/components/m-platform"
+import { Header, LevelBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -191,7 +191,6 @@ export default function TaskPublishPage() {
             </CardContent>
           </Card>
         </main>
-        <Footer />
       </div>
     )
   }
@@ -330,7 +329,7 @@ export default function TaskPublishPage() {
                     </Select>
                   </div>
 
-                  {/* 解剖部位与专科系统 */}
+                  {/* 解剖部位���专科系统 */}
                   <div className="space-y-2">
                     <Label>解剖部位与专科系统</Label>
                     <Select
@@ -600,8 +599,6 @@ export default function TaskPublishPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

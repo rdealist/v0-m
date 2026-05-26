@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer, LevelBadge } from "@/components/m-platform"
+import { Header, LevelBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -317,8 +317,6 @@ export default function RankingsPage() {
           </Tabs>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { Header, Footer, LevelBadge, TaskStatusBadge, DatasetStatusBadge } from "@/components/m-platform"
+import { Header, LevelBadge, TaskStatusBadge, DatasetStatusBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -445,8 +445,6 @@ export default function PersonalCenterPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

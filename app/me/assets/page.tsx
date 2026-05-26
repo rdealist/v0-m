@@ -170,7 +170,7 @@ export default function AssetsPage() {
   const getFlowTypeTag = (type: string) => {
     switch (type) {
       case "income":
-        return <Badge className="bg-[#0F8770]/10 text-[#0F8770] border-[#0F8770]/30">收入</Badge>
+        return <Badge className="bg-primary/10 text-primary border-primary/30">收入</Badge>
       case "expense":
         return <Badge className="bg-primary/10 text-primary border-primary/30">支出</Badge>
       case "pending":
@@ -187,7 +187,7 @@ export default function AssetsPage() {
       case "locked":
         return <Badge className="bg-primary/10 text-primary border-primary/30">锁定中</Badge>
       case "settled":
-        return <Badge className="bg-[#0F8770]/10 text-[#0F8770] border-[#0F8770]/30">已结算</Badge>
+        return <Badge className="bg-primary/10 text-primary border-primary/30">已结算</Badge>
       case "refunded":
         return <Badge className="bg-muted text-muted-foreground border-border">已退款</Badge>
       default:
@@ -267,7 +267,7 @@ export default function AssetsPage() {
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-sm">累计收益</span>
                 </div>
-                <p className="text-3xl font-bold font-mono text-[#0F8770]">
+                <p className="text-3xl font-bold font-mono text-primary">
                   {mockWallet.totalIncome.toLocaleString()}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -333,7 +333,7 @@ export default function AssetsPage() {
                           <TableCell className="text-right">
                             <span className={cn(
                               "font-mono font-medium flex items-center justify-end gap-1",
-                              flow.amount > 0 ? "text-[#0F8770]" : "text-foreground"
+                              flow.amount > 0 ? "text-primary" : "text-foreground"
                             )}>
                               {flow.amount > 0 ? (
                                 <ArrowDownLeft className="h-3.5 w-3.5" />
@@ -415,7 +415,7 @@ export default function AssetsPage() {
                       {mockRefunds.map((refund) => (
                         <TableRow key={refund.id} className="border-border">
                           <TableCell className="font-medium">{refund.taskName}</TableCell>
-                          <TableCell className="font-mono text-[#0F8770]">+{refund.amount.toLocaleString()}</TableCell>
+                          <TableCell className="font-mono text-primary">+{refund.amount.toLocaleString()}</TableCell>
                           <TableCell className="text-muted-foreground">{refund.reason}</TableCell>
                           <TableCell className="text-muted-foreground text-sm">{refund.refundedAt}</TableCell>
                         </TableRow>

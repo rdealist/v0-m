@@ -215,7 +215,7 @@ export default function DataUploadPage() {
                       className={cn(
                         "flex h-10 w-10 items-center justify-center rounded-full border-2 text-sm font-semibold transition-colors",
                         currentStep > step.id
-                          ? "border-[#0F8770] bg-[#0F8770] text-white"
+                          ? "border-primary bg-primary text-white"
                           : currentStep === step.id
                           ? "border-primary bg-primary text-primary-foreground"
                           : "border-muted bg-background text-muted-foreground"
@@ -243,7 +243,7 @@ export default function DataUploadPage() {
                     <div
                       className={cn(
                         "mx-4 h-0.5 flex-1 min-w-[40px]",
-                        currentStep > step.id ? "bg-[#0F8770]" : "bg-muted"
+                        currentStep > step.id ? "bg-primary" : "bg-muted"
                       )}
                     />
                   )}
@@ -270,15 +270,15 @@ export default function DataUploadPage() {
                     className={cn(
                       "border-2 border-dashed rounded-xl p-8 text-center transition-colors",
                       uploadProgress === 100
-                        ? "border-[#0F8770] bg-[#0F8770]/5"
+                        ? "border-primary bg-primary/5"
                         : "border-muted hover:border-primary/50 cursor-pointer"
                     )}
                     onClick={uploadProgress === 0 ? handleUpload : undefined}
                   >
                     {uploadProgress === 100 ? (
                       <div className="space-y-4">
-                        <div className="flex h-16 w-16 mx-auto items-center justify-center rounded-full bg-[#0F8770]/10">
-                          <CheckCircle2 className="h-8 w-8 text-[#0F8770]" />
+<div className="flex h-16 w-16 mx-auto items-center justify-center rounded-full bg-primary/10">
+                        <CheckCircle2 className="h-8 w-8 text-primary" />
                         </div>
                         <div>
                           <p className="text-lg font-medium text-foreground">上传完成</p>
@@ -478,14 +478,14 @@ export default function DataUploadPage() {
                           className={cn(
                             "flex items-start gap-4 p-4 rounded-lg border",
                             result.status === "passed"
-                              ? "border-[#0F8770]/30 bg-[#0F8770]/5"
+                              ? "border-primary/30 bg-primary/5"
                               : result.status === "warning"
                               ? "border-warning/30 bg-warning/5"
                               : "border-destructive/30 bg-destructive/5"
                           )}
                         >
                           {result.status === "passed" ? (
-                            <CheckCircle2 className="h-5 w-5 text-[#0F8770] flex-shrink-0 mt-0.5" />
+                            <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                           ) : result.status === "warning" ? (
                             <AlertCircle className="h-5 w-5 text-warning flex-shrink-0 mt-0.5" />
                           ) : (
@@ -501,9 +501,9 @@ export default function DataUploadPage() {
                       ))}
 
                       {preCheckComplete && (
-                        <div className="mt-6 p-4 rounded-lg bg-[#0F8770]/10 border border-[#0F8770]/30">
+                        <div className="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/30">
                           <div className="flex items-center gap-3">
-                            <CheckCircle2 className="h-6 w-6 text-[#0F8770]" />
+                            <CheckCircle2 className="h-6 w-6 text-primary" />
                             <div>
                               <p className="font-medium text-foreground">预检通过</p>
                               <p className="text-sm text-muted-foreground">
@@ -607,7 +607,7 @@ export default function DataUploadPage() {
                   <Button
                     onClick={handlePublish}
                     disabled={isPublishing}
-                    className="bg-[#0F8770] hover:bg-[#0A6655] text-white"
+                    className="bg-primary hover:bg-primary/90 text-white"
                   >
                     {isPublishing ? (
                       <>

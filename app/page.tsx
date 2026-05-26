@@ -58,19 +58,19 @@ const workflowSteps = [
   icon: ClipboardList,
   title: "任务发布",
   description: "创建任务并预存报酬",
-  color: "bg-[#0F8770]/10 text-[#0F8770]",
+  color: "bg-primary/10 text-primary",
   },
   {
     icon: CheckSquare,
     title: "标注与审核",
     description: "标注者完成后Lv5+专家审核",
-    color: "bg-[#0F8770]/10 text-[#0F8770]",
+    color: "bg-primary/10 text-primary",
   },
   {
     icon: Wallet,
     title: "钱包结算",
     description: "审核通过后积分自动结算",
-    color: "bg-[#0F8770]/10 text-[#0F8770]",
+    color: "bg-primary/10 text-primary",
   },
 ]
 
@@ -266,7 +266,7 @@ export default function HomePage() {
             {/* 解耦示意图 */}
             <div className="relative max-w-5xl mx-auto">
               {/* 中心连接线 - 桌面端 */}
-              <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-px bg-gradient-to-r from-blue-300 via-emerald-400 to-cyan-300" />
+              <div className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-px bg-gradient-to-r from-blue-300 via-blue-400 to-blue-300" />
               
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
                 {/* 数据端 */}
@@ -299,30 +299,30 @@ export default function HomePage() {
                 </div>
 
                 {/* 中心 - 区块链确权 */}
-                <div className="bg-gradient-to-br from-emerald-50 to-cyan-50 p-6 rounded-2xl border-2 border-emerald-300 shadow-md space-y-5 relative lg:scale-105 lg:z-10">
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+<div className="bg-gradient-to-br from-blue-50 to-sky-50 p-6 rounded-2xl border-2 border-blue-300 shadow-md space-y-5 relative lg:scale-105 lg:z-10">
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
                     区块链确权
                   </div>
                   <div className="pt-2 text-center">
                     <div className="w-14 h-14 rounded-xl bg-white flex items-center justify-center mx-auto mb-4 shadow-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
                     </div>
                     <h3 className="font-bold text-slate-900 text-base">智能合约结算</h3>
                     <p className="text-sm text-slate-500 mt-2 leading-relaxed">
                       每一份贡献链上存证，权益归属清晰透明。API 调用即触发分账，数据贡献者与标注专家共享模型收益。
                     </p>
                   </div>
-                  <div className="space-y-2 pt-2 border-t border-emerald-200">
-                    <div className="flex items-center justify-center gap-2 text-xs text-emerald-700">
+<div className="space-y-2 pt-2 border-t border-blue-200">
+                      <div className="flex items-center justify-center gap-2 text-xs text-blue-700">
                       <CheckSquare className="h-3.5 w-3.5" />
                       <span>贡献存证，永久可查</span>
                     </div>
-                    <div className="flex items-center justify-center gap-2 text-xs text-emerald-700">
+                    <div className="flex items-center justify-center gap-2 text-xs text-blue-700">
                       <Coins className="h-3.5 w-3.5" />
                       <span>秒级分账，收益透明</span>
                     </div>
                   </div>
-                  <div className="text-[11px] text-emerald-700 bg-white/60 border border-emerald-200 rounded-lg p-2 text-center font-medium">
+                  <div className="text-[11px] text-blue-700 bg-white/60 border border-blue-200 rounded-lg p-2 text-center font-medium">
                     清算结算系统全合规支持
                   </div>
                 </div>
@@ -415,7 +415,7 @@ export default function HomePage() {
                     </CardHeader>
                     <CardContent className="pt-0 space-y-3">
                       <div className="flex items-center justify-between text-sm">
-                        <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
+                        <div className="flex items-center gap-1.5 text-primary font-medium">
                           <Coins className="h-4 w-4" />
                           <span className="font-mono">{task.reward.toLocaleString()}</span> 积分
                         </div>
@@ -457,16 +457,16 @@ export default function HomePage() {
                   key={item.level}
                   className={`relative flex flex-col items-center p-5 rounded-xl border ${
                     item.highlight 
-                      ? "bg-[#0F8770]/5 border-[#0F8770]/30 shadow-md" 
+                      ? "bg-primary/5 border-primary/30 shadow-md" 
                       : "bg-background border-border shadow-sm"
                   }`}
                 >
                   <LevelBadge level={item.level} size="md" />
                   <span className="mt-3 text-sm font-semibold text-foreground">{item.name}</span>
                   <span className="mt-1 text-xs text-muted-foreground text-center">{item.ability}</span>
-                  <span className="mt-2 text-xs font-medium text-[#0F8770]">{item.reward}</span>
+                  <span className="mt-2 text-xs font-medium text-primary">{item.reward}</span>
                   {item.highlight && (
-                    <Badge className="absolute -top-2 -right-2 bg-[#0F8770] text-white text-[10px]">审核资质</Badge>
+                    <Badge className="absolute -top-2 -right-2 bg-primary text-white text-[10px]">审核资质</Badge>
                   )}
                   {index < levelDescriptions.length - 1 && (
                     <div className="hidden md:block absolute -right-2 top-1/2 -translate-y-1/2 text-muted-foreground/30">
@@ -514,8 +514,8 @@ export default function HomePage() {
               </div>
             </div>
             <div className="bg-card border border-border p-6 rounded-2xl shadow-sm space-y-4 hover:border-primary/30 hover:shadow-md transition-all">
-              <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
-                <Zap className="h-6 w-6 text-emerald-600" />
+<div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                          <Zap className="h-6 w-6 text-primary" />
               </div>
               <div>
                 <h4 className="text-base font-semibold text-foreground">高并发推理</h4>
@@ -557,7 +557,7 @@ export default function HomePage() {
               <Link href="/tasks">
                 <Card className="h-full hover:shadow-lg transition-all group cursor-pointer">
                   <CardHeader>
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#0F8770]/10 text-[#0F8770] group-hover:bg-[#0F8770] group-hover:text-white transition-colors">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
                       <ClipboardList className="h-6 w-6" />
                     </div>
                     <CardTitle className="mt-4">任务广场</CardTitle>

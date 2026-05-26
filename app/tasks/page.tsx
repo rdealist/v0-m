@@ -306,7 +306,7 @@ export default function TaskMarketplacePage() {
               <p className="mt-1 text-muted-foreground">发现标注任务，赚取积分收益</p>
             </div>
             {isPublisher && (
-              <Button className="bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
+              <Button className="bg-primary hover:bg-primary/90 text-white" asChild>
                 <Link href="/tasks/new">
                   <Plus className="mr-2 h-4 w-4" />
                   发布任务
@@ -476,7 +476,7 @@ export default function TaskMarketplacePage() {
 
                         {/* 奖励和等级要求 */}
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
+                          <div className="flex items-center gap-1.5 text-primary font-medium">
                             <Coins className="h-4 w-4" />
                             <span className="font-mono">{task.reward.toLocaleString()}</span>
                             <span className="text-sm">积分</span>
@@ -516,7 +516,7 @@ export default function TaskMarketplacePage() {
                           className={cn(
                             "w-full",
                             claimable
-                              ? "bg-[#0F8770] hover:bg-[#0A6655] text-white"
+                              ? "bg-primary hover:bg-primary/90 text-white"
                               : ""
                           )}
                           variant={claimable ? "default" : "secondary"}
@@ -634,7 +634,7 @@ export default function TaskMarketplacePage() {
                                 <Clock className="h-4 w-4" />
                                 截止 {task.deadline}
                               </div>
-                              <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
+                              <div className="flex items-center gap-1.5 text-primary font-medium">
                                 <Coins className="h-4 w-4" />
                                 <span className="font-mono">{task.reward.toLocaleString()}</span>
                               </div>
@@ -722,7 +722,7 @@ export default function TaskMarketplacePage() {
                         <p className="mt-2 text-sm text-muted-foreground">
                           发布标注任务，吸引专业标注者
                         </p>
-                        <Button className="mt-4 bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
+                        <Button className="mt-4 bg-primary hover:bg-primary/90 text-white" asChild>
                           <Link href="/tasks/new">
                             <Plus className="mr-2 h-4 w-4" />
                             发布任务

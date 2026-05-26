@@ -266,7 +266,7 @@ export default function DataMarketplacePage() {
               <h1 className="text-2xl font-bold text-foreground sm:text-3xl">数据广场</h1>
               <p className="mt-1 text-muted-foreground">浏览公开数据资产，发现高质量医学影像数据集</p>
             </div>
-            <Button className="bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
+            <Button className="bg-primary hover:bg-primary/90 text-white" asChild>
               <Link href="/data/upload">
                 <Upload className="mr-2 h-4 w-4" />
                 上传数据集
@@ -629,7 +629,7 @@ export default function DataMarketplacePage() {
                             <span className="text-muted-foreground">
                               <span className="font-mono font-medium text-foreground">{dataset.samples.toLocaleString()}</span> 样本
                             </span>
-                            <span className="font-medium text-[#0F8770]">
+                            <span className="font-medium text-primary">
                               <span className="font-mono">{dataset.price.toLocaleString()}</span> 积分
                             </span>
                           </div>

@@ -78,8 +78,8 @@ const levelConfig: Record<
     label: "Lv5",
     name: "专家",
     description: "具备审核资格的专家（审核起点）",
-    color: "text-[#0F8770]",
-    bgColor: "bg-[#0F8770]/10",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
     icon: Award,
     permissions: ["审核他人标注", "发布专家任务", "参与质量评定", "80%分成比例"],
     canAudit: true,
@@ -88,8 +88,8 @@ const levelConfig: Record<
     label: "Lv6",
     name: "资深专家",
     description: "平台认证的资深专家",
-    color: "text-[#0F8770]",
-    bgColor: "bg-[#0F8770]/10",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
     icon: Award,
     permissions: ["全部审核权限", "制定标注规范", "80%分成比例"],
     canAudit: true,
@@ -98,8 +98,8 @@ const levelConfig: Record<
     label: "Lv7",
     name: "权威专家",
     description: "权威领域专家",
-    color: "text-[#0A6655]",
-    bgColor: "bg-[#0A6655]/10",
+    color: "text-blue-700",
+    bgColor: "bg-blue-700/10",
     icon: Crown,
     permissions: ["最高审核权限", "培训其他用户", "80%分成比例"],
     canAudit: true,
@@ -108,8 +108,8 @@ const levelConfig: Record<
     label: "Lv8",
     name: "首席专家",
     description: "顶级首席专家",
-    color: "text-[#0A6655]",
-    bgColor: "bg-[#0A6655]/10",
+    color: "text-blue-700",
+    bgColor: "bg-blue-700/10",
     icon: Crown,
     permissions: ["最高审核权限", "规范制定", "80%分成比例"],
     canAudit: true,
@@ -195,7 +195,7 @@ export function LevelBadge({
                   <li key={perm} className="flex items-center gap-1.5">
                     <span className={cn(
                       "w-1.5 h-1.5 rounded-full",
-                      config.canAudit ? "bg-[#0F8770]" : "bg-primary"
+                      config.canAudit ? "bg-primary" : "bg-primary"
                     )} />
                     {perm}
                   </li>
@@ -204,7 +204,7 @@ export function LevelBadge({
             </div>
             {config.canAudit && (
               <div className="pt-1">
-                <Badge className="bg-[#0F8770] text-white text-[10px]">
+                <Badge className="bg-primary text-white text-[10px]">
                   具备审核资格
                 </Badge>
               </div>

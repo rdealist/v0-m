@@ -173,8 +173,8 @@ export default function TaskPublishPage() {
         <main className="flex-1 flex items-center justify-center">
           <Card className="max-w-md w-full mx-4">
             <CardContent className="pt-8 pb-8 text-center">
-              <div className="flex h-16 w-16 mx-auto items-center justify-center rounded-full bg-[#0F8770]/10">
-                <CheckCircle2 className="h-8 w-8 text-[#0F8770]" />
+              <div className="flex h-16 w-16 mx-auto items-center justify-center rounded-full bg-primary/10">
+                <CheckCircle2 className="h-8 w-8 text-primary" />
               </div>
               <h2 className="mt-6 text-xl font-bold text-foreground">任务发布成功</h2>
               <p className="mt-2 text-muted-foreground">
@@ -572,7 +572,7 @@ export default function TaskPublishPage() {
                 className={cn(
                   "w-full h-12 text-base",
                   isFormValid
-                    ? "bg-[#0F8770] hover:bg-[#0A6655] text-white"
+                    ? "bg-primary hover:bg-primary/90 text-white"
                     : ""
                 )}
                 disabled={!isFormValid || isPublishing}

@@ -339,7 +339,7 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
                   {dataset.modality}
                 </Badge>
-                <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200">
+                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
                   {dataset.specialty}
                 </Badge>
                 {isOwner && (

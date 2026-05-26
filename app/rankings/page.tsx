@@ -167,7 +167,7 @@ export default function RankingsPage() {
                         </div>
                         <div className="w-12 text-center">
                           {item.change > 0 && (
-                            <Badge variant="outline" className="text-[#0F8770] bg-[#0F8770]/10">
+                            <Badge variant="outline" className="text-primary bg-primary/10">
                               <TrendingUp className="h-3 w-3 mr-0.5" />
                               {item.change}
                             </Badge>
@@ -203,7 +203,7 @@ export default function RankingsPage() {
                           {getRankIcon(item.rank)}
                         </div>
                         <Avatar className="h-10 w-10">
-                          <AvatarFallback className="bg-[#0F8770]/10 text-[#0F8770]">
+                          <AvatarFallback className="bg-primary/10 text-primary">
                             {item.name.slice(0, 1)}
                           </AvatarFallback>
                         </Avatar>
@@ -221,7 +221,7 @@ export default function RankingsPage() {
                           <p className="text-xs text-muted-foreground">审核样本</p>
                         </div>
                         <div className="text-right">
-                          <Badge className="bg-[#0F8770]/10 text-[#0F8770]">
+                          <Badge className="bg-primary/10 text-primary">
                             {item.approvalRate}% 通过率
                           </Badge>
                         </div>
@@ -303,7 +303,7 @@ export default function RankingsPage() {
                           <p className="text-sm text-muted-foreground truncate">{item.institution}</p>
                         </div>
                         <div className="text-right">
-                          <p className="font-bold font-mono text-[#0F8770]">
+                          <p className="font-bold font-mono text-primary">
                             {item.points.toLocaleString()}
                           </p>
                           <p className="text-xs text-muted-foreground">积分</p>

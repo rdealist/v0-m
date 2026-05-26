@@ -128,7 +128,7 @@ export default function CertificationPage() {
 
           {/* 当前等级卡片 */}
           <Card className="mb-8 overflow-hidden">
-            <div className="bg-gradient-to-r from-[#0F8770] to-[#1E63B5] p-6 text-white">
+            <div className="bg-gradient-to-r from-primary to-chart-2 p-6 text-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/20 backdrop-blur">
@@ -181,7 +181,7 @@ export default function CertificationPage() {
                       key={step.level}
                       className={`relative flex items-start gap-4 p-3 rounded-xl transition-colors ${
                         step.current
-                          ? "bg-[#0F8770]/10"
+                          ? "bg-primary/10"
                           : step.completed
                           ? "bg-muted/30"
                           : ""
@@ -191,7 +191,7 @@ export default function CertificationPage() {
                       <div
                         className={`relative z-10 flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full ${
                           step.current
-                            ? "bg-[#0F8770] text-white"
+                            ? "bg-primary text-white"
                             : step.completed
                             ? "bg-primary text-primary-foreground"
                             : "bg-muted text-muted-foreground"
@@ -211,10 +211,10 @@ export default function CertificationPage() {
                             {step.label} {step.name}
                           </span>
                           {step.current && (
-                            <Badge className="bg-[#0F8770] text-white text-xs">当前等级</Badge>
+                            <Badge className="bg-primary text-white text-xs">当前等级</Badge>
                           )}
                           {step.level >= 5 && !step.current && (
-                            <Badge variant="outline" className="text-xs text-[#0F8770]">
+                            <Badge variant="outline" className="text-xs text-primary">
                               审核权限
                             </Badge>
                           )}
@@ -227,7 +227,7 @@ export default function CertificationPage() {
                       {/* 状态 */}
                       <div className="flex-shrink-0">
                         {step.completed ? (
-                          <span className="text-xs text-[#0F8770]">已达成</span>
+                          <span className="text-xs text-primary">已达成</span>
                         ) : (
                           <span className="text-xs text-muted-foreground">未达成</span>
                         )}
@@ -254,7 +254,7 @@ export default function CertificationPage() {
                   key={cert.id}
                   className={`flex items-center justify-between p-4 rounded-xl ${
                     cert.status === "completed"
-                      ? "bg-[#0F8770]/5"
+                      ? "bg-primary/5"
                       : cert.status === "in_progress"
                       ? "bg-primary/5"
                       : "bg-muted/30"
@@ -264,7 +264,7 @@ export default function CertificationPage() {
                     <div
                       className={`flex h-10 w-10 items-center justify-center rounded-full ${
                         cert.status === "completed"
-                          ? "bg-[#0F8770]/10 text-[#0F8770]"
+                          ? "bg-primary/10 text-primary"
                           : cert.status === "in_progress"
                           ? "bg-primary/10 text-primary"
                           : "bg-muted text-muted-foreground"

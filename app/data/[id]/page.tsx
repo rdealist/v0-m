@@ -369,10 +369,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
             <div className="flex flex-col gap-3 lg:min-w-[200px]">
               {isOwner ? (
                 <>
-                  <Button className="w-full">
-                    <Edit className="mr-2 h-4 w-4" />
-                    编辑数据集
-                  </Button>
                   <Button variant="outline" className="w-full">
                     <Share2 className="mr-2 h-4 w-4" />
                     分享
@@ -467,7 +463,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-6">
               <TabsTrigger value="overview">概览</TabsTrigger>
-              <TabsTrigger value="files">文件管理</TabsTrigger>
               <TabsTrigger value="annotations">标注信息</TabsTrigger>
               <TabsTrigger value="statistics">统计数据</TabsTrigger>
               <TabsTrigger value="tasks">关联任务</TabsTrigger>
@@ -488,16 +483,8 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                           <p className="text-2xl font-bold text-foreground">{dataset.statistics.totalViews.toLocaleString()}</p>
                         </div>
                         <div className="p-4 bg-muted/50 rounded-lg">
-                          <p className="text-sm text-muted-foreground">总下载量</p>
-                          <p className="text-2xl font-bold text-foreground">{dataset.statistics.totalDownloads.toLocaleString()}</p>
-                        </div>
-                        <div className="p-4 bg-muted/50 rounded-lg">
                           <p className="text-sm text-muted-foreground">累计收益</p>
                           <p className="text-2xl font-bold text-primary">{dataset.statistics.totalRevenue.toLocaleString()}</p>
-                        </div>
-                        <div className="p-4 bg-muted/50 rounded-lg">
-                          <p className="text-sm text-muted-foreground">平均评分</p>
-                          <p className="text-2xl font-bold text-foreground">{dataset.statistics.averageRating}</p>
                         </div>
                       </div>
                     ) : (
@@ -529,55 +516,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   </CardContent>
                 </Card>
               </div>
-            </TabsContent>
-
-            {/* 文件管理 */}
-            <TabsContent value="files">
-              <Card className="border border-border">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle className="text-base">文件列表</CardTitle>
-                    <Button size="sm">
-                      <Download className="mr-2 h-4 w-4" />
-                      下载全部
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  {dataset.files && dataset.files.length > 0 ? (
-                    <Table>
-                      <TableHeader>
-                        <TableRow className="border-border">
-                          <TableHead>文件名</TableHead>
-                          <TableHead>类型</TableHead>
-                          <TableHead>大小</TableHead>
-                          <TableHead>上传时间</TableHead>
-                          <TableHead className="text-right">操作</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {dataset.files.map((file) => (
-                          <TableRow key={file.id} className="border-border">
-                            <TableCell className="font-medium">{file.name}</TableCell>
-                            <TableCell>
-                              <Badge variant="outline">{file.type}</Badge>
-                            </TableCell>
-                            <TableCell>{file.size}</TableCell>
-                            <TableCell>{file.uploadedAt}</TableCell>
-                            <TableCell className="text-right">
-                              <Button variant="ghost" size="sm">
-                                <Download className="h-4 w-4" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  ) : (
-                    <p className="text-muted-foreground text-center py-8">暂无文件</p>
-                  )}
-                </CardContent>
-              </Card>
             </TabsContent>
 
             {/* 标注信息 */}
@@ -624,26 +562,16 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 </CardHeader>
                 <CardContent>
                   {dataset.statistics ? (
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                    <div className="grid gap-6 sm:grid-cols-2">
                       <div className="p-6 bg-muted/50 rounded-xl text-center">
                         <Eye className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
                         <p className="text-3xl font-bold text-foreground">{dataset.statistics.totalViews.toLocaleString()}</p>
                         <p className="text-sm text-muted-foreground">总浏览量</p>
                       </div>
-                      <div className="p-6 bg-muted/50 rounded-xl text-center">
-                        <Download className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-3xl font-bold text-foreground">{dataset.statistics.totalDownloads.toLocaleString()}</p>
-                        <p className="text-sm text-muted-foreground">总下载量</p>
-                      </div>
                       <div className="p-6 bg-primary/5 rounded-xl text-center border border-primary/20">
                         <Coins className="h-8 w-8 text-primary mx-auto mb-2" />
                         <p className="text-3xl font-bold text-primary">{dataset.statistics.totalRevenue.toLocaleString()}</p>
                         <p className="text-sm text-muted-foreground">累计收益 (积分)</p>
-                      </div>
-                      <div className="p-6 bg-muted/50 rounded-xl text-center">
-                        <BarChart3 className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-3xl font-bold text-foreground">{dataset.statistics.averageRating}</p>
-                        <p className="text-sm text-muted-foreground">平均评分</p>
                       </div>
                     </div>
                   ) : (

@@ -161,20 +161,24 @@ export default function CommunityPage() {
             {/* 主内容区 */}
             <div className="lg:col-span-2 space-y-6">
               {/* 排序标签 */}
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="rounded-full bg-primary/10 text-primary hover:bg-primary/20">
-                  <Flame className="h-4 w-4 mr-1.5" />
-                  热门
-                </Button>
-                <Button variant="ghost" size="sm" className="rounded-full">
-                  <Clock className="h-4 w-4 mr-1.5" />
-                  最新
-                </Button>
-                <Button variant="ghost" size="sm" className="rounded-full">
-                  <TrendingUp className="h-4 w-4 mr-1.5" />
-                  热议
-                </Button>
-              </div>
+              <Card>
+                <CardContent className="py-3 px-4">
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm" className="rounded-full bg-primary/10 text-primary hover:bg-primary/20">
+                      <Flame className="h-4 w-4 mr-1.5" />
+                      热门
+                    </Button>
+                    <Button variant="ghost" size="sm" className="rounded-full">
+                      <Clock className="h-4 w-4 mr-1.5" />
+                      最新
+                    </Button>
+                    <Button variant="ghost" size="sm" className="rounded-full">
+                      <TrendingUp className="h-4 w-4 mr-1.5" />
+                      热议
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* 帖子列表 */}
               <div className="space-y-4">

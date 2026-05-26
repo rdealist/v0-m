@@ -13,7 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
-import { Menu, Bell, Globe } from "lucide-react"
+import { Menu, Bell, Globe, Check } from "lucide-react"
 import { useState } from "react"
 import {
   DropdownMenu,
@@ -21,6 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { useI18n, locales, type Locale } from "@/lib/i18n"
 
 // 导航配置
 const navItems = [
@@ -71,12 +72,7 @@ export function Header({
 }: HeaderProps) {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [currentLang, setCurrentLang] = useState<"zh" | "en">("zh")
-
-  const languages = [
-    { code: "zh" as const, label: "中文" },
-    { code: "en" as const, label: "English" },
-  ]
+  const { locale, setLocale } = useI18n()
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false)
@@ -130,17 +126,18 @@ export function Header({
                 <span className="sr-only">切换语言</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {languages.map((lang) => (
+            <DropdownMenuContent align="end" className="w-36">
+              {locales.map((lang) => (
                 <DropdownMenuItem
                   key={lang.code}
-                  onClick={() => setCurrentLang(lang.code)}
+                  onClick={() => setLocale(lang.code)}
                   className={cn(
-                    "cursor-pointer",
-                    currentLang === lang.code && "bg-accent font-medium"
+                    "cursor-pointer flex items-center justify-between",
+                    locale === lang.code && "bg-accent"
                   )}
                 >
-                  {lang.label}
+                  <span>{lang.label}</span>
+                  {locale === lang.code && <Check className="h-4 w-4 text-primary" />}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>

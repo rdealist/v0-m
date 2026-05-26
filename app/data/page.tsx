@@ -32,6 +32,7 @@ import {
   X,
 } from "lucide-react"
 import Link from "next/link"
+import { useI18n } from "@/lib/i18n"
 
 // 模拟用户数据
 const mockUser = {
@@ -190,6 +191,7 @@ const mockDatasets = [
 ]
 
 export default function DataMarketplacePage() {
+  const { locale, t } = useI18n()
   const [searchQuery, setSearchQuery] = useState("")
   const [datasetTab, setDatasetTab] = useState<"public" | "mine">("public")
   const [selectedModality, setSelectedModality] = useState<string>("计算机断层扫描")
@@ -560,9 +562,9 @@ export default function DataMarketplacePage() {
 
               {/* 结果计数 */}
               <p className="text-sm text-muted-foreground mb-4">
-                共找到 <span className="font-mono font-medium text-foreground">{filteredDatasets.length}</span> 个数据集
+                {t("pagination.found", { count: filteredDatasets.length, type: t("pagination.datasets") })}
                 {totalPages > 1 && (
-                  <span>，显示第 {(currentPage - 1) * itemsPerPage + 1}-{Math.min(currentPage * itemsPerPage, filteredDatasets.length)} 个</span>
+                  <span>，{t("pagination.showing", { start: (currentPage - 1) * itemsPerPage + 1, end: Math.min(currentPage * itemsPerPage, filteredDatasets.length) })}</span>
                 )}
               </p>
 
@@ -634,6 +636,7 @@ export default function DataMarketplacePage() {
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious 
+                        locale={locale}
                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                         className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                       />
@@ -662,7 +665,7 @@ export default function DataMarketplacePage() {
                       ) {
                         return (
                           <PaginationItem key={page}>
-                            <PaginationEllipsis />
+                            <PaginationEllipsis locale={locale} />
                           </PaginationItem>
                         )
                       }
@@ -671,6 +674,7 @@ export default function DataMarketplacePage() {
                     
                     <PaginationItem>
                       <PaginationNext 
+                        locale={locale}
                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                         className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                       />

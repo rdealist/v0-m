@@ -37,6 +37,7 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { useI18n } from "@/lib/i18n"
 
 // 模拟用户数据
 const mockUser = {
@@ -226,6 +227,7 @@ const myPublishedTasks = [
 ]
 
 export default function TaskMarketplacePage() {
+  const { locale, t } = useI18n()
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedModality, setSelectedModality] = useState<string>("all")
   const [selectedTaskType, setSelectedTaskType] = useState<string>("all")
@@ -419,9 +421,9 @@ export default function TaskMarketplacePage() {
             <TabsContent value="all" className="space-y-6">
               {/* 结果计数 */}
               <p className="text-sm text-muted-foreground">
-                共找到 <span className="font-mono font-medium text-foreground">{filteredTasks.length}</span> 个任务
+                {t("pagination.found", { count: filteredTasks.length, type: t("pagination.tasks") })}
                 {totalPages > 1 && (
-                  <span>，显示第 {(currentPage - 1) * itemsPerPage + 1}-{Math.min(currentPage * itemsPerPage, filteredTasks.length)} 个</span>
+                  <span>，{t("pagination.showing", { start: (currentPage - 1) * itemsPerPage + 1, end: Math.min(currentPage * itemsPerPage, filteredTasks.length) })}</span>
                 )}
               </p>
               
@@ -540,6 +542,7 @@ export default function TaskMarketplacePage() {
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious 
+                        locale={locale}
                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                         className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
                       />
@@ -568,7 +571,7 @@ export default function TaskMarketplacePage() {
                       ) {
                         return (
                           <PaginationItem key={page}>
-                            <PaginationEllipsis />
+                            <PaginationEllipsis locale={locale} />
                           </PaginationItem>
                         )
                       }
@@ -577,6 +580,7 @@ export default function TaskMarketplacePage() {
                     
                     <PaginationItem>
                       <PaginationNext 
+                        locale={locale}
                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                         className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
                       />

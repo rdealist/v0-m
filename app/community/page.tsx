@@ -42,15 +42,6 @@ const mockWallet = {
   change: 2350,
 }
 
-// 热门话题
-const hotTopics = [
-  { id: 1, name: "肺结节AI诊断", count: 1280 },
-  { id: 2, name: "标注经验分享", count: 856 },
-  { id: 3, name: "数据质量控制", count: 642 },
-  { id: 4, name: "CT影像处理", count: 523 },
-  { id: 5, name: "病理切片分析", count: 489 },
-]
-
 // 讨论帖子
 const discussions = [
   {
@@ -278,30 +269,85 @@ export default function CommunityPage() {
 
             {/* 侧边栏 */}
             <div className="space-y-6">
-              {/* 热门话题 */}
+              {/* 标注贡献榜 */}
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <Flame className="h-4 w-4 text-orange-500" />
-                    热门话题
-                  </CardTitle>
+                  <CardTitle className="text-base">标注贡献榜</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {hotTopics.map((topic, index) => (
-                    <div
-                      key={topic.id}
-                      className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <span
-                          className={`w-5 text-center font-bold ${
-                            index < 3 ? "text-orange-500" : "text-muted-foreground"
-                          }`}
-                        >
-                          {index + 1}
-                        </span>
-                        <span className="text-sm text-foreground">#{topic.name}</span>
+                  {[
+                    { name: "张医生", institution: "协和医院", count: 12580, level: 5 },
+                    { name: "李教授", institution: "华西医院", count: 9845, level: 4 },
+                    { name: "王主任", institution: "中山医院", count: 8762, level: 4 },
+                    { name: "陈医师", institution: "湘雅医院", count: 7234, level: 3 },
+                    { name: "刘专家", institution: "瑞金医院", count: 6891, level: 3 },
+                  ].map((user, index) => (
+                    <div key={index} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                      <span className={`w-5 text-center font-bold ${index < 3 ? "text-primary" : "text-muted-foreground"}`}>
+                        {index + 1}
+                      </span>
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback className="bg-primary/10 text-primary text-xs">
+                          {user.name.slice(0, 1)}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm font-medium text-foreground truncate">{user.name}</span>
+                          <LevelBadge level={user.level} size="sm" />
+                        </div>
+                        <p className="text-xs text-muted-foreground truncate">{user.institution}</p>
                       </div>
+                      <span className="text-xs text-muted-foreground font-mono">{user.count.toLocaleString()}</span>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* 数据贡献榜 */}
+              <Card>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-base">数据贡献榜</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  {[
+                    { name: "北京协和医院", count: 45600, level: 5 },
+                    { name: "四川大学华西医院", count: 38200, level: 5 },
+                    { name: "复旦大学附属中山医院", count: 32100, level: 4 },
+                    { name: "中南大学湘雅医院", count: 28500, level: 4 },
+                    { name: "上海交通大学医学院附属瑞金医院", count: 24800, level: 4 },
+                  ].map((org, index) => (
+                    <div key={index} className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                      <span className={`w-5 text-center font-bold ${index < 3 ? "text-primary" : "text-muted-foreground"}`}>
+                        {index + 1}
+                      </span>
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
+                        <span className="text-xs font-medium text-muted-foreground">{org.name.slice(0, 2)}</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-sm font-medium text-foreground truncate">{org.name}</span>
+                        </div>
+                      </div>
+                      <span className="text-xs text-muted-foreground font-mono">{org.count.toLocaleString()}</span>
+                    </div>
+                  ))}
+                </CardContent>
+              </Card>
+
+              {/* 社区规范 */}
+              <Card className="bg-muted/30">
+                <CardContent className="pt-6">
+                  <h4 className="font-medium text-foreground mb-2">社区规范</h4>
+                  <ul className="text-xs text-muted-foreground space-y-1">
+                    <li>- 尊重他人，友善讨论</li>
+                    <li>- 保护患者隐私，脱敏处理</li>
+                    <li>- 分享真实经验，拒绝抄袭</li>
+                    <li>- 不发布广告或无关内容</li>
+                  </ul>
+                </CardContent>
+              </Card>
+            </div>
                       <span className="text-xs text-muted-foreground">{topic.count} 讨论</span>
                     </div>
                   ))}

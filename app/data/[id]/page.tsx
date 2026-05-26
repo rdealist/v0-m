@@ -477,15 +477,9 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   </CardHeader>
                   <CardContent>
                     {dataset.statistics ? (
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 bg-muted/50 rounded-lg">
-                          <p className="text-sm text-muted-foreground">总浏览量</p>
-                          <p className="text-2xl font-bold text-foreground">{dataset.statistics.totalViews.toLocaleString()}</p>
-                        </div>
-                        <div className="p-4 bg-muted/50 rounded-lg">
-                          <p className="text-sm text-muted-foreground">累计收益</p>
-                          <p className="text-2xl font-bold text-primary">{dataset.statistics.totalRevenue.toLocaleString()}</p>
-                        </div>
+                      <div className="p-4 bg-muted/50 rounded-lg inline-block">
+                        <p className="text-sm text-muted-foreground">总浏览量</p>
+                        <p className="text-2xl font-bold text-foreground">{dataset.statistics.totalViews.toLocaleString()}</p>
                       </div>
                     ) : (
                       <p className="text-muted-foreground">暂无统计数据</p>
@@ -562,17 +556,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 </CardHeader>
                 <CardContent>
                   {dataset.statistics ? (
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      <div className="p-6 bg-muted/50 rounded-xl text-center">
-                        <Eye className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-3xl font-bold text-foreground">{dataset.statistics.totalViews.toLocaleString()}</p>
-                        <p className="text-sm text-muted-foreground">总浏览量</p>
-                      </div>
-                      <div className="p-6 bg-primary/5 rounded-xl text-center border border-primary/20">
-                        <Coins className="h-8 w-8 text-primary mx-auto mb-2" />
-                        <p className="text-3xl font-bold text-primary">{dataset.statistics.totalRevenue.toLocaleString()}</p>
-                        <p className="text-sm text-muted-foreground">累计收益 (积分)</p>
-                      </div>
+                    <div className="p-6 bg-muted/50 rounded-xl text-center max-w-xs">
+                      <Eye className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-3xl font-bold text-foreground">{dataset.statistics.totalViews.toLocaleString()}</p>
+                      <p className="text-sm text-muted-foreground">总浏览量</p>
                     </div>
                   ) : (
                     <p className="text-muted-foreground text-center py-8">暂无统计数据</p>

@@ -296,19 +296,19 @@ export default function DataMarketplacePage() {
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">覆盖专科</p>
+                <p className="text-sm text-muted-foreground">专科系统</p>
                 <p className="text-2xl font-bold text-foreground font-mono">
-                  12
+                  11
                   <span className="text-sm font-normal text-muted-foreground ml-1">个</span>
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">合作机构</p>
+                <p className="text-sm text-muted-foreground">数据贡献者</p>
                 <p className="text-2xl font-bold text-foreground font-mono">
-                  150
-                  <span className="text-sm font-normal text-muted-foreground ml-1">家</span>
+                  156
+                  <span className="text-sm font-normal text-muted-foreground ml-1">位</span>
                 </p>
               </CardContent>
             </Card>

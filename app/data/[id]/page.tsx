@@ -473,9 +473,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   {dataset.ownerType === "institution" ? "机构账户" : "个人账户"}
                 </p>
               </div>
-              <Button variant="outline" size="sm">
-                查看主页
-              </Button>
             </div>
           </CardContent>
         </Card>
@@ -735,55 +732,54 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
           /* 非所有者视图 - 仅基本信息 */
           <Card className="border border-border">
             <CardHeader>
-              <div className="flex items-center gap-2">
-                <Lock className="h-5 w-5 text-muted-foreground" />
-                <CardTitle className="text-base">数据访问受限</CardTitle>
-              </div>
+              <CardTitle className="text-base">数据集简介</CardTitle>
               <CardDescription>
-                您需要获取访问权限才能查看完整数据内容
+                此数据集由其他机构或用户上传，您可以查看基本信息
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="bg-muted/50 rounded-xl p-6 text-center">
-                <div className="flex justify-center mb-4">
-                  <div className="flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-                    <Lock className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">获取数据访问权限</h3>
-                <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                  支付 <span className="font-bold text-primary">{dataset.price.toLocaleString()}</span> 积分即可获得此数据集的完整访问权限，包括下载原始数据、查看标注详情等功能。
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                  <Button size="lg">
-                    <Coins className="mr-2 h-5 w-5" />
-                    立即获取 ({dataset.price.toLocaleString()} 积分)
-                  </Button>
-                  <Button variant="outline" size="lg">
-                    <Eye className="mr-2 h-5 w-5" />
-                    预览示例数据
-                  </Button>
+            <CardContent className="space-y-6">
+              {/* 描述 */}
+              <div>
+                <h4 className="font-medium text-foreground mb-2">详细描述</h4>
+                <p className="text-sm text-muted-foreground leading-relaxed">{dataset.description}</p>
+              </div>
+
+              {/* 标签 */}
+              <div>
+                <h4 className="font-medium text-foreground mb-2">标签</h4>
+                <div className="flex flex-wrap gap-2">
+                  {dataset.tags.map((tag, idx) => (
+                    <Badge key={idx} variant="secondary">{tag}</Badge>
+                  ))}
                 </div>
               </div>
 
-              {/* 公开可见的信息摘要 */}
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {/* 基本信息 */}
+              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-2">数据格式</h4>
+                  <h4 className="font-medium text-foreground mb-1">数据格式</h4>
                   <p className="text-sm text-muted-foreground">{dataset.format}</p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-2">许可协议</h4>
+                  <h4 className="font-medium text-foreground mb-1">许可协议</h4>
                   <p className="text-sm text-muted-foreground">{dataset.license}</p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-2">样本数量</h4>
+                  <h4 className="font-medium text-foreground mb-1">样本数量</h4>
                   <p className="text-sm text-muted-foreground">{dataset.samples.toLocaleString()} 例</p>
                 </div>
                 <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-2">用户评分</h4>
-                  <p className="text-sm text-muted-foreground">{dataset.rating} / 5.0</p>
+                  <h4 className="font-medium text-foreground mb-1">上传时间</h4>
+                  <p className="text-sm text-muted-foreground">{dataset.createdAt}</p>
                 </div>
+              </div>
+
+              {/* 提示信息 */}
+              <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
+                <Lock className="h-5 w-5 text-muted-foreground flex-shrink-0" />
+                <p className="text-sm text-muted-foreground">
+                  完整数据内容仅对数据集所有者可见，如有合作意向请联系数据提供方
+                </p>
               </div>
             </CardContent>
           </Card>

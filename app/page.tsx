@@ -77,7 +77,7 @@ const workflowSteps = [
 // 平台统计（克制呈现，使用种子数据）
 const platformStats = [
   {
-    title: "标注记录",
+    title: "标注记录（个）",
     value: "1,245,800",
     icon: <FileStack className="h-5 w-5 text-primary" />,
   },
@@ -87,7 +87,7 @@ const platformStats = [
     icon: <Database className="h-5 w-5 text-primary" />,
   },
   {
-    title: "活跃任务数",
+    title: "活跃任务数（个）",
     value: "128",
     icon: <ClipboardList className="h-5 w-5 text-primary" />,
   },

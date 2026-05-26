@@ -278,16 +278,16 @@ export default function DataMarketplacePage() {
           <section className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">影像总量</p>
+                <p className="text-sm text-muted-foreground">数据集总数</p>
                 <p className="text-2xl font-bold text-foreground font-mono">
-                  52,104,921
-                  <span className="text-sm font-normal text-muted-foreground ml-1">DICOM</span>
+                  1,286
+                  <span className="text-sm font-normal text-muted-foreground ml-1">个</span>
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">确权资产</p>
+                <p className="text-sm text-muted-foreground">样本总量</p>
                 <p className="text-2xl font-bold text-foreground font-mono">
                   1,245,000
                   <span className="text-sm font-normal text-muted-foreground ml-1">例</span>
@@ -296,18 +296,19 @@ export default function DataMarketplacePage() {
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">合作节点</p>
+                <p className="text-sm text-muted-foreground">覆盖专科</p>
                 <p className="text-2xl font-bold text-foreground font-mono">
-                  150
-                  <span className="text-sm font-normal text-muted-foreground ml-1">家</span>
+                  12
+                  <span className="text-sm font-normal text-muted-foreground ml-1">个</span>
                 </p>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="pt-6">
-                <p className="text-sm text-muted-foreground">要素分红</p>
+                <p className="text-sm text-muted-foreground">合作机构</p>
                 <p className="text-2xl font-bold text-foreground font-mono">
-                  ¥3,481,920
+                  150
+                  <span className="text-sm font-normal text-muted-foreground ml-1">家</span>
                 </p>
               </CardContent>
             </Card>

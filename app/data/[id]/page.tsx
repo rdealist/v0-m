@@ -18,7 +18,6 @@ import {
   ArrowLeft,
   Database,
   Building2,
-  Calendar,
   FileImage,
   Lock,
   Eye,
@@ -34,6 +33,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   Coins,
+  GitBranch,
 } from "lucide-react"
 import Link from "next/link"
 import { useI18n } from "@/lib/i18n"
@@ -102,6 +102,7 @@ const mockDatasets: Record<string, {
   lastUpdated: string
   downloads: number
   rating: number
+  version: string
 }> = {
   "DS001": {
     id: "DS001",
@@ -124,6 +125,7 @@ const mockDatasets: Record<string, {
     lastUpdated: "2026-05-10",
     downloads: 156,
     rating: 4.8,
+    version: "v1.0",
   },
   "DS002": {
     id: "DS002",
@@ -146,6 +148,7 @@ const mockDatasets: Record<string, {
     lastUpdated: "2026-04-20",
     downloads: 89,
     rating: 4.9,
+    version: "v1.0",
   },
   "DS003": {
     id: "DS003",
@@ -190,6 +193,7 @@ const mockDatasets: Record<string, {
       { id: "T001", name: "DR分级标注", status: "completed", progress: 100, participants: 12 },
       { id: "T002", name: "病变区域分割", status: "active", progress: 68, participants: 8 },
     ],
+    version: "v1.2",
   },
   "DS004": {
     id: "DS004",
@@ -212,6 +216,7 @@ const mockDatasets: Record<string, {
     lastUpdated: "2026-05-01",
     downloads: 412,
     rating: 4.6,
+    version: "v1.0",
   },
   "DS005": {
     id: "DS005",
@@ -253,6 +258,7 @@ const mockDatasets: Record<string, {
     tasks: [
       { id: "T003", name: "心室分割标注", status: "completed", progress: 100, participants: 6 },
     ],
+    version: "v1.1",
   },
   "DS006": {
     id: "DS006",
@@ -275,6 +281,7 @@ const mockDatasets: Record<string, {
     lastUpdated: "2026-05-15",
     downloads: 45,
     rating: 4.8,
+    version: "v1.0",
   },
 }
 
@@ -348,8 +355,12 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                   </Badge>
                 )}
               </div>
-              <h1 className="text-2xl font-bold text-foreground sm:text-3xl mb-3">
+              <h1 className="text-2xl font-bold text-foreground sm:text-3xl mb-3 flex items-center gap-3">
                 {dataset.name}
+                <Badge variant="outline" className="text-sm font-normal">
+                  <GitBranch className="h-3 w-3 mr-1" />
+                  {dataset.version}
+                </Badge>
               </h1>
               <p className="text-muted-foreground leading-relaxed max-w-3xl">
                 {dataset.description}
@@ -389,7 +400,7 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* 基本信息卡片 */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <Card className="border border-border">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 text-muted-foreground mb-1">
@@ -415,15 +426,6 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
                 <span className="text-xs">许可协议</span>
               </div>
               <p className="text-xs font-medium text-foreground truncate">{dataset.license}</p>
-            </CardContent>
-          </Card>
-          <Card className="border border-border">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-muted-foreground mb-1">
-                <Calendar className="h-4 w-4" />
-                <span className="text-xs">创建时间</span>
-              </div>
-              <p className="text-sm font-medium text-foreground">{dataset.createdAt}</p>
             </CardContent>
           </Card>
           <Card className="border border-border">
@@ -628,53 +630,10 @@ export default function DatasetDetailPage({ params }: { params: Promise<{ id: st
             </TabsContent>
           </Tabs>
         ) : (
-          /* 非所有者视图 - 仅基本信息 */
+          /* 非所有者视图 - 提示信息 */
           <Card className="border border-border">
-            <CardHeader>
-              <CardTitle className="text-base">数据集简介</CardTitle>
-              <CardDescription>
-                此数据集由其他机构或用户上传，您可以查看基本信息
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* 描述 */}
-              <div>
-                <h4 className="font-medium text-foreground mb-2">详细描述</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{dataset.description}</p>
-              </div>
-
-              {/* 标签 */}
-              <div>
-                <h4 className="font-medium text-foreground mb-2">标签</h4>
-                <div className="flex flex-wrap gap-2">
-                  {dataset.tags.map((tag, idx) => (
-                    <Badge key={idx} variant="secondary">{tag}</Badge>
-                  ))}
-                </div>
-              </div>
-
-              {/* 基本信息 */}
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-1">数据格式</h4>
-                  <p className="text-sm text-muted-foreground">{dataset.format}</p>
-                </div>
-                <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-1">许可协议</h4>
-                  <p className="text-sm text-muted-foreground">{dataset.license}</p>
-                </div>
-                <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-1">样本数量</h4>
-                  <p className="text-sm text-muted-foreground">{dataset.samples.toLocaleString()} 例</p>
-                </div>
-                <div className="p-4 border border-border rounded-lg">
-                  <h4 className="font-medium text-foreground mb-1">上传时间</h4>
-                  <p className="text-sm text-muted-foreground">{dataset.createdAt}</p>
-                </div>
-              </div>
-
-              {/* 提示信息 */}
-              <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
+            <CardContent className="p-6">
+              <div className="flex items-center gap-3">
                 <Lock className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                 <p className="text-sm text-muted-foreground">
                   完整数据内容仅对数据集所有者可见，如有合作意向请联系数据提供方

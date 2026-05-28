@@ -82,47 +82,47 @@ export function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full bg-card/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-card/80",
+        "sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80 border-b border-border/40",
         className
       )}
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        {/* 左侧: Logo + 导航 */}
-        <div className="flex items-center gap-6">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* 左侧: Logo */}
+        <div className="flex items-center">
           <Link href="/" className="flex-shrink-0">
             <Logo size="md" />
           </Link>
-
-          {/* 桌面端导航 */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href
-              return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => handleNavClick(item.href)}
-                      className={cn(
-                        "px-4 py-2 text-sm font-medium rounded-full transition-all",
-                        isActive
-                          ? "text-primary-foreground bg-primary shadow-sm"
-                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                      )}
-                    >
-                  {item.label}
-                </Link>
-              )
-            })}
-          </nav>
         </div>
 
-        {/* 右侧: 多语言 + 钱包 + 通知 + 用户菜单 / 登录按钮 */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* 中间: 导航菜单 - Voiceflow 风格的胶囊按钮 */}
+        <nav className="hidden md:flex items-center gap-1 bg-muted/50 p-1 rounded-full border border-border/50">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => handleNavClick(item.href)}
+                className={cn(
+                  "px-4 py-1.5 text-sm font-medium rounded-full transition-all",
+                  isActive
+                    ? "bg-background text-foreground shadow-sm border border-border/50"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+        </nav>
+
+        {/* 右侧: 多语言 + 通知 + 用户菜单 / 登录按钮 */}
+        <div className="flex items-center gap-2">
           {/* 多语言切换 */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-                <Globe className="h-5 w-5" />
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                <Globe className="h-4 w-4" />
                 <span className="sr-only">切换语言</span>
               </Button>
             </DropdownMenuTrigger>
@@ -149,11 +149,11 @@ export function Header({
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative"
+                className="relative h-8 w-8"
                 asChild
               >
                 <Link href="/notifications">
-                  <Bell className="h-5 w-5" />
+                  <Bell className="h-4 w-4" />
                   {notificationCount > 0 && (
                     <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
                       {notificationCount > 99 ? "99+" : notificationCount}
@@ -176,20 +176,20 @@ export function Header({
               />
             </>
           ) : (
-            <>
-              <Button variant="ghost" asChild>
+            <div className="flex items-center gap-2">
+              <Button variant="ghost" size="sm" className="rounded-full px-4" asChild>
                 <Link href="/login">登录</Link>
               </Button>
-              <Button asChild>
+              <Button size="sm" className="rounded-full px-4" asChild>
                 <Link href="/login">注册</Link>
               </Button>
-            </>
+            </div>
           )}
 
           {/* 移动端菜单按钮 */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon" className="md:hidden h-8 w-8">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">打开菜单</span>
               </Button>
@@ -209,10 +209,10 @@ export function Header({
                       href={item.href}
                       onClick={() => handleNavClick(item.href)}
                       className={cn(
-                        "px-4 py-3 text-base font-medium rounded-full transition-all",
+                        "px-4 py-3 text-base font-medium rounded-lg transition-all",
                         isActive
-                          ? "text-primary-foreground bg-primary shadow-sm"
-                          : "text-muted-foreground hover:text-foreground hover:bg-accent hover:shadow-sm"
+                          ? "text-foreground bg-muted"
+                          : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                       )}
                     >
                       {item.label}
@@ -226,7 +226,7 @@ export function Header({
                     <Link 
                       href="/me/assets"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="block px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-full transition-all"
+                      className="block px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 rounded-lg transition-all"
                     >
                       我的资产
                     </Link>

@@ -14,7 +14,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { Menu, Bell, Globe, Check } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -73,6 +73,20 @@ export function Header({
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { locale, setLocale } = useI18n()
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  // 监听滚动事件
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10)
+    }
+    
+    // 初始检查
+    handleScroll()
+    
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false)
@@ -82,20 +96,35 @@ export function Header({
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 w-full bg-background/95 backdrop-blur-sm supports-[backdrop-filter]:bg-background/80 border-b border-border/40",
+        "sticky top-0 z-50 w-full transition-all duration-300 ease-in-out",
+        isScrolled
+          ? "bg-background/98 backdrop-blur-md shadow-sm border-b border-border/60"
+          : "bg-background/80 backdrop-blur-sm border-b border-transparent",
         className
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div 
+        className={cn(
+          "mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 transition-all duration-300",
+          isScrolled ? "h-14" : "h-16"
+        )}
+      >
         {/* 左侧: Logo */}
         <div className="flex items-center">
-          <Link href="/" className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0 transition-transform duration-300 hover:scale-105">
             <Logo size="md" />
           </Link>
         </div>
 
         {/* 中间: 导航菜单 - Voiceflow 风格的胶囊按钮 */}
-        <nav className="hidden md:flex items-center gap-1 bg-muted/50 p-1 rounded-full border border-border/50">
+        <nav 
+          className={cn(
+            "hidden md:flex items-center gap-1 p-1 rounded-full border transition-all duration-300",
+            isScrolled
+              ? "bg-muted/60 border-border/60"
+              : "bg-muted/40 border-border/40"
+          )}
+        >
           {navItems.map((item) => {
             const isActive = pathname === item.href
             return (
@@ -104,10 +133,10 @@ export function Header({
                 href={item.href}
                 onClick={() => handleNavClick(item.href)}
                 className={cn(
-                  "px-4 py-1.5 text-sm font-medium rounded-full transition-all",
+                  "px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-200",
                   isActive
                     ? "bg-background text-foreground shadow-sm border border-border/50"
-                    : "text-muted-foreground hover:text-foreground"
+                    : "text-muted-foreground hover:text-foreground hover:bg-background/50"
                 )}
               >
                 {item.label}
@@ -121,7 +150,7 @@ export function Header({
           {/* 多语言切换 */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+              <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground transition-colors">
                 <Globe className="h-4 w-4" />
                 <span className="sr-only">切换语言</span>
               </Button>
@@ -149,13 +178,13 @@ export function Header({
               <Button
                 variant="ghost"
                 size="icon"
-                className="relative h-8 w-8"
+                className="relative h-8 w-8 transition-colors"
                 asChild
               >
                 <Link href="/notifications">
                   <Bell className="h-4 w-4" />
                   {notificationCount > 0 && (
-                    <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
+                    <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground animate-pulse">
                       {notificationCount > 99 ? "99+" : notificationCount}
                     </span>
                   )}
@@ -177,10 +206,10 @@ export function Header({
             </>
           ) : (
             <div className="flex items-center gap-2">
-              <Button variant="ghost" size="sm" className="rounded-full px-4" asChild>
+              <Button variant="ghost" size="sm" className="rounded-full px-4 transition-all hover:bg-muted" asChild>
                 <Link href="/login">登录</Link>
               </Button>
-              <Button size="sm" className="rounded-full px-4" asChild>
+              <Button size="sm" className="rounded-full px-4 transition-all hover:scale-105" asChild>
                 <Link href="/login">注册</Link>
               </Button>
             </div>
@@ -189,7 +218,7 @@ export function Header({
           {/* 移动端菜单按钮 */}
           <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden h-8 w-8">
+              <Button variant="ghost" size="icon" className="md:hidden h-8 w-8 transition-colors">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">打开菜单</span>
               </Button>
@@ -209,7 +238,7 @@ export function Header({
                       href={item.href}
                       onClick={() => handleNavClick(item.href)}
                       className={cn(
-                        "px-4 py-3 text-base font-medium rounded-lg transition-all",
+                        "px-4 py-3 text-base font-medium rounded-lg transition-all duration-200",
                         isActive
                           ? "text-foreground bg-muted"
                           : "text-muted-foreground hover:text-foreground hover:bg-muted/50"

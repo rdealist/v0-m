@@ -26,7 +26,6 @@ import {
 import {
   Search,
   SlidersHorizontal,
-  Upload,
   Database,
   Building2,
   X,
@@ -193,7 +192,6 @@ const mockDatasets = [
 export default function DataMarketplacePage() {
   const { locale, t } = useI18n()
   const [searchQuery, setSearchQuery] = useState("")
-  const [datasetTab, setDatasetTab] = useState<"public" | "mine">("public")
   const [selectedModality, setSelectedModality] = useState<string>("计算机断层扫描")
   const [selectedSpecialty, setSelectedSpecialty] = useState<string>("呼吸与胸壁")
   const [selectedStatus, setSelectedStatus] = useState<string>("all")
@@ -214,13 +212,10 @@ export default function DataMarketplacePage() {
     setCurrentPage(1)
   }
 
-  // 过滤数据集
+  // 过滤数据集（只展示公开数据集）
   const filteredDatasets = mockDatasets.filter(dataset => {
-    // Tab 筛选：公开数据集 vs 我的数据集
-    if (datasetTab === "public" && dataset.isOwned) {
-      return false
-    }
-    if (datasetTab === "mine" && !dataset.isOwned) {
+    // 只展示非自有的公开数据集
+    if (dataset.isOwned) {
       return false
     }
     if (searchQuery && !dataset.name.toLowerCase().includes(searchQuery.toLowerCase())) {
@@ -261,17 +256,9 @@ export default function DataMarketplacePage() {
       <main className="flex-1">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* 页面标题区 */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground sm:text-3xl">数据广场</h1>
-              <p className="mt-1 text-muted-foreground">浏览公开数据资产，发现高质量医学影像数据集</p>
-            </div>
-            <Button className="bg-primary hover:bg-primary/90 text-white" asChild>
-              <Link href="/data/upload">
-                <Upload className="mr-2 h-4 w-4" />
-                上传数据集
-              </Link>
-            </Button>
+          <div className="mb-8">
+            <h1 className="text-2xl font-bold text-foreground sm:text-3xl">数据广场</h1>
+            <p className="mt-1 text-muted-foreground">浏览公开数据资产，发现高质量医学影像数据集</p>
           </div>
 
           {/* 统计数据卡片 */}
@@ -313,30 +300,6 @@ export default function DataMarketplacePage() {
               </CardContent>
             </Card>
           </section>
-
-          {/* Tab 切换：公开数据集 / 我的数据集 */}
-          <div className="flex gap-2 mb-4">
-            <button
-              onClick={() => setDatasetTab("public")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                datasetTab === "public"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              公开数据集
-            </button>
-            <button
-              onClick={() => setDatasetTab("mine")}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                datasetTab === "mine"
-                  ? "bg-primary text-primary-foreground shadow-sm"
-                  : "bg-muted/50 text-muted-foreground hover:bg-muted hover:text-foreground"
-              }`}
-            >
-              我的数据集
-            </button>
-          </div>
 
           {/* 搜索栏 */}
           <div className="flex gap-4 mb-6">

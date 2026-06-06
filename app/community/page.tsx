@@ -1,28 +1,24 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Header, Footer, LevelBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
 import {
   MessageSquare,
   Heart,
   Share2,
   Bookmark,
-  Search,
   Filter,
   Flame,
   Clock,
   TrendingUp,
-  Image as ImageIcon,
-  Send,
   MoreHorizontal,
   Eye,
+  Plus,
 } from "lucide-react"
 import {
   DropdownMenu,
@@ -45,15 +41,6 @@ const mockWallet = {
   locked: 15000,
   change: 2350,
 }
-
-// 热门话题
-const hotTopics = [
-  { id: 1, name: "肺结节AI诊断", count: 1280 },
-  { id: 2, name: "标注经验分享", count: 856 },
-  { id: 3, name: "数据质量控制", count: 642 },
-  { id: 4, name: "CT影像处理", count: 523 },
-  { id: 5, name: "病理切片分析", count: 489 },
-]
 
 // 讨论帖子
 const discussions = [
@@ -136,9 +123,6 @@ const discussions = [
 ]
 
 export default function CommunityPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [newPost, setNewPost] = useState("")
-
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header
@@ -151,60 +135,41 @@ export default function CommunityPage() {
       <main className="flex-1">
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {/* 页面标题 */}
-          <div className="mb-8">
-            <h1 className="text-2xl font-bold text-foreground sm:text-3xl">医学讨论社区</h1>
-            <p className="mt-1 text-muted-foreground">分享经验、探讨病例、共同进步</p>
+          <div className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-foreground sm:text-3xl">医学讨论社区</h1>
+              <p className="mt-1 text-muted-foreground">分享经验、探讨病例、共同进步</p>
+            </div>
+            <Link href="/community/new">
+              <Button>
+                <Plus className="h-4 w-4 mr-2" />
+                发布帖子
+              </Button>
+            </Link>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
             {/* 主内容区 */}
             <div className="lg:col-span-2 space-y-6">
-              {/* 发帖框 */}
+              {/* 排序标签 */}
               <Card>
-                <CardContent className="pt-6">
-                  <div className="flex gap-3">
-                    <Avatar className="h-10 w-10">
-                      <AvatarFallback className="bg-primary/10 text-primary">
-                        {mockUser.name.slice(0, 1)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 space-y-3">
-                      <Textarea
-                        placeholder="分享您的标注经验、提问或讨论病例..."
-                        value={newPost}
-                        onChange={(e) => setNewPost(e.target.value)}
-                        className="min-h-[80px] resize-none"
-                      />
-                      <div className="flex items-center justify-between">
-                        <Button variant="ghost" size="sm">
-                          <ImageIcon className="h-4 w-4 mr-1.5" />
-                          添加图片
-                        </Button>
-                        <Button className="bg-primary hover:bg-primary/90" disabled={!newPost.trim()}>
-                          <Send className="h-4 w-4 mr-1.5" />
-                          发布
-                        </Button>
-                      </div>
-                    </div>
+                <CardContent className="py-3 px-4">
+                  <div className="flex items-center gap-2">
+                    <Button variant="outline" size="sm" className="rounded-full bg-primary/10 text-primary hover:bg-primary/20">
+                      <Flame className="h-4 w-4 mr-1.5" />
+                      热门
+                    </Button>
+                    <Button variant="ghost" size="sm" className="rounded-full">
+                      <Clock className="h-4 w-4 mr-1.5" />
+                      最新
+                    </Button>
+                    <Button variant="ghost" size="sm" className="rounded-full">
+                      <TrendingUp className="h-4 w-4 mr-1.5" />
+                      热议
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
-
-              {/* 排序标签 */}
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" className="rounded-full bg-primary/10 text-primary hover:bg-primary/20">
-                  <Flame className="h-4 w-4 mr-1.5" />
-                  热门
-                </Button>
-                <Button variant="ghost" size="sm" className="rounded-full">
-                  <Clock className="h-4 w-4 mr-1.5" />
-                  最新
-                </Button>
-                <Button variant="ghost" size="sm" className="rounded-full">
-                  <TrendingUp className="h-4 w-4 mr-1.5" />
-                  热议
-                </Button>
-              </div>
 
               {/* 帖子列表 */}
               <div className="space-y-4">
@@ -304,21 +269,6 @@ export default function CommunityPage() {
 
             {/* 侧边栏 */}
             <div className="space-y-6">
-              {/* 搜索 */}
-              <Card>
-                <CardContent className="pt-6">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      placeholder="搜索讨论..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* 热门话题 */}
               <Card>
                 <CardHeader className="pb-3">
@@ -328,7 +278,13 @@ export default function CommunityPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  {hotTopics.map((topic, index) => (
+                  {[
+                    { id: 1, name: "肺结节AI诊断", count: 1280 },
+                    { id: 2, name: "标注经验分享", count: 856 },
+                    { id: 3, name: "数据质量控制", count: 642 },
+                    { id: 4, name: "CT影像处理", count: 523 },
+                    { id: 5, name: "病理切片分析", count: 489 },
+                  ].map((topic, index) => (
                     <div
                       key={topic.id}
                       className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"

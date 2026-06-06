@@ -1,675 +1,191 @@
 "use client"
 
-import { useState } from "react"
-import { Header, Footer, LevelBadge, TaskStatusBadge } from "@/components/m-platform"
+import { Header } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Progress } from "@/components/ui/progress"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  PaginationEllipsis,
-} from "@/components/ui/pagination"
-import {
-  Search,
-  Plus,
-  Clock,
-  Coins,
-  Users,
-  CheckCircle2,
-  AlertTriangle,
-  ChevronRight,
-  Building2,
-} from "lucide-react"
-import Link from "next/link"
+import { Clock, FileImage, Shield, CheckCircle2 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
-// 模拟用户数据
 const mockUser = {
   name: "张医生",
   email: "zhang@hospital.com",
-  avatar: undefined,
   level: 5,
   verified: true,
 }
+const mockWallet = { balance: 125680, locked: 15000, change: 2350 }
 
-const mockWallet = {
-  balance: 125680,
-  locked: 15000,
-  change: 2350,
+type TaskVariant = "normal" | "claimed" | "full" | "level_blocked"
+
+interface TaskItem {
+  id: string
+  title: string
+  samples: number
+  deadline: string
+  minLevel: number
+  reward: number
+  claimed: number
+  maxClaims: number
+  variant: TaskVariant
 }
 
-// 模拟任务列表
-const mockTasks = [
+const tasks: TaskItem[] = [
   {
     id: "T001",
-    title: "肺结节良恶性标注",
-    description: "对胸部CT影像中的肺结节进行良恶性分类标注，需要标注结节位置和分类",
-    publisher: "协和医院影像中心",
-    publisherLevel: 7,
-    reward: 5000,
-    rewardPerCase: 4,
+    title: "胸部 CT 肺结节检测标注",
+    samples: 200,
+    deadline: "2026-07-15",
     minLevel: 3,
-    deadline: "2026-06-15",
-    claimed: 12,
-    maxClaims: 20,
-    totalCases: 1250,
-    status: "open" as const,
-    modality: "CT",
-    specialty: "放射科",
+    reward: 2400,
+    claimed: 8,
+    maxClaims: 15,
+    variant: "normal",
   },
   {
     id: "T002",
-    title: "脑部肿瘤边界分割",
-    description: "对脑部MRI影像中的肿瘤进行边界分割标注，要求精确到像素级别",
-    publisher: "华西医学影像研究院",
-    publisherLevel: 8,
-    reward: 8000,
-    rewardPerCase: 8,
+    title: "脑部 MRI 肿瘤边界分割",
+    samples: 100,
+    deadline: "2026-07-20",
     minLevel: 4,
-    deadline: "2026-06-20",
+    reward: 3600,
     claimed: 5,
     maxClaims: 10,
-    totalCases: 1000,
-    status: "open" as const,
-    modality: "MRI",
-    specialty: "神经内科",
+    variant: "claimed",
   },
   {
     id: "T003",
     title: "视网膜病变分级标注",
-    description: "对眼底OCT影像进行糖尿病视网膜病变分级标注（0-4级）",
-    publisher: "中山眼科中心",
-    publisherLevel: 6,
-    reward: 3500,
-    rewardPerCase: 2,
+    samples: 350,
+    deadline: "2026-07-10",
     minLevel: 2,
-    deadline: "2026-06-10",
-    claimed: 18,
+    reward: 1800,
+    claimed: 25,
     maxClaims: 25,
-    totalCases: 1750,
-    status: "open" as const,
-    modality: "OCT",
-    specialty: "眼科",
+    variant: "full",
   },
   {
     id: "T004",
-    title: "胸部X光肺炎检测",
-    description: "对胸部X光片进行肺炎检测和定位标注",
-    publisher: "北京大学人民医院",
-    publisherLevel: 7,
-    reward: 4500,
-    rewardPerCase: 2,
-    minLevel: 2,
-    deadline: "2026-06-08",
-    claimed: 22,
-    maxClaims: 30,
-    totalCases: 2250,
-    status: "open" as const,
-    modality: "X-Ray",
-    specialty: "放射科",
+    title: "病理切片质量审核",
+    samples: 80,
+    deadline: "2026-07-18",
+    minLevel: 5,
+    reward: 4000,
+    claimed: 2,
+    maxClaims: 6,
+    variant: "level_blocked",
   },
   {
     id: "T005",
-    title: "心脏超声结构分割",
-    description: "对心脏超声影像进行心室心房边界分割",
-    publisher: "阜外医院",
-    publisherLevel: 8,
-    reward: 6000,
-    rewardPerCase: 6,
-    minLevel: 4,
-    deadline: "2026-06-25",
-    claimed: 8,
-    maxClaims: 15,
-    totalCases: 1000,
-    status: "open" as const,
-    modality: "超声",
-    specialty: "心内科",
+    title: "心脏超声结构分割标注",
+    samples: 160,
+    deadline: "2026-07-25",
+    minLevel: 3,
+    reward: 2800,
+    claimed: 4,
+    maxClaims: 12,
+    variant: "normal",
   },
 ]
 
-// 我的接单（已领取的任务）
-const myClaimedTasks = [
-  {
-    id: "T001",
-    title: "肺结节良恶性标注",
-    publisher: "协和医院影像中心",
-    reward: 5000,
-    deadline: "2026-06-15",
-    myProgress: 45,
-    totalCases: 100,
-    completedCases: 45,
-    status: "in_progress" as const,
-  },
-]
-
-// 审核任务（Lv5+可见）
-const auditTasks = [
-  {
-    id: "A001",
-    title: "肺结节标注审核",
-    submitter: "李医生",
-    submitterLevel: 3,
-    submittedAt: "2026-05-19 14:30",
-    casesCount: 50,
-    status: "pending_audit" as const,
-  },
-  {
-    id: "A002",
-    title: "视网膜病变标注审核",
-    submitter: "王医生",
-    submitterLevel: 2,
-    submittedAt: "2026-05-19 10:15",
-    casesCount: 80,
-    status: "pending_audit" as const,
-  },
-]
-
-// 我发布的任务（机构可见）
-const myPublishedTasks = [
-  {
-    id: "T001",
-    title: "肺结节良恶性标注",
-    reward: 5000,
-    lockedFunds: 5250,
-    deadline: "2026-06-15",
-    claimed: 12,
-    maxClaims: 20,
-    status: "open" as const,
-  },
-]
-
-export default function TaskMarketplacePage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedModality, setSelectedModality] = useState<string>("all")
-  const [selectedMinLevel, setSelectedMinLevel] = useState<string>("all")
-  const [sortBy, setSortBy] = useState("newest")
-  const [activeTab, setActiveTab] = useState("all")
-  const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 6
-
-  const userLevel = mockUser.level
-  const isExpert = userLevel >= 5
-  const isPublisher = true // 模拟机构身份
-
-  // 过滤任务
-  const filteredTasks = mockTasks.filter(task => {
-    if (searchQuery && !task.title.toLowerCase().includes(searchQuery.toLowerCase())) {
-      return false
-    }
-    if (selectedModality !== "all" && task.modality !== selectedModality) {
-      return false
-    }
-    return true
-  })
-
-  // 分页
-  const totalPages = Math.ceil(filteredTasks.length / itemsPerPage)
-  const paginatedTasks = filteredTasks.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  )
-
-  // 判断用户是否可以领取任务
-  const canClaimTask = (task: typeof mockTasks[0]) => {
-    return userLevel >= task.minLevel && task.claimed < task.maxClaims
-  }
-
-  // 计算截止时间状态
-  const getDeadlineStatus = (deadline: string) => {
-    const now = new Date()
-    const deadlineDate = new Date(deadline)
-    const daysLeft = Math.ceil((deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
-    
-    if (daysLeft <= 3) return "urgent"
-    if (daysLeft <= 7) return "warning"
-    return "normal"
-  }
-
+export default function BrowseTasksPage() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      <Header
-        isLoggedIn={true}
-        user={mockUser}
-        wallet={mockWallet}
-        currentPath="/tasks"
-        notificationCount={3}
-        onNavigate={(path) => console.log("Navigate to:", path)}
-        onLogout={() => console.log("Logout")}
-        onNotificationClick={() => console.log("Notifications")}
-      />
+      <Header isLoggedIn user={mockUser} wallet={mockWallet} notificationCount={3} />
 
       <main className="flex-1">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          {/* 页面标题区 */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-8">
-            <div>
-              <h1 className="text-2xl font-bold text-foreground sm:text-3xl">任务广场</h1>
-              <p className="mt-1 text-muted-foreground">发现标注任务，赚取积分收益</p>
-            </div>
-            {isPublisher && (
-              <Button className="bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
-                <Link href="/tasks/new">
-                  <Plus className="mr-2 h-4 w-4" />
-                  发布任务
-                </Link>
-              </Button>
-            )}
+        <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-foreground sm:text-3xl">浏览标注任务</h1>
+            <p className="mt-1 text-muted-foreground">领取适合你的标注工作机会，赚取积分收益</p>
           </div>
 
-          {/* 任务Tab */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:w-auto lg:inline-grid">
-              <TabsTrigger value="all">全部任务</TabsTrigger>
-              <TabsTrigger value="claimed">我的接单</TabsTrigger>
-              {isExpert && <TabsTrigger value="audit">审核任务</TabsTrigger>}
-              {isPublisher && <TabsTrigger value="published">我发布的</TabsTrigger>}
-            </TabsList>
+          {/* 任务列表（列表式，非网格） */}
+          <div className="space-y-3">
+            {tasks.map((task) => {
+              const claimedRatio = (task.claimed / task.maxClaims) * 100
+              const isFull = task.variant === "full"
+              const isClaimed = task.variant === "claimed"
+              const isBlocked = task.variant === "level_blocked"
 
-            {/* 搜索和筛选 - 所有tab下可见 */}
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  placeholder="搜索任务..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Select value={selectedModality} onValueChange={setSelectedModality}>
-                  <SelectTrigger className="w-[120px]">
-                    <SelectValue placeholder="模态" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">全部</SelectItem>
-                    <SelectItem value="CT">CT</SelectItem>
-                    <SelectItem value="MRI">MRI</SelectItem>
-                    <SelectItem value="X-Ray">X-Ray</SelectItem>
-                    <SelectItem value="超声">超声</SelectItem>
-                    <SelectItem value="OCT">OCT</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={selectedMinLevel} onValueChange={setSelectedMinLevel}>
-                  <SelectTrigger className="w-[140px]">
-                    <SelectValue placeholder="最低等级" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">全部等级</SelectItem>
-                    <SelectItem value="1">Lv1 及以上</SelectItem>
-                    <SelectItem value="2">Lv2 及以上</SelectItem>
-                    <SelectItem value="3">Lv3 及以上</SelectItem>
-                    <SelectItem value="4">Lv4 及以上</SelectItem>
-                    <SelectItem value="5">Lv5 及以上</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={sortBy} onValueChange={setSortBy}>
-                  <SelectTrigger className="w-[130px]">
-                    <SelectValue placeholder="排序" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">最新发布</SelectItem>
-                    <SelectItem value="deadline">截止最近</SelectItem>
-                    <SelectItem value="reward">奖励最高</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
+              return (
+                <div
+                  key={task.id}
+                  className={cn(
+                    "relative flex flex-col gap-4 rounded-xl border border-border bg-card p-5 transition-all sm:flex-row sm:items-center",
+                    isClaimed && "border-l-[3px] border-l-green-500",
+                    isFull && "opacity-60"
+                  )}
+                >
+                  {/* 左侧 70% */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground text-base truncate">{task.title}</h3>
+                    <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                      <span className="flex items-center gap-1.5">
+                        <FileImage className="h-3.5 w-3.5" />
+                        总计 {task.samples} 个样本
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="h-3.5 w-3.5" />
+                        截止 {task.deadline}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <Shield className="h-3.5 w-3.5" />
+                        最低 Lv{task.minLevel}
+                      </span>
+                    </div>
+                  </div>
 
-            {/* 全部任务 */}
-            <TabsContent value="all" className="space-y-6">
-              {/* 结果计数 */}
-              <p className="text-sm text-muted-foreground">
-                共找到 <span className="font-mono font-medium text-foreground">{filteredTasks.length}</span> 个任务
-                {totalPages > 1 && (
-                  <span>，显示第 {(currentPage - 1) * itemsPerPage + 1}-{Math.min(currentPage * itemsPerPage, filteredTasks.length)} 个</span>
-                )}
-              </p>
-              
-              {/* 任务列表 */}
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {paginatedTasks.map((task) => {
-                  const deadlineStatus = getDeadlineStatus(task.deadline)
-                  const claimable = canClaimTask(task)
-                  const levelBlocked = userLevel < task.minLevel
-                  const isFull = task.claimed >= task.maxClaims
-
-                  return (
-                    <Card
-                      key={task.id}
-                      className={cn(
-                        "border border-border hover:border-primary/30 hover:shadow-sm transition-all",
-                        !claimable && "opacity-75"
-                      )}
-                    >
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1 min-w-0">
-                            <CardTitle className="text-base truncate">
-                              {task.title}
-                            </CardTitle>
-                            <CardDescription className="mt-1 flex items-center gap-1.5 text-sm">
-                              <Building2 className="h-3.5 w-3.5" />
-                              <span className="truncate">{task.publisher}</span>
-                            </CardDescription>
-                          </div>
-                          <TaskStatusBadge status={task.status} />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="pt-0 space-y-4">
-                        <p className="text-sm text-muted-foreground line-clamp-2">
-                          {task.description}
-                        </p>
-
-                        {/* 奖励和等级要求 */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
-                            <Coins className="h-4 w-4" />
-                            <span className="font-mono">{task.reward.toLocaleString()}</span>
-                            <span className="text-sm">积分</span>
-                          </div>
-                          <LevelBadge level={task.minLevel} size="sm" />
-                        </div>
-
-                        {/* 截止时间和进度 */}
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <div className={cn(
-                              "flex items-center gap-1.5",
-                              deadlineStatus === "urgent" ? "text-destructive" :
-                              deadlineStatus === "warning" ? "text-warning" :
-                              "text-muted-foreground"
-                            )}>
-                              {deadlineStatus === "urgent" ? (
-                                <AlertTriangle className="h-4 w-4" />
-                              ) : (
-                                <Clock className="h-4 w-4" />
-                              )}
-                              截止 {task.deadline}
-                            </div>
-                            <div className="flex items-center gap-1.5 text-muted-foreground">
-                              <Users className="h-4 w-4" />
-                              <span className="font-mono">{task.claimed}</span>/{task.maxClaims}
-                            </div>
-                          </div>
-                          <Progress 
-                            value={(task.claimed / task.maxClaims) * 100} 
-                            className="h-1.5"
-                          />
-                        </div>
-
-                        {/* 领取按钮 */}
-                        <Button
-                          className={cn(
-                            "w-full",
-                            claimable
-                              ? "bg-[#0F8770] hover:bg-[#0A6655] text-white"
-                              : ""
-                          )}
-                          variant={claimable ? "default" : "secondary"}
-                          disabled={!claimable}
-                        >
-                          {levelBlocked ? (
-                            `需要 Lv${task.minLevel} 及以上`
-                          ) : isFull ? (
-                            "名额已满"
-                          ) : (
-                            "领取任务"
-                          )}
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  )
-                })}
-              </div>
-
-              {/* 分页 */}
-              {totalPages > 1 && (
-                <Pagination className="mt-6">
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious 
-                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-                        className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                      />
-                    </PaginationItem>
-                    
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <PaginationItem key={page}>
-                            <PaginationLink
-                              onClick={() => setCurrentPage(page)}
-                              isActive={currentPage === page}
-                              className="cursor-pointer"
-                            >
-                              {page}
-                            </PaginationLink>
-                          </PaginationItem>
-                        )
-                      } else if (
-                        page === currentPage - 2 ||
-                        page === currentPage + 2
-                      ) {
-                        return (
-                          <PaginationItem key={page}>
-                            <PaginationEllipsis />
-                          </PaginationItem>
-                        )
-                      }
-                      return null
-                    })}
-                    
-                    <PaginationItem>
-                      <PaginationNext 
-                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-                        className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-                      />
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
-              )}
-            </TabsContent>
-
-            {/* 我的接单 */}
-            <TabsContent value="claimed" className="space-y-6">
-              {myClaimedTasks.length > 0 ? (
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                  {myClaimedTasks.map((task) => (
-                    <Card key={task.id} className="border border-border">
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-base">{task.title}</CardTitle>
-                        <CardDescription>{task.publisher}</CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-sm">
-                            <span className="text-muted-foreground">标注进度</span>
-                            <span className="font-mono font-medium">
-                              {task.completedCases}/{task.totalCases}
-                            </span>
-                          </div>
-                          <Progress value={task.myProgress} className="h-2" />
-                        </div>
-                        <div className="flex items-center justify-between text-sm">
-                          <div className="flex items-center gap-1.5 text-muted-foreground">
-                            <Clock className="h-4 w-4" />
-                            截止 {task.deadline}
-                          </div>
-                          <div className="flex items-center gap-1.5 text-[#0F8770] font-medium">
-                            <Coins className="h-4 w-4" />
-                            <span className="font-mono">{task.reward.toLocaleString()}</span>
-                          </div>
-                        </div>
-                        <Button className="w-full bg-primary hover:bg-primary/90" asChild>
-                          <Link href="/workspace/annotation">
-                            去标注
-                            <ChevronRight className="ml-2 h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <Card className="border border-dashed">
-                  <CardContent className="py-16 text-center">
-                    <CheckCircle2 className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                    <h3 className="mt-4 text-lg font-medium text-foreground">暂无接单</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">
-                      浏览任务广场，领取适合您的标注任务
+                  {/* 右侧 30% */}
+                  <div className="sm:w-48 sm:text-right flex-shrink-0">
+                    {/* 报酬数字 - 视觉锚点 */}
+                    <p className="font-mono text-2xl font-bold text-primary leading-none">
+                      ¥{task.reward.toLocaleString()}
                     </p>
-                    <Button variant="outline" className="mt-4" onClick={() => setActiveTab("all")}>
-                      浏览任务
-                    </Button>
-                  </CardContent>
-                </Card>
-              )}
-            </TabsContent>
 
-            {/* 审核任务（Lv5+） */}
-            {isExpert && (
-              <TabsContent value="audit" className="space-y-6">
-                {auditTasks.length > 0 ? (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {auditTasks.map((task) => (
-                      <Card key={task.id} className="border border-border">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start justify-between gap-2">
-                            <CardTitle className="text-base">{task.title}</CardTitle>
-                            <Badge variant="outline" className="bg-warning/10 text-warning border-warning/30">
-                              待审核
-                            </Badge>
-                          </div>
-                          <CardDescription className="flex items-center gap-2 mt-1">
-                            提交人：{task.submitter}
-                            <LevelBadge level={task.submitterLevel} size="sm" />
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span>提交时间</span>
-                            <span>{task.submittedAt}</span>
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <span>案例数量</span>
-                            <span className="font-mono">{task.casesCount} 例</span>
-                          </div>
-                          <Button className="w-full bg-primary hover:bg-primary/90" asChild>
-                            <Link href="/workspace/audit">
-                              开始审核
-                              <ChevronRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                ) : (
-                  <Card className="border border-dashed">
-                    <CardContent className="py-16 text-center">
-                      <CheckCircle2 className="mx-auto h-12 w-12 text-[#0F8770]/30" />
-                      <h3 className="mt-4 text-lg font-medium text-foreground">审核队列为空</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        当前没有待审核的标注提交
+                    {/* 参与进度条 */}
+                    <div className="mt-3">
+                      <div className="h-1.5 w-full rounded-full bg-muted overflow-hidden">
+                        <div
+                          className={cn("h-full rounded-full", isFull ? "bg-muted-foreground/40" : "bg-primary")}
+                          style={{ width: `${claimedRatio}%` }}
+                        />
+                      </div>
+                      <p className="mt-1 text-xs text-muted-foreground sm:text-right">
+                        {task.claimed} / {task.maxClaims} 人已领取
                       </p>
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-            )}
+                    </div>
 
-            {/* 我发布的 */}
-            {isPublisher && (
-              <TabsContent value="published" className="space-y-6">
-                {myPublishedTasks.length > 0 ? (
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                    {myPublishedTasks.map((task) => (
-                      <Card key={task.id} className="border border-border">
-                        <CardHeader className="pb-3">
-                          <div className="flex items-start justify-between gap-2">
-                            <CardTitle className="text-base">{task.title}</CardTitle>
-                            <TaskStatusBadge status={task.status} />
-                          </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                          <div className="grid grid-cols-2 gap-4 text-sm">
-                            <div>
-                              <span className="text-muted-foreground">任务奖励</span>
-                              <p className="font-mono font-medium text-foreground">
-                                {task.reward.toLocaleString()} 积分
-                              </p>
-                            </div>
-                            <div>
-                              <span className="text-muted-foreground">锁仓资金</span>
-                              <p className="font-mono font-medium text-primary">
-                                {task.lockedFunds.toLocaleString()} 积分
-                              </p>
-                            </div>
-                          </div>
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between text-sm">
-                              <span className="text-muted-foreground">领取进度</span>
-                              <span className="font-mono">{task.claimed}/{task.maxClaims}</span>
-                            </div>
-                            <Progress value={(task.claimed / task.maxClaims) * 100} className="h-1.5" />
-                          </div>
-                          <div className="flex items-center justify-between text-sm text-muted-foreground">
-                            <div className="flex items-center gap-1.5">
-                              <Clock className="h-4 w-4" />
-                              截止 {task.deadline}
-                            </div>
-                          </div>
-                          <Button variant="outline" className="w-full">
-                            查看详情
+                    {/* 操作区 */}
+                    <div className="mt-3">
+                      {isClaimed ? (
+                        <span className="inline-flex items-center gap-1.5 text-sm font-medium text-green-600">
+                          <CheckCircle2 className="h-4 w-4" />
+                          已领取
+                        </span>
+                      ) : isFull ? (
+                        <Button size="sm" variant="secondary" disabled className="w-full sm:w-auto">
+                          名额已满
+                        </Button>
+                      ) : isBlocked ? (
+                        <div className="sm:flex sm:flex-col sm:items-end">
+                          <Button size="sm" variant="secondary" disabled className="w-full sm:w-auto">
+                            领取任务
                           </Button>
-                        </CardContent>
-                      </Card>
-                    ))}
+                          <p className="mt-1 text-xs text-destructive">需要 Lv{task.minLevel} 以上等级</p>
+                        </div>
+                      ) : (
+                        <Button size="sm" className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white">
+                          领取任务
+                        </Button>
+                      )}
+                    </div>
                   </div>
-                ) : (
-                  <Card className="border border-dashed">
-                    <CardContent className="py-16 text-center">
-                      <Plus className="mx-auto h-12 w-12 text-muted-foreground/30" />
-                      <h3 className="mt-4 text-lg font-medium text-foreground">暂无发布的任务</h3>
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        发布标注任务，吸引专业标注者
-                      </p>
-                      <Button className="mt-4 bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
-                        <Link href="/tasks/new">
-                          <Plus className="mr-2 h-4 w-4" />
-                          发布任务
-                        </Link>
-                      </Button>
-                    </CardContent>
-                  </Card>
-                )}
-              </TabsContent>
-            )}
-          </Tabs>
+                </div>
+              )
+            })}
+          </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

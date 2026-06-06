@@ -1,6 +1,6 @@
 "use client"
 
-import { Header, Footer, LevelBadge, TaskStatusBadge, DatasetStatusBadge } from "@/components/m-platform"
+import { Header, LevelBadge, TaskStatusBadge, DatasetStatusBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -149,7 +149,7 @@ export default function PersonalCenterPage() {
                     <h1 className="text-2xl font-bold text-foreground">{mockUser.name}</h1>
                     <LevelBadge level={mockUser.level} size="md" />
                     {mockUser.verified && (
-                      <Badge className="bg-[#0F8770]/10 text-[#0F8770] border-[#0F8770]/30">
+                      <Badge className="bg-primary/10 text-primary border-primary/30">
                         <Shield className="h-3 w-3 mr-1" />
                         已认证
                       </Badge>
@@ -221,7 +221,7 @@ export default function PersonalCenterPage() {
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Lock className="h-4 w-4" />
-                      <span className="text-sm">锁仓资金</span>
+                      <span className="text-sm">预存资金</span>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>
@@ -242,9 +242,9 @@ export default function PersonalCenterPage() {
                       <span className="text-sm">累计收益</span>
                     </div>
                     <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                  </div>
-                  <p className="text-2xl font-bold font-mono text-[#0F8770]">
-                    {mockWallet.totalIncome.toLocaleString()}
+                </div>
+                <p className="text-2xl font-bold font-mono text-primary">
+                  {mockWallet.totalIncome.toLocaleString()}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">积分</p>
                 </CardContent>
@@ -302,7 +302,7 @@ export default function PersonalCenterPage() {
                           <div className="flex-1 min-w-0">
                             <p className="font-medium truncate">{task.title}</p>
                             <p className="text-sm text-muted-foreground">
-                              锁仓 <span className="font-mono text-primary">{task.lockedFunds.toLocaleString()}</span> 积分
+                              预存 <span className="font-mono text-primary">{task.lockedFunds.toLocaleString()}</span> 积分
                             </p>
                           </div>
                           <div className="text-right">
@@ -342,7 +342,7 @@ export default function PersonalCenterPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <CardTitle className="flex items-center gap-2">
-                        <ClipboardList className="h-5 w-5 text-[#0F8770]" />
+                        <ClipboardList className="h-5 w-5 text-primary" />
                         我的标注
                       </CardTitle>
                       <CardDescription className="mt-1">查看您领取的标注任务</CardDescription>
@@ -377,7 +377,7 @@ export default function PersonalCenterPage() {
                             </div>
                             <Progress value={task.progress} className="h-2" />
                           </div>
-                          <Button className="w-full bg-[#0F8770] hover:bg-[#0A6655] text-white" asChild>
+                          <Button className="w-full bg-primary hover:bg-primary/90 text-white" asChild>
                             <Link href="/workspace/annotation">
                               继续标注
                               <ArrowRight className="h-4 w-4 ml-1.5" />
@@ -391,7 +391,7 @@ export default function PersonalCenterPage() {
                       <ClipboardList className="h-12 w-12 mx-auto text-muted-foreground/30" />
                       <p className="mt-4 text-muted-foreground">暂无进行中的任务</p>
                       <Button variant="outline" className="mt-4" asChild>
-                        <Link href="/tasks">浏览任务广场</Link>
+                        <Link href="/tasks">浏���任务广场</Link>
                       </Button>
                     </div>
                   )}
@@ -428,8 +428,8 @@ export default function PersonalCenterPage() {
                       <p className="text-2xl font-bold font-mono text-foreground">{auditStats.totalAudited}</p>
                       <p className="text-xs text-muted-foreground mt-1">累计审核</p>
                     </div>
-                    <div className="p-3 rounded-lg bg-[#0F8770]/10 text-center">
-                      <p className="text-2xl font-bold font-mono text-[#0F8770]">{auditStats.approvalRate}%</p>
+<div className="p-3 rounded-lg bg-primary/10 text-center">
+                        <p className="text-2xl font-bold font-mono text-primary">{auditStats.approvalRate}%</p>
                       <p className="text-xs text-muted-foreground mt-1">通过率</p>
                     </div>
                   </div>
@@ -445,8 +445,6 @@ export default function PersonalCenterPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

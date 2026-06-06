@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Geist, Geist_Mono } from "next/font/google"
+import { I18nProvider } from "@/lib/i18n"
 
 // 初始化字体
 const geistSans = Geist({
@@ -71,7 +72,9 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} bg-background`}
     >
       <body className="min-h-screen font-sans antialiased">
-        {children}
+        <I18nProvider>
+          {children}
+        </I18nProvider>
         {process.env.NODE_ENV === "production" && <Analytics />}
       </body>
     </html>

@@ -309,7 +309,7 @@ export default function AuditWorkspacePage() {
               </div>
               <div className="space-y-1.5 text-xs text-[#8B949E]">
                 <p>标注者「审查中收益」清零</p>
-                <p>锁仓资金退回发布方</p>
+                <p>预存资金退回发布方</p>
               </div>
             </div>
           </div>
@@ -439,7 +439,7 @@ export default function AuditWorkspacePage() {
                   <p className="text-[#8B949E]">驳回后将发生以下变化：</p>
                   <ul className="text-[#8B949E] space-y-1 text-xs">
                     <li>• 标注者「审查中收益」清零</li>
-                    <li>• 锁仓资金将退款给发布方</li>
+                    <li>• 预存资金将退还给发布方</li>
                     <li>• 标注者将收到驳回通知</li>
                   </ul>
                 </div>

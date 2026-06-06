@@ -8,6 +8,16 @@ import {
 import { cn } from '@/lib/utils'
 import { Button, buttonVariants } from '@/components/ui/button'
 
+// 多语言文案
+const paginationTexts = {
+  "zh-CN": { previous: "上一页", next: "下一页", more: "更多页面" },
+  "zh-TW": { previous: "上一頁", next: "下一頁", more: "更多頁面" },
+  "en": { previous: "Previous", next: "Next", more: "More pages" },
+  "ja": { previous: "前へ", next: "次へ", more: "その他" },
+}
+
+type Locale = keyof typeof paginationTexts
+
 function Pagination({ className, ...props }: React.ComponentProps<'nav'>) {
   return (
     <nav
@@ -65,10 +75,16 @@ function PaginationLink({
   )
 }
 
+type PaginationPreviousProps = React.ComponentProps<typeof PaginationLink> & {
+  locale?: Locale
+}
+
 function PaginationPrevious({
   className,
+  locale = "zh-CN",
   ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+}: PaginationPreviousProps) {
+  const text = paginationTexts[locale]
   return (
     <PaginationLink
       aria-label="Go to previous page"
@@ -77,15 +93,21 @@ function PaginationPrevious({
       {...props}
     >
       <ChevronLeftIcon />
-      <span className="hidden sm:block">Previous</span>
+      <span className="hidden sm:block">{text.previous}</span>
     </PaginationLink>
   )
 }
 
+type PaginationNextProps = React.ComponentProps<typeof PaginationLink> & {
+  locale?: Locale
+}
+
 function PaginationNext({
   className,
+  locale = "zh-CN",
   ...props
-}: React.ComponentProps<typeof PaginationLink>) {
+}: PaginationNextProps) {
+  const text = paginationTexts[locale]
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -93,16 +115,22 @@ function PaginationNext({
       className={cn('gap-1 px-2.5 sm:pr-2.5', className)}
       {...props}
     >
-      <span className="hidden sm:block">Next</span>
+      <span className="hidden sm:block">{text.next}</span>
       <ChevronRightIcon />
     </PaginationLink>
   )
 }
 
+type PaginationEllipsisProps = React.ComponentProps<'span'> & {
+  locale?: Locale
+}
+
 function PaginationEllipsis({
   className,
+  locale = "zh-CN",
   ...props
-}: React.ComponentProps<'span'>) {
+}: PaginationEllipsisProps) {
+  const text = paginationTexts[locale]
   return (
     <span
       aria-hidden
@@ -111,7 +139,7 @@ function PaginationEllipsis({
       {...props}
     >
       <MoreHorizontalIcon className="size-4" />
-      <span className="sr-only">More pages</span>
+      <span className="sr-only">{text.more}</span>
     </span>
   )
 }

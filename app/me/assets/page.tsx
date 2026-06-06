@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer, LevelBadge } from "@/components/m-platform"
+import { Header, LevelBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -88,7 +88,7 @@ const mockFlows = [
     id: "F004",
     type: "expense",
     amount: -5250,
-    description: "发布任务锁仓",
+    description: "发布任务预存",
     taskId: "T001",
     taskName: "肺结节良恶性标注",
     status: "locked",
@@ -106,7 +106,7 @@ const mockFlows = [
   },
 ]
 
-// 锁仓记录
+// 预存记录
 const mockLockups = [
   {
     id: "L001",
@@ -170,7 +170,7 @@ export default function AssetsPage() {
   const getFlowTypeTag = (type: string) => {
     switch (type) {
       case "income":
-        return <Badge className="bg-[#0F8770]/10 text-[#0F8770] border-[#0F8770]/30">收入</Badge>
+        return <Badge className="bg-primary/10 text-primary border-primary/30">收入</Badge>
       case "expense":
         return <Badge className="bg-primary/10 text-primary border-primary/30">支出</Badge>
       case "pending":
@@ -187,7 +187,7 @@ export default function AssetsPage() {
       case "locked":
         return <Badge className="bg-primary/10 text-primary border-primary/30">锁定中</Badge>
       case "settled":
-        return <Badge className="bg-[#0F8770]/10 text-[#0F8770] border-[#0F8770]/30">已结算</Badge>
+        return <Badge className="bg-primary/10 text-primary border-primary/30">已结算</Badge>
       case "refunded":
         return <Badge className="bg-muted text-muted-foreground border-border">已退款</Badge>
       default:
@@ -252,7 +252,7 @@ export default function AssetsPage() {
               <CardContent className="pt-6">
                 <div className="flex items-center gap-2 text-muted-foreground mb-2">
                   <Lock className="h-4 w-4" />
-                  <span className="text-sm">锁仓资金</span>
+                  <span className="text-sm">预存资金</span>
                 </div>
                 <p className="text-3xl font-bold font-mono text-primary">
                   {mockWallet.locked.toLocaleString()}
@@ -267,7 +267,7 @@ export default function AssetsPage() {
                   <TrendingUp className="h-4 w-4" />
                   <span className="text-sm">累计收益</span>
                 </div>
-                <p className="text-3xl font-bold font-mono text-[#0F8770]">
+                <p className="text-3xl font-bold font-mono text-primary">
                   {mockWallet.totalIncome.toLocaleString()}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
@@ -281,7 +281,7 @@ export default function AssetsPage() {
           <Tabs value={activeTab} onValueChange={setActiveTab}>
             <TabsList className="mb-6">
               <TabsTrigger value="flows">流水</TabsTrigger>
-              <TabsTrigger value="lockups">沙箱锁仓</TabsTrigger>
+              <TabsTrigger value="lockups">任务预存</TabsTrigger>
               <TabsTrigger value="refunds">退款记录</TabsTrigger>
             </TabsList>
 
@@ -333,7 +333,7 @@ export default function AssetsPage() {
                           <TableCell className="text-right">
                             <span className={cn(
                               "font-mono font-medium flex items-center justify-end gap-1",
-                              flow.amount > 0 ? "text-[#0F8770]" : "text-foreground"
+                              flow.amount > 0 ? "text-primary" : "text-foreground"
                             )}>
                               {flow.amount > 0 ? (
                                 <ArrowDownLeft className="h-3.5 w-3.5" />
@@ -351,13 +351,13 @@ export default function AssetsPage() {
               </Card>
             </TabsContent>
 
-            {/* 沙箱锁仓 */}
+            {/* 任务预存 */}
             <TabsContent value="lockups">
               <Card className="border border-border">
                 <CardHeader>
-                  <CardTitle>沙箱锁仓记录</CardTitle>
+                  <CardTitle>任务预存记录</CardTitle>
                   <CardDescription>
-                    发布任务时锁定的资金，任务完成后自动结算
+                    发布任务时预存的资金，任务完成后自动结算
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -365,9 +365,9 @@ export default function AssetsPage() {
                     <TableHeader>
                       <TableRow className="border-border">
                         <TableHead>任务名称</TableHead>
-                        <TableHead>锁仓金额</TableHead>
+                        <TableHead>预存金额</TableHead>
                         <TableHead>状态</TableHead>
-                        <TableHead>锁仓时间</TableHead>
+                        <TableHead>预存时间</TableHead>
                         <TableHead>结算/退款时间</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -415,7 +415,7 @@ export default function AssetsPage() {
                       {mockRefunds.map((refund) => (
                         <TableRow key={refund.id} className="border-border">
                           <TableCell className="font-medium">{refund.taskName}</TableCell>
-                          <TableCell className="font-mono text-[#0F8770]">+{refund.amount.toLocaleString()}</TableCell>
+                          <TableCell className="font-mono text-primary">+{refund.amount.toLocaleString()}</TableCell>
                           <TableCell className="text-muted-foreground">{refund.reason}</TableCell>
                           <TableCell className="text-muted-foreground text-sm">{refund.refundedAt}</TableCell>
                         </TableRow>
@@ -437,8 +437,6 @@ export default function AssetsPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Header, Footer, LevelBadge } from "@/components/m-platform"
+import { Header, LevelBadge } from "@/components/m-platform"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -344,8 +344,6 @@ export default function SettingsPage() {
           </Tabs>
         </div>
       </main>
-
-      <Footer />
     </div>
   )
 }
